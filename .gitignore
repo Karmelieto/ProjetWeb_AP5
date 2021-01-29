@@ -1,0 +1,58 @@
+#---------- FRONT ----------
+
+# dependencies
+front/node_modules
+front/.pnp
+front/.pnp.js
+
+# testing
+front/coverage
+
+# production
+front/build
+
+# misc
+front/.DS_Store
+front/.env.local
+front/.env.development.local
+front/.env.test.local
+front/.env.production.local
+
+#---------- BACK ----------
+
+# compiled output
+back/dist
+back/node_modules
+
+# OS
+back/.DS_Store
+
+# Tests
+back/coverage
+back/.nyc_output
+
+#---------- GLOBAL ----------
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
