@@ -1,0 +1,42 @@
+.menu {
+    text-align: center;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    bottom: 0;
+    width: 100%;
+    height: 75px;
+    border-top: solid 2px #0d0d0d;
+    background-color: #ffffff;
+}
+
+.menu-item {
+    padding-top: 10px;
+    flex-grow: 1;
+    text-decoration: none;
+    height: 80%;
+}
+
+.menu-img {
+    height: 40px;
+}
+
+.selected {
+    border-bottom: 2px solid #F2A35E;
+}
+
+@media only screen and (min-width: 768px) {
+    .menu {
+      width: 768px;
+      margin : 0 auto;
+      border: solid 2px #0d0d0d;
+      left: 50%;
+      bottom: 2%;
+      transform: translateX(-50%);
+      box-shadow: 5px 5px 5px grey;
+    }
+
+    .menu-img {
+        height: 50px;
+    }
+  }
