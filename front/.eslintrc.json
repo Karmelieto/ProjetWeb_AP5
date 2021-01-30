@@ -21,6 +21,7 @@
         "eqeqeq": "error",
         "semi": ["error", "always"],
         "quotes": ["error", "double"],
-        "no-undef": ["off"]
+        "no-undef": ["off"],
+        "indent": ["off"]
     }
 }
