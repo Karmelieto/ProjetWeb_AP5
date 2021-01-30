@@ -1,0 +1,25 @@
+{
+  "_id": 1,
+  "pseudo" : "Toto",
+  "mail" : "toto@gmail.com",
+  "profileImageLink" : "https://fr.web.img6.acsta.net/newsv7/20/06/11/14/46/1077703.png",
+  "description": "Salut je suis Toto :)",
+  "userRole" : "Admin",
+  "favorisPosts": [1,5],
+  "rewards" : [
+    {
+      "rank" : 1,
+      "postId": 1,
+      "date" : "29/01/2021",
+      "tag" : "Chat",
+      "points" : 1000
+    },
+    {
+      "rank" : 3,
+      "postId": 1,
+      "date" : "29/01/2021",
+      "tag" : "Mignon",
+      "points" : 1000
+    }
+  ]
+}
