@@ -19,9 +19,10 @@
     ],
     "rules": {
         "eqeqeq": "error",
-        "semi": ["error", "always"],
-        "quotes": ["error", "double"],
+        "semi": ["warn", "never"],
+        "quotes": ["warn", "single"],
+        "no-console": ["off"],
         "no-undef": ["off"],
-        "indent": ["off"]
+        "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": false }]
     }
 }

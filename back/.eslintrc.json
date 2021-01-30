@@ -16,7 +16,16 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "semi": ["error", "always"],
-        "quotes": ["error", "double"]
+        "eqeqeq": "error",
+        "semi": ["warn", "never"],
+        "quotes": ["warn", "single"],
+        "no-console": ["off"],
+        "no-use-before-define": "warn",
+        "no-undef": ["off"],
+        "no-unused-vars": ["warn", { "vars": "all", "args": "none", "ignoreRestSiblings": false }],
+        "no-useless-constructor": "off",
+        "new-cap": "off",
+        "spaced-comment": "warn",
+        "no-trailing-spaces": "off"
     }
 }
