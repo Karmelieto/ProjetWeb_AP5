@@ -2,7 +2,6 @@ import { Reward } from '../models/Reward'
 import { ApiProperty } from '@nestjs/swagger'
 
 export class CreateUserDto {
-
   @ApiProperty()
   pseudo: string;
 

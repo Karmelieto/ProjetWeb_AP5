@@ -1,12 +1,11 @@
-import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose'
-import {Document} from 'mongoose'
-import {Reward} from '../models/Reward'
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+import { Document } from 'mongoose'
+import { Reward } from '../models/Reward'
 
 export type UserDocument = User & Document;
 
 @Schema()
 export class User {
-
   @Prop()
   pseudo: string;
 

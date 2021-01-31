@@ -9,7 +9,11 @@ import { CreatePublicationDto } from '../dto/create-publication.dto'
 
 @Injectable()
 export class PublicationsService {
-  constructor (@InjectModel(Publication.name) private publicationModel: Model<PublicationDocument>) {}
+  constructor (
+    @InjectModel(Publication.name)
+    private publicationModel: Model<PublicationDocument>
+  ) {}
+
   private readonly logger = new Logger(PublicationsService.name);
 
   async findAll (): Promise<Publication[]> {

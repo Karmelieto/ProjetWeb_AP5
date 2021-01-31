@@ -1,9 +1,9 @@
 import { Model } from 'mongoose'
-import { Injectable, Logger, HttpStatus, HttpException} from '@nestjs/common'
+import { Injectable, Logger, HttpStatus, HttpException } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { User, UserDocument } from '../schemas/user.schema'
 import { CreateUserDto } from '../dto/create-user.dto'
-import * as util from "util";
+import * as util from 'util'
 
 @Injectable()
 export class UsersService {
@@ -21,15 +21,18 @@ export class UsersService {
   async create (createUserDto: CreateUserDto): Promise<User> {
     const createdUser = new this.userModel(createUserDto)
     if (await this.isUserExist(createdUser.pseudo)) {
-      throw new HttpException(util.format("The user %s already exist", createdUser.pseudo), HttpStatus.FORBIDDEN);
+      throw new HttpException(
+        util.format('The user %s already exist', createdUser.pseudo),
+        HttpStatus.FORBIDDEN
+      )
     } else {
-      this.logger.debug("CREATING USER : " + createdUser);
+      this.logger.debug('CREATING USER : ' + createdUser)
       return createdUser.save()
     }
   }
 
-  async isUserExist (pseudo: string): Promise<boolean>{
-    return !!(await this.findOne(pseudo));
+  async isUserExist (pseudo: string): Promise<boolean> {
+    return !!(await this.findOne(pseudo))
   }
   /* async update (updateUserDto: CreateUserDto) {
 
