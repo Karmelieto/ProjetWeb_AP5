@@ -4,7 +4,7 @@
   "mail" : "toto@gmail.com",
   "profileImageLink" : "https://fr.web.img6.acsta.net/newsv7/20/06/11/14/46/1077703.png",
   "description": "Salut je suis Toto :)",
-  "userRole" : "Admin",
+  "isAdmin" : true,
   "favorisPosts": [1,5],
   "rewards" : [
     {

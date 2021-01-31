@@ -32,7 +32,7 @@ export class UsersController {
 
   @Get(':pseudo')
   @ApiOperation({
-    summary: 'Find one user by is pseudo'
+    summary: 'Retrieve a user by his pseudo'
   })
   async findOne (@Param('pseudo') pseudo: string) {
     return this.usersService.findOne(pseudo)
@@ -52,14 +52,14 @@ export class UsersController {
 
   @Put(':pseudo')
   @ApiOperation({
-    summary: 'Update a user by is pseudo'
+    summary: 'Update a user by his pseudo'
   })
   async update (
     @Param('pseudo') pseudo: string,
     @Body() updateUserDto: CreateUserDto
   ) {
     // await this.usersService.update(updateUserDto)
-    console.log('Has to delete %s', pseudo)
+    console.log('Has to update  %s', pseudo)
   }
 
   @Delete(':pseudo')
@@ -69,7 +69,7 @@ export class UsersController {
   })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @ApiOperation({
-    summary: 'Remove a user by is pseudo'
+    summary: 'Remove a user by his pseudo'
   })
   async remove (@Param('pseudo') pseudo: string) {
     await this.usersService.remove(pseudo)
