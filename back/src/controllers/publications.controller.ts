@@ -32,7 +32,7 @@ export class PublicationsController {
 
   @Get(':id')
   @ApiOperation({
-    summary: 'Find one publication by is id'
+    summary: 'Retrieve a publication by his id'
   })
   async findOne (@Param('id') id: number) {
     return this.publicationsService.findOne(id)
@@ -52,7 +52,7 @@ export class PublicationsController {
 
   @Put(':id')
   @ApiOperation({
-    summary: 'Update a publication by is id'
+    summary: 'Update a publication by his id'
   })
   async update (
     @Param('id') id: number,
@@ -69,7 +69,7 @@ export class PublicationsController {
   })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @ApiOperation({
-    summary: 'Remove a publication by is id'
+    summary: 'Remove a publication by his id'
   })
   async remove (@Param('id') id: number) {
     await this.publicationsService.remove(id)
