@@ -1,0 +1,14 @@
+@font-face {
+    font-family: 'Josephin';
+    src: local('Josephin'),
+    url(../assets/Josephin.ttf) format('truetype');
+}
+
+* { 
+    font-family: 'Josephin', sans-serif !important;
+    --color-black : #0d0d0d;
+    --color-white : #ffffff;
+    --color-grey : #d2d2d2;
+    --color-primary-dark : #F2A35E;
+    --color-primary-light : #F2C166;
+}

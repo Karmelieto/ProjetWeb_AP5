@@ -1,17 +1,17 @@
-import "./Navigator.css";
-import { Route, Switch } from "react-router";
-import Home from "../home/Home";
-import Search from "../search/Search";
-import React from "react";
+import './Navigator.css';
+import { Route, Switch } from 'react-router';
+import Home from '../home/Home';
+import Search from '../search/Search';
+import React from 'react';
 
 function Navigator () {
     return (
-        <div className="navigator">
+        <div className='navigator'>
             <Switch>
-                <Route exact path="/">
+                <Route exact path='/'>
                     <Home />
                 </Route>
-                <Route path="/search">
+                <Route path='/search'>
                     <Search />
                 </Route>
             </Switch>

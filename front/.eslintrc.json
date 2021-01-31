@@ -21,6 +21,9 @@
         "eqeqeq": "error",
         "semi": ["warn", "never"],
         "quotes": ["warn", "single"],
+        "indent": ["off"],
+        "semi": ["off"],
+        "no-trailing-spaces": "off",
         "no-console": ["off"],
         "no-undef": ["off"],
         "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": false }]
