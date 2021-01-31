@@ -59,7 +59,7 @@ export class UsersController {
     @Body() updateUserDto: CreateUserDto
   ) {
     // await this.usersService.update(updateUserDto)
-    console.log('Has to delete %s', pseudo)
+    console.log('Has to update  %s', pseudo)
   }
 
   @Delete(':pseudo')

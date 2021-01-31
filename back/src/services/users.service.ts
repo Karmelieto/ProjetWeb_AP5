@@ -17,7 +17,10 @@ export class UsersService {
   }
 
   async create (createUserDto: CreateUserDto): Promise<User> {
+    console.log(createUserDto)
     const createdUser = new this.userModel(createUserDto)
+    // await this.getNextSequenceValue()
+    console.log(createUserDto)
     return createdUser.save()
   }
 
@@ -38,10 +41,8 @@ export class UsersService {
       message: 'An error occured when trying to remove ' + pseudo
     }
   }
-
-  /*    getNextSequenceValue () {
-    const sequenceDocument = this.userModel.estimatedDocumentCount();
-    console.log("NB DOCUMENT" + sequenceDocument.getQuery()._id);
-    return sequenceDocument.getQuery();
-  } */
 }
+
+/*  getNextSequenceValue () {
+
+  } */

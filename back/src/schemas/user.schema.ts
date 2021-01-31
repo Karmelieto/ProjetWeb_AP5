@@ -1,8 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { Document } from 'mongoose'
 import { Reward } from '../models/Reward'
-import { ApiProperty } from '@nestjs/swagger'
-import { UserRole } from '../models/UserRole'
+import * as mongoose from 'mongoose'
 
 export type UserDocument = User & Document;
 
@@ -11,32 +10,25 @@ export class User {
   @Prop()
   _id: number;
 
-  @ApiProperty()
   @Prop()
   pseudo: string;
 
-  @ApiProperty()
   @Prop()
   mail: string;
 
-  @ApiProperty()
   @Prop()
   profileImageLink: string;
 
-  @ApiProperty()
   @Prop()
   description: string;
 
-  @ApiProperty()
   @Prop()
-  userRole: UserRole;
+  isAdmin: boolean;
 
-  @ApiProperty()
   @Prop()
   favorisPosts: number[];
 
-  @ApiProperty()
-  @Prop([Reward])
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reward' }] })
   rewards: Reward[];
 }
 

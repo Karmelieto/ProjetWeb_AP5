@@ -3,10 +3,10 @@ import { Document } from 'mongoose'
 import { MetaData } from '../models/MetaData'
 import { ApiProperty } from '@nestjs/swagger'
 
-export type PostDocument = Post & Document;
+export type PublicationDocument = Publication & Document;
 
 @Schema()
-export class Post {
+export class Publication {
   @ApiProperty()
   @Prop()
   imageLink: string;
@@ -40,4 +40,4 @@ export class Post {
   date: string;
 }
 
-export const PostSchema = SchemaFactory.createForClass(Post)
+export const PublicationSchema = SchemaFactory.createForClass(Publication)
