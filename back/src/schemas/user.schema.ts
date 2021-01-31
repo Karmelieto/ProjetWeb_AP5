@@ -1,17 +1,17 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import { Document } from 'mongoose'
-import { Reward } from '../models/Reward'
-import * as mongoose from 'mongoose'
+import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose'
+import {Document} from 'mongoose'
+import {Reward} from '../models/Reward'
 
 export type UserDocument = User & Document;
 
 @Schema()
 export class User {
-  @Prop()
-  _id: number;
 
   @Prop()
   pseudo: string;
+
+  @Prop()
+  password: string;
 
   @Prop()
   mail: string;
@@ -28,7 +28,7 @@ export class User {
   @Prop()
   favorisPosts: number[];
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reward' }] })
+  @Prop()
   rewards: Reward[];
 }
 
