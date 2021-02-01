@@ -6,7 +6,7 @@ import play from '../../images/play.svg';
 import publication from '../../images/post.svg';
 import { NavLink } from 'react-router-dom';
 
-function Menu () {
+const Menu = () => {
     return (
             <div className='menu'>
                 <NavLink exact to='/' className='menu-item' activeClassName='selected'><img className='menu-img' src={home}/></NavLink>

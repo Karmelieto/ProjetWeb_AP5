@@ -34,28 +34,17 @@
         margin : 0 auto;
         border: solid 2px #0d0d0d;
         left: 50%;
-        bottom: 2%;
+        bottom: 1%;
         transform: translateX(-50%);
         box-shadow: 5px 5px 5px var(--color-grey);
     }
 
-    @keyframes zoom-in {
-        0% { height: 50px; }
-        100% { height: 55px; }
-    }
-
-    @keyframes zoom-out {
-        0% { height: 55px; }
-        100% { height: 50px; }
-    }
-
     .menu-img {
         height: 50px;
-        animation: zoom-out 0.1s linear;
+        transition: height 0.2s;
     }
 
     .menu-item:hover > .menu-img {
         height: 55px;
-        animation: zoom-in 0.1s linear;
     }
 }

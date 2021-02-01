@@ -1,5 +1,5 @@
 import './Search.css';
-import APICallManager from '../../app/APICallManager'
+import APICallManager from '../../app/APICallManager';
 import React from 'react';
 
 class Search extends React.Component {
