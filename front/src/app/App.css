@@ -13,7 +13,7 @@ body {
     --color-black : #0d0d0d;
     --color-white : #ffffff;
     --color-grey : #d2d2d2;
-    --color-grey-light : #fbfbfb;
+    --color-grey-light : #f9f9f9;
     --color-primary-dark : #F2A35E;
     --color-primary-light : #F2C166;
 }
@@ -28,6 +28,7 @@ button {
     box-shadow: 5px 3px 5px var(--color-grey);
     transition: padding 0.2s;
     border: 1px solid var(--color-black);
+    white-space: nowrap;
 }
 
 button:hover {

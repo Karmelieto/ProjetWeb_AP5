@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Tag = (props) => {
-    console.log('TAG :' + props);
     return (
         <div className="tag">
             <div className="tag-name">
