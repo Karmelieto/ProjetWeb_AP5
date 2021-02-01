@@ -1,8 +1,9 @@
 import { Model } from 'mongoose'
-import { Injectable, Logger } from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Publication, PublicationDocument } from './publication.schema'
 import { CreatePublicationDto } from './dto/create-publication.dto'
+import * as util from 'util'
 
 @Injectable()
 export class PublicationsService {
@@ -18,7 +19,17 @@ export class PublicationsService {
   }
 
   async findOne (id: number): Promise<Publication> {
-    return this.publicationModel.findOne({ id: id })
+    const publication: Publication = await this.publicationModel.findOne({
+      id: id
+    })
+    if (publication) {
+      return publication
+    } else {
+      throw new HttpException(
+        util.format('The publication with the id %s has not been found', id),
+        HttpStatus.NOT_FOUND
+      )
+    }
   }
 
   async create (createPostDto: CreatePublicationDto): Promise<Publication> {

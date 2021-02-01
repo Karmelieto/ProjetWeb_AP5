@@ -1,10 +1,10 @@
-import {Model} from 'mongoose'
-import {HttpException, HttpStatus, Injectable, Logger} from '@nestjs/common'
-import {InjectModel} from '@nestjs/mongoose'
-import {User, UserDocument} from './user.schema'
-import {CreateUserDto} from './dto/create-user.dto'
+import { Model } from 'mongoose'
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common'
+import { InjectModel } from '@nestjs/mongoose'
+import { User, UserDocument } from './user.schema'
+import { CreateUserDto } from './dto/create-user.dto'
 import * as util from 'util'
-import {UpdateUserDto} from './dto/update-user.dto'
+import { UpdateUserDto } from './dto/update-user.dto'
 
 @Injectable()
 export class UsersService {
@@ -17,7 +17,15 @@ export class UsersService {
   }
 
   async findOne (pseudo: string): Promise<User> {
-    return this.userModel.findOne({ pseudo: pseudo })
+    const user: User = await this.userModel.findOne({ pseudo: pseudo })
+    if (user) {
+      return user
+    } else {
+      throw new HttpException(
+        util.format('The user %s has not been found', pseudo),
+        HttpStatus.NOT_FOUND
+      )
+    }
   }
 
   async create (createUserDto: CreateUserDto): Promise<User> {
@@ -57,7 +65,10 @@ export class UsersService {
         return this.userModel.findOne({ pseudo: updateUserDto.newPseudo })
       } catch (e) {
         throw new HttpException(
-          util.format('There was a problem when trying to update the user', updateUserDto.lastPseudo),
+          util.format(
+            'There was a problem when trying to update the user',
+            updateUserDto.lastPseudo
+          ),
           HttpStatus.NOT_ACCEPTABLE
         )
       }
@@ -75,7 +86,6 @@ export class UsersService {
 
   async remove (pseudo: string) {
     const res = await this.userModel.deleteOne({ pseudo: pseudo })
-    console.log(res);
     if (res.deletedCount !== 0) {
       return {
         status: 204,
@@ -83,8 +93,8 @@ export class UsersService {
       }
     }
     throw new HttpException(
-        util.format('The user %s might be already remove', pseudo),
-        HttpStatus.NOT_FOUND
+      util.format('The user %s might be already remove', pseudo),
+      HttpStatus.NOT_FOUND
     )
   }
 }
