@@ -1,11 +1,8 @@
 import { Model } from 'mongoose'
 import { Injectable, Logger } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
-import {
-  Publication,
-  PublicationDocument
-} from '../schemas/publication.schema'
-import { CreatePublicationDto } from '../dto/create-publication.dto'
+import { Publication, PublicationDocument } from './publication.schema'
+import { CreatePublicationDto } from './dto/create-publication.dto'
 
 @Injectable()
 export class PublicationsService {

@@ -7,15 +7,16 @@ import {
   Post,
   Put
 } from '@nestjs/common'
-import { CreateUserDto } from '../dto/create-user.dto'
-import { UsersService } from '../services/users.service'
-import { User } from '../schemas/user.schema'
+import { CreateUserDto } from './dto/create-user.dto'
+import { UsersService } from './users.service'
+import { User } from './user.schema'
 import {
   ApiCreatedResponse,
   ApiOperation,
   ApiResponse,
   ApiTags
 } from '@nestjs/swagger'
+import { UpdateUserDto } from './dto/update-user.dto'
 
 @Controller('users')
 @ApiTags('users')
@@ -50,16 +51,12 @@ export class UsersController {
     await this.usersService.create(createUserDto)
   }
 
-  @Put(':pseudo')
+  @Put()
   @ApiOperation({
-    summary: 'Update a user by his pseudo'
+    summary: 'Update a user'
   })
-  async update (
-    @Param('pseudo') pseudo: string,
-    @Body() updateUserDto: CreateUserDto
-  ) {
-    // await this.usersService.update(updateUserDto)
-    console.log('Has to update  %s', pseudo)
+  async update (@Body() updateUserDto: UpdateUserDto) {
+    await this.usersService.update(updateUserDto)
   }
 
   @Delete(':pseudo')

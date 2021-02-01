@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
-import { Publication, PublicationSchema } from '../schemas/publication.schema'
-import { PublicationsController } from '../controllers/publications.controller'
-import { PublicationsService } from '../services/publications.service'
+import { Publication, PublicationSchema } from './publication.schema'
+import { PublicationsController } from './publications.controller'
+import { PublicationsService } from './publications.service'
 
 @Module({
   imports: [

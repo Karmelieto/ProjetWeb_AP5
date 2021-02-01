@@ -13,9 +13,9 @@ import {
   ApiResponse,
   ApiTags
 } from '@nestjs/swagger'
-import { PublicationsService } from '../services/publications.service'
-import { Publication } from '../schemas/publication.schema'
-import { CreatePublicationDto } from '../dto/create-publication.dto'
+import { PublicationsService } from './publications.service'
+import { Publication } from './publication.schema'
+import { CreatePublicationDto } from './dto/create-publication.dto'
 
 @Controller('publications')
 @ApiTags('publications')
