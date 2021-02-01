@@ -7,6 +7,7 @@ async function bootstrap () {
     logger: ['error', 'debug']
   })
   const port = 4242
+  app.enableCors()
 
   const options = new DocumentBuilder()
     .setTitle('Toppics API documentation')
