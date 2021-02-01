@@ -1,4 +1,4 @@
-import { Reward } from '../models/Reward'
+import { Reward } from '../../models/Reward'
 import { ApiProperty } from '@nestjs/swagger'
 
 export class CreateUserDto {
