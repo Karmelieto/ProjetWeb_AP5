@@ -1,5 +1,6 @@
 import './Search.css';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import APICallManager from '../../app/APICallManager';
 import logo from '../../images/logo.svg'
 import Banner from '../banner/Banner';
@@ -12,7 +13,7 @@ class Search extends React.Component {
     state = {
         users: [],
         isLoading: true,
-        inputSearch: ""
+        inputSearch: ''
     };
 
     componentDidMount () {
@@ -49,9 +50,11 @@ class Search extends React.Component {
                             </div>
                         }
                         right = {
-                            <button>
-                                Log in    
-                            </button>
+                            <Link to='/login'>
+                                <button>
+                                    Log in
+                                </button>
+                            </Link>
                         }
                     />
                     <Container>

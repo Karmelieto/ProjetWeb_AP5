@@ -1,14 +1,10 @@
-import './Home.css';
+import './Login.css';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import APICallManager from '../../app/APICallManager';
 import logo from '../../images/logo.svg'
 import Banner from '../banner/Banner';
-import Loading from '../loading/Loading';
-import Tag from '../tag/Tag';
-import Container from '../container/Container';
 
-class Home extends React.Component {
+class Login extends React.Component {
 
     state = {
         tags: [],
@@ -39,11 +35,9 @@ class Home extends React.Component {
                             <img src={logo}/>
                         }
                         right = {
-                            <Link to="/login">
-                                <button>
-                                    Log in
-                                </button>
-                            </Link>
+                            <button>
+                                Log in    
+                            </button>
                         }
                     />
                     <Container>
@@ -61,4 +55,4 @@ class Home extends React.Component {
     }
 }
 
-export default Home;
+export default Login;
