@@ -122,21 +122,25 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:System-ui;-inkscape-font-specification:System-ui;fill:#0d0d0f;fill-opacity:1"
          id="path861" />
     </g>
-    <text
-       xml:space="preserve"
+    <g
+       aria-label="["
+       transform="matrix(1.03987,0,0,0.99899408,5.594113,-93.497392)"
        id="text849"
-       style="font-style:normal;font-weight:normal;font-size:25.4px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect851);fill:#f2a35e;fill-opacity:1;stroke:none;"
-       transform="matrix(1.03987,0,0,0.99899408,5.594113,-93.497392)"><tspan
-         x="3.0234375"
-         y="128.94648"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25.4px;font-family:'MS Gothic';-inkscape-font-specification:'MS Gothic';fill:#f2a35e;fill-opacity:1">[</tspan></tspan></text>
-    <text
-       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:25.4px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect851);fill:#f2a35e;fill-opacity:1;stroke:none">
+      <path
+         d="m 8.0835937,108.60664 h 6.2507813 v 1.5875 H 9.7703124 v 19.34766 h 4.5640626 v 1.5875 H 8.0835937 Z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25.4px;font-family:'MS Gothic';-inkscape-font-specification:'MS Gothic';fill:#f2a35e;fill-opacity:1"
+         id="path858" />
+    </g>
+    <g
+       aria-label="]"
+       transform="matrix(1.03987,0,0,0.99899408,-78.748842,-45.920298)"
        id="text855"
-       style="font-style:normal;font-weight:normal;font-size:25.4px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect857);fill:#f2a35e;fill-opacity:1;stroke:none;"
-       transform="matrix(1.03987,0,0,0.99899408,-78.748842,-45.920298)"><tspan
-         x="102.80859"
-         y="81.321484"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'MS Gothic';-inkscape-font-specification:'MS Gothic';fill:#f2a35e;fill-opacity:1">]</tspan></tspan></text>
+       style="font-style:normal;font-weight:normal;font-size:25.4px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect857);fill:#f2a35e;fill-opacity:1;stroke:none">
+      <path
+         d="m 104.09844,62.569141 v -1.5875 h 6.25078 v 22.522655 h -6.25078 v -1.5875 h 4.56406 V 62.569141 Z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'MS Gothic';-inkscape-font-specification:'MS Gothic';fill:#f2a35e;fill-opacity:1"
+         id="path862" />
+    </g>
   </g>
 </svg>

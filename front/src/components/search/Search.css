@@ -1,3 +1,19 @@
 .search {
-    
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-self: center;
+}
+
+.input-button > input {
+    height: 32px;
+    font-size: 18px;
+    width: 45%;
+    border : 2px solid var(--color-grey);
+    border-radius: 5px 0px 0px 5px;
+    padding-left: 5px;
+}
+
+.input-button > button {
+    border-radius: 0px 5px 5px 0px;
 }

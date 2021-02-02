@@ -4,7 +4,7 @@ import Home from '../home/Home';
 import Search from '../search/Search';
 import React from 'react';
 
-function Navigator () {
+const Navigator = () => {
     return (
         <div className='navigator'>
             <Switch>
