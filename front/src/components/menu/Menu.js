@@ -42,6 +42,6 @@ class Menu extends React.Component {
 
 Menu.propTypes = {
     history: PropTypes.object
-  }
+}
 
 export default withRouter(Menu);

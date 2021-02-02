@@ -1,52 +1,45 @@
 import './Login.css';
 import React from 'react';
 import APICallManager from '../../app/APICallManager';
-import logo from '../../images/logo.svg'
+import back from '../../images/back.svg'
 import Banner from '../banner/Banner';
+import Container from '../container/Container';
+import Loading from '../loading/Loading';
+import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 class Login extends React.Component {
 
     state = {
-        tags: [],
-        isLoading: true
+        isLoading: false
     };
 
     componentDidMount () {
         APICallManager.getUsers((response) => {
             console.log(response.data);
-            response.data.map((tag, index) => (tag.key = index));
-            this.setState({
-                tags: response.data,
-                isLoading: false
-            });
-
-            console.log(this.state.isLoading);
-            console.log(this.state.tags);
         });
+    }
+
+    onBackClicked (event) {
+        this.props.history.goBack();
     }
 
     render () {
         const isLoading = this.state.isLoading;
-        const tags = this.state.tags;
         return (
                 <div>
                     <Banner 
                         left={
-                            <img src={logo}/>
-                        }
-                        right = {
-                            <button>
-                                Log in    
-                            </button>
+                            <img src={back} className='back-img' onClick={ (event) => this.onBackClicked(event) }/>
                         }
                     />
                     <Container>
                         <div className='home'>
                             {isLoading
                                 ? <Loading/>
-                                : tags.map(tag => (
-                                    <Tag tag={tag} key={tag.key}/>
-                                ))
+                                : <div>
+                                    <input/>
+                                </div>
                             }
                         </div>
                     </Container>
@@ -55,4 +48,8 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+Login.propTypes = {
+    history: PropTypes.object
+}
+
+export default withRouter(Login);

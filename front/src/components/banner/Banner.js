@@ -8,7 +8,7 @@ const Banner = (props) => {
             <div className="banner-left">
                 {props.left}
             </div>
-            <div className="banner-item">
+            <div className="banner-center">
                 {props.center}
             </div>
             <div className="banner-right">

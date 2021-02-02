@@ -1,0 +1,14 @@
+.back-img {
+    cursor: pointer;
+    height: 35px;
+    transition: height 0.2s;
+}
+
+.back-img:hover {
+    height: 40px;
+}
+
+.title {
+    font-size: 28px;
+}
+
