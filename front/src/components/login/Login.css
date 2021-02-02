@@ -8,7 +8,33 @@
     height: 40px;
 }
 
-.title {
-    font-size: 28px;
+.full-page {
+    height: 100%;
+}
+
+.login-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    text-align: center;
+}
+
+.logo {
+    height: 100px;
+}
+
+.margin-top {
+    margin-top: 20px;
+}
+
+.input {
+    font-size: 18px;
+    padding: 2px;
+}
+
+.register {
+    color: var(--color-primary-dark);
 }
 

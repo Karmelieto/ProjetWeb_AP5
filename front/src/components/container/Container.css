@@ -1,5 +1,6 @@
 .container {
     margin: 15px;
+    height: 100%;
 }
 
 @media only screen and (min-width: 768px) {

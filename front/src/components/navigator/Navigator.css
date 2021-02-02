@@ -3,6 +3,6 @@
   max-height: 100%;
   margin-bottom: 75px;
   margin-top: 60px;
-
+  height: calc(100vh - 132px);
   background-color: var(--color-grey-light);
 }
