@@ -21,10 +21,7 @@ export class UsersService {
     if (user) {
       return user
     } else {
-      throw new HttpException(
-        util.format('The user %s has not been found', pseudo),
-        HttpStatus.NOT_FOUND
-      )
+      return null
     }
   }
 

@@ -17,16 +17,13 @@ export class TagsService {
   }
 
   async findOne (name: string): Promise<Tag> {
-    const tag: Tag = await this.tagModel.findOne({ name: name })
-    if (tag) {
-      return tag
-    } else {
-      throw new HttpException(
-        util.format('The tag %s has not been found', name),
-        HttpStatus.NOT_FOUND
-      )
+    const tag: Tag = await this.tagModel.findOne({name: name})
+      if (tag) {
+        return tag
+      } else {
+        return null
+      }
     }
-  }
 
   async create (createTagDto: CreateTagDto): Promise<Tag> {
     const createdTag = new this.tagModel(createTagDto)
