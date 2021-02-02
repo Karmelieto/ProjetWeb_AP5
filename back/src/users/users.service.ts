@@ -17,12 +17,7 @@ export class UsersService {
   }
 
   async findOne (pseudo: string): Promise<User> {
-    const user: User = await this.userModel.findOne({ pseudo: pseudo })
-    if (user) {
-      return user
-    } else {
-      return null
-    }
+    return await this.userModel.findOne({ pseudo: pseudo })
   }
 
   async create (createUserDto: CreateUserDto): Promise<User> {
