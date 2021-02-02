@@ -1,8 +1,8 @@
-import { Model } from 'mongoose'
-import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common'
-import { InjectModel } from '@nestjs/mongoose'
-import { Publication, PublicationDocument } from './publication.schema'
-import { CreatePublicationDto } from './dto/create-publication.dto'
+import {Model} from 'mongoose'
+import {Injectable} from '@nestjs/common'
+import {InjectModel} from '@nestjs/mongoose'
+import {Publication, PublicationDocument} from './publication.schema'
+import {CreatePublicationDto} from './dto/create-publication.dto'
 import * as util from 'util'
 
 @Injectable()
@@ -11,8 +11,6 @@ export class PublicationsService {
     @InjectModel(Publication.name)
     private publicationModel: Model<PublicationDocument>
   ) {}
-
-  private readonly logger = new Logger(PublicationsService.name);
 
   async findAll (): Promise<Publication[]> {
     return this.publicationModel.find().exec()
@@ -25,10 +23,7 @@ export class PublicationsService {
     if (publication) {
       return publication
     } else {
-      throw new HttpException(
-        util.format('The publication with the id %s has not been found', id),
-        HttpStatus.NOT_FOUND
-      )
+      return null
     }
   }
 
@@ -46,14 +41,12 @@ export class PublicationsService {
     if (res.result.ok === 1 && res.result.n === 1) {
       return {
         status: 204,
-        message: 'Publication with the id ' + id + ' successfully deleted'
+        message: util.format("Publication with the id %s successfully deleted", id)
       }
     }
     return {
       status: 404,
-      message:
-        'An error occured when trying to remove the publication with the id : ' +
-        id
+      message: util.format("An error occured when trying to remove the publication with the id : %s ", id)
     }
   }
 
