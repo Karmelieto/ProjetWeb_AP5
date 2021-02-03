@@ -4,9 +4,16 @@ import { UsersModule } from './users/users.module'
 import { PublicationsModule } from './publications/publications.module'
 import { TagsModule } from './tags/tags.module'
 
+const connectionParams = {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true
+}
+
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/toppics'),
+    MongooseModule.forRoot('mongodb+srv://dbAdminUser:MPvsNZdTNNtd8u0K@cluster0.sbi0m.mongodb.net/toppics?retryWrites=true&w=majority'),
+    MongooseModule.forRoot('mongodb+srv://dbAdminUser:MPvsNZdTNNtd8u0K@cluster0.sbi0m.mongodb.net/toppics?retryWrites=true&w=majority'),
     UsersModule,
     PublicationsModule,
     TagsModule
