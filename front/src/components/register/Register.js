@@ -1,4 +1,4 @@
-import './Login.css';
+import '../login/Login.css';
 import React from 'react';
 import APICallManager from '../../app/APICallManager';
 import back from '../../images/back.svg';
@@ -6,14 +6,15 @@ import logo from '../../images/logo.svg';
 import Banner from '../banner/Banner';
 import Container from '../container/Container';
 import Loading from '../loading/Loading';
-import { NavLink, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-class Login extends React.Component {
+class Register extends React.Component {
 
     state = {
         isLoading: false,
         emailInput: '',
+        pseudo: '',
         passwordInput: ''
     };
 
@@ -21,8 +22,8 @@ class Login extends React.Component {
         this.props.history.goBack();
     }
 
-    onLoginClicked (event) {
-        APICallManager.login(this.state.emailInput, this.state.pseudo, (response) => {
+    onRegisterClicked (event) {
+        APICallManager.register(this.state.emailInput, this.state.pseudo, this.state.passwordInput, (response) => {
 
         });
     }
@@ -30,6 +31,11 @@ class Login extends React.Component {
     handleEmailInputChange (event) {
         event.preventDefault();
         this.setState({ emailInput: event.target.value });
+    }
+
+    handlePseudoInputChange (event) {
+        event.preventDefault();
+        this.setState({ pseudo: event.target.value });
     }
 
     handlePasswordInputChange (event) {
@@ -52,12 +58,12 @@ class Login extends React.Component {
                                 ? <Loading/>
                                 : <div className="login-content full-page">
                                     <img src={logo} className="logo"/>
-                                    <input className="input margin-top" placeholder="Email" type="email" onChange={ (event) => this.handleEmailInputChange(event) }/>
+                                    <input className="input margin-top" placeholder="Email" type="text" onChange={ (event) => this.handleEmailInputChange(event) }/>
+                                    <input className="input margin-top" placeholder="Pseudo" type="text" onChange={ (event) => this.handlePseudoInputChange(event) }/>
                                     <input className="input margin-top" placeholder="Password" type="password" onChange={ (event) => this.handlePasswordInputChange(event) }/>
-                                    <button className="margin-top" onClick={ (event) => this.onLoginClicked(event) }>
-                                        Log in
+                                    <button onClick={ (event) => this.onRegisterClicked(event) } className="margin-top">
+                                        Register
                                     </button>
-                                    <NavLink className="margin-top register" to="/register">Register</NavLink>
                                 </div>
                             }
                         </div>
@@ -67,8 +73,8 @@ class Login extends React.Component {
     }
 }
 
-Login.propTypes = {
+Register.propTypes = {
     history: PropTypes.object
 }
 
-export default withRouter(Login);
+export default withRouter(Register);

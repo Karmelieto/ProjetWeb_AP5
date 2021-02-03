@@ -10,4 +10,12 @@ export default class APICallManager {
     static getUser (pseudo, callback) {
         axios.get(APICallManager.backUrl + '/users/' + pseudo).then(callback);
     }
+
+    static login (email, pseudo, callback) {
+
+    }
+
+    static register (email, pseudo, password, callback) {
+
+    } 
 };
