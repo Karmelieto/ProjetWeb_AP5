@@ -7,9 +7,15 @@ export class CreateTagDto {
   @ApiProperty()
   imageLink: string;
 
+  @ApiProperty({
+    default: false
+  })
   @ApiProperty()
   isPrivate: boolean;
 
+  @ApiProperty({
+    default: []
+  })
   @ApiProperty()
   usersAllow: string[];
 }
