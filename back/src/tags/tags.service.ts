@@ -4,7 +4,7 @@ import { InjectModel } from '@nestjs/mongoose'
 import * as util from 'util'
 import { Tag, TagDocument } from './tag.schema'
 import { CreateTagDto } from './dto/create-tag.dto'
-import {UpdateImageTagDto} from "./dto/update-image-tag.dto";
+import { UpdateImageTagDto } from './dto/update-image-tag.dto'
 
 @Injectable()
 export class TagsService {
@@ -17,13 +17,13 @@ export class TagsService {
   }
 
   async findOne (name: string): Promise<Tag> {
-    const tag: Tag = await this.tagModel.findOne({name: name})
-      if (tag) {
-        return tag
-      } else {
-        return null
-      }
+    const tag: Tag = await this.tagModel.findOne({ name: name })
+    if (tag) {
+      return tag
+    } else {
+      return null
     }
+  }
 
   async create (createTagDto: CreateTagDto): Promise<Tag> {
     const createdTag = new this.tagModel(createTagDto)
@@ -38,7 +38,6 @@ export class TagsService {
     }
   }
 
-
   async updateImageTag (updateImageTagDto: UpdateImageTagDto): Promise<Tag> {
     this.logger.debug(updateImageTagDto)
     const myTag: Tag = await this.tagModel.findOne({
@@ -52,12 +51,17 @@ export class TagsService {
             imageLink: updateImageTagDto.newImageLink
           }
         )
-        const updatedTag = await this.tagModel.findOne({ name: updateImageTagDto.name })
+        const updatedTag = await this.tagModel.findOne({
+          name: updateImageTagDto.name
+        })
         this.logger.debug('UPDATE FINISHED ' + updatedTag)
         return updatedTag
       } catch (e) {
         throw new HttpException(
-          util.format('There was a problem when trying to update the tag', updateImageTagDto.name),
+          util.format(
+            'There was a problem when trying to update the tag',
+            updateImageTagDto.name
+          ),
           HttpStatus.NOT_ACCEPTABLE
         )
       }
@@ -68,7 +72,6 @@ export class TagsService {
       )
     }
   }
-
 
   /* async update (updateTagDto: UpdateTagDto): Promise<Tag> {
     this.logger.debug(updateTagDto)

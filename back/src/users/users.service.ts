@@ -28,6 +28,9 @@ export class UsersService {
         HttpStatus.FORBIDDEN
       )
     } else {
+      if (!createdUser.isAdmin) {
+        createdUser.isAdmin = false
+      }
       this.logger.debug('CREATING USER : ' + createdUser)
       return createdUser.save()
     }
