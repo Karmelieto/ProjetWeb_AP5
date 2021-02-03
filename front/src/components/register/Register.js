@@ -6,7 +6,7 @@ import logo from '../../images/logo.svg';
 import Banner from '../banner/Banner';
 import Container from '../container/Container';
 import Loading from '../loading/Loading';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 class Register extends React.Component {
@@ -18,10 +18,6 @@ class Register extends React.Component {
         passwordInput: '',
         isRegistered: false
     };
-
-    onBackClicked (event) {
-        this.props.history.goBack();
-    }
 
     onRegisterClicked (event) {
         APICallManager.register(this.state.emailInput, this.state.pseudo, this.state.passwordInput, (response) => {
@@ -58,6 +54,11 @@ class Register extends React.Component {
                         left={
                             <img src={back} className="back-img" onClick={ (event) => this.onBackClicked(event) }/>
                         }
+                        right={
+                            <Link to="/">
+                                <img src= {logo}/>
+                            </Link>
+                        }
                     />
                     <Container>
                         <div className="full-page">
@@ -65,8 +66,8 @@ class Register extends React.Component {
                                 ? <Loading/>
                                 : <div className="login-content full-page">
                                     <img src={logo} className="logo"/>
-                                    <input className="input margin-top" placeholder="Email" type="text" onChange={ (event) => this.handleEmailInputChange(event) }/>
                                     <input className="input margin-top" placeholder="Pseudo" type="text" onChange={ (event) => this.handlePseudoInputChange(event) }/>
+                                    <input className="input margin-top" placeholder="Email" type="text" onChange={ (event) => this.handleEmailInputChange(event) }/>
                                     <input className="input margin-top" placeholder="Password" type="password" onChange={ (event) => this.handlePasswordInputChange(event) }/>
                                     <button onClick={ (event) => this.onRegisterClicked(event) } className="margin-top">
                                         Register
