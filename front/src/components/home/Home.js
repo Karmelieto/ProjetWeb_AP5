@@ -16,7 +16,7 @@ class Home extends React.Component {
     };
 
     componentDidMount () {
-        APICallManager.getUsers((response) => {
+        APICallManager.getTags((response) => {
             console.log(response.data);
             response.data.map((tag, index) => (tag.key = index));
             this.setState({

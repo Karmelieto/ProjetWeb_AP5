@@ -7,8 +7,24 @@ export default class APICallManager {
         axios.get(APICallManager.backUrl + '/users').then(callback);
     }
 
+    static getTags (callback) {
+        axios.get(APICallManager.backUrl + '/tags').then(callback);
+    }
+
+    static getPublications (callback) {
+        axios.get(APICallManager.backUrl + '/publications').then(callback);
+    }
+
     static getUser (pseudo, callback) {
-        axios.get(APICallManager.backUrl + '/users/' + pseudo).then(callback);
+        axios.get(APICallManager.backUrl + '/users' + pseudo).then(callback);
+    }
+
+    static getTag (nom, callback) {
+        axios.get(APICallManager.backUrl + '/tags' + nom).then(callback);
+    }
+
+    static getPublication (nom, callback) {
+        axios.get(APICallManager.backUrl + '/publications' + nom).then(callback);
     }
 
     static login (email, pseudo, callback) {
