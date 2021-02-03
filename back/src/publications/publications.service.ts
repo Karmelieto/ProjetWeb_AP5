@@ -1,8 +1,8 @@
-import {Model} from 'mongoose'
-import {Injectable} from '@nestjs/common'
-import {InjectModel} from '@nestjs/mongoose'
-import {Publication, PublicationDocument} from './publication.schema'
-import {CreatePublicationDto} from './dto/create-publication.dto'
+import { Model } from 'mongoose'
+import { Injectable } from '@nestjs/common'
+import { InjectModel } from '@nestjs/mongoose'
+import { Publication, PublicationDocument } from './publication.schema'
+import { CreatePublicationDto } from './dto/create-publication.dto'
 import * as util from 'util'
 
 @Injectable()
@@ -41,12 +41,18 @@ export class PublicationsService {
     if (res.result.ok === 1 && res.result.n === 1) {
       return {
         status: 204,
-        message: util.format("Publication with the id %s successfully deleted", id)
+        message: util.format(
+          'Publication with the id %s successfully deleted',
+          id
+        )
       }
     }
     return {
       status: 404,
-      message: util.format("An error occured when trying to remove the publication with the id : %s ", id)
+      message: util.format(
+        'An error occured when trying to remove the publication with the id : %s ',
+        id
+      )
     }
   }
 

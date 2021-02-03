@@ -16,7 +16,7 @@ import {
 import { Tag } from './tag.schema'
 import { CreateTagDto } from './dto/create-tag.dto'
 import { TagsService } from './tags.service'
-import {UpdateImageTagDto} from "./dto/update-image-tag.dto";
+import { UpdateImageTagDto } from './dto/update-image-tag.dto'
 
 @Controller('tags')
 @ApiTags('tags')
