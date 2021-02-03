@@ -17,12 +17,18 @@ export class CreateUserDto {
   @ApiProperty()
   description: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    default: false
+  })
   isAdmin: boolean;
 
-  @ApiProperty()
+  @ApiProperty({
+    default: []
+  })
   favorisPosts: number[];
 
-  @ApiProperty()
+  @ApiProperty({
+    default: []
+  })
   rewards: Reward[];
 }

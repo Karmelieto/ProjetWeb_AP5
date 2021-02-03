@@ -16,6 +16,9 @@ export class CreatePublicationDto {
   @ApiProperty()
   description: string;
 
+  @ApiProperty({
+    default: []
+  })
   @ApiProperty()
   tags: string[];
 
