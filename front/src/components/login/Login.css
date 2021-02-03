@@ -8,10 +8,6 @@
     height: 40px;
 }
 
-.full-page {
-    height: 100%;
-}
-
 .login-content {
     display: flex;
     align-items: center;
