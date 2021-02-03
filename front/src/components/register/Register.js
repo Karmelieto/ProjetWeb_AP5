@@ -15,7 +15,8 @@ class Register extends React.Component {
         isLoading: false,
         emailInput: '',
         pseudo: '',
-        passwordInput: ''
+        passwordInput: '',
+        isRegistered: false
     };
 
     onBackClicked (event) {
@@ -24,7 +25,13 @@ class Register extends React.Component {
 
     onRegisterClicked (event) {
         APICallManager.register(this.state.emailInput, this.state.pseudo, this.state.passwordInput, (response) => {
-
+            if (response.status === 201) {
+                this.setState({ isRegistered: true })
+                // TODO : change display
+            } else {
+                // TODO : change display
+                console.log('Error, profile not created');
+            }
         });
     }
 

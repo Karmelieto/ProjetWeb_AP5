@@ -12,10 +12,14 @@ export default class APICallManager {
     }
 
     static login (email, pseudo, callback) {
-
+        
     }
 
-    static register (email, pseudo, password, callback) {
-
+    static async register (email, pseudo, password, callback) {
+        const msgBuffer = new TextEncoder('utf-8').encode(password);
+        const hashBuffer = await window.crypto.subtle.digest('SHA-256', msgBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        password = hashArray.map(b => ('00' + b.toString(16)).slice(-2)).join('');
+        axios.post(APICallManager.backUrl + '/users/', { email, pseudo, password }).then(callback);
     } 
 };
