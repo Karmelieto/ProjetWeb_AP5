@@ -27,15 +27,20 @@ export default class APICallManager {
         axios.get(APICallManager.backUrl + '/publications' + nom).then(callback);
     }
 
-    static login (email, pseudo, callback) {
+    static login (mail, password, callback) {
         
     }
 
-    static async register (email, pseudo, password, callback) {
-        const msgBuffer = new TextEncoder('utf-8').encode(password);
-        const hashBuffer = await window.crypto.subtle.digest('SHA-256', msgBuffer);
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
-        password = hashArray.map(b => ('00' + b.toString(16)).slice(-2)).join('');
-        axios.post(APICallManager.backUrl + '/users/', { email, pseudo, password }).then(callback);
+    static async register (mail, pseudo, password, callback) {
+        password = await hashPassword(password);
+        console.log('PASSWORD : ' + password);
+        axios.post(APICallManager.backUrl + '/users/', { mail, pseudo, password }).then(callback);
     } 
 };
+
+async function hashPassword (password) {
+    const msgBuffer = new TextEncoder('utf-8').encode(password);
+    const hashBuffer = await window.crypto.subtle.digest('SHA-256', msgBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => ('00' + b.toString(16)).slice(-2)).join('');
+}

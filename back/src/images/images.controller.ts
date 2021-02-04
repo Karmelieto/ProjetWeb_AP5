@@ -15,9 +15,9 @@ export class ImagesController {
 
     @Get(':fileId')
     @ApiOperation({
-        summary: 'Retrieve an image by it id'
+        summary: 'Retrieve an image by its id'
     })
-    async serveImage(@Param('fileId') fileId: string, @Res() res): Promise<any> {
+    async getImage(@Param('fileId') fileId: string, @Res() res): Promise<any> {
         res.sendFile(fileId, { root: 'uploads'});
     }
 
