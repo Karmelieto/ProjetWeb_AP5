@@ -21,16 +21,29 @@ export class UsersService {
   }
 
   async create (createUserDto: CreateUserDto): Promise<User> {
-    const createdUser = new this.userModel(createUserDto)
+    const createdUser = new this.userModel(createUserDto);
+    console.log(createUserDto);
     if (await this.isUserExist(createdUser.pseudo)) {
       throw new HttpException(
         util.format('The user name %s already exist', createdUser.pseudo),
         HttpStatus.FORBIDDEN
       )
     } else {
+
+      if (!createUserDto.pseudo || !createUserDto.mail || !createUserDto.password){
+        throw new HttpException(
+          util.format('The user have empty required datas'),
+          HttpStatus.FORBIDDEN
+        )
+      }
+
       if (!createdUser.isAdmin) {
         createdUser.isAdmin = false
       }
+
+      if (!createdUser.profileImageLink)
+        createdUser.profileImageLink = "http://localhost:4242/images/default.svg";
+        
       this.logger.debug('CREATING USER : ' + createdUser)
       return createdUser.save()
     }
