@@ -28,13 +28,21 @@ export class UsersService {
         HttpStatus.FORBIDDEN
       )
     } else {
+
+      if(createUserDto.pseudo === "" || createUserDto.pseudo === undefined || createUserDto.mail === "" ||createUserDto.mail === undefined || createUserDto.password === "" || createUserDto.password === undefined ){
+        throw new HttpException(
+          util.format('The user have empty required datas'),
+          HttpStatus.FORBIDDEN
+        )
+      }
+
       if (!createdUser.isAdmin) {
         createdUser.isAdmin = false
       }
-      
+
       if(createdUser.profileImageLink === undefined || createdUser.profileImageLink === null)
         createdUser.profileImageLink = "http://localhost:4242/images/default.svg";
-
+        
       this.logger.debug('CREATING USER : ' + createdUser)
       return createdUser.save()
     }
