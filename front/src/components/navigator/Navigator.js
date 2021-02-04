@@ -8,7 +8,7 @@ import Register from '../register/Register';
 
 const Navigator = () => {
     return (
-        <div className='navigator'>
+        <div className='navigator flex-content' >
             <Switch>
                 <Route exact path='/'>
                     <Home />

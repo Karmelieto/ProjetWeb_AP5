@@ -7,8 +7,8 @@ import { BrowserRouter } from 'react-router-dom';
 const App = () => {
   return (
     <BrowserRouter>
-      <Menu />
       <Navigator/>
+      <Menu />
     </BrowserRouter>
   );
 }

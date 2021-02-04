@@ -1,7 +1,7 @@
 .tag {
     display: flex;
     border: 1px solid;
-    border-radius: 50px;
+    border-radius: 30px;
     margin: 10px;
     justify-content: space-between;
     border-bottom: 2px solid var(--color-black);
@@ -22,7 +22,7 @@
 .tag-img > img {
     height: 75px;
     width: 125px;
-    border-radius: 25px;
+    border-radius: 20px;
     object-fit: cover;
 }
 

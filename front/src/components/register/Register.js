@@ -1,4 +1,5 @@
 import '../login/Login.css';
+import './Register.css';
 import React from 'react';
 import APICallManager from '../../app/APICallManager';
 import back from '../../images/back.svg';
@@ -24,11 +25,16 @@ class Register extends React.Component {
             if (response.status === 201) {
                 this.setState({ isRegistered: true })
                 // TODO : change display
+                this.props.history.push('/');
             } else {
                 // TODO : change display
                 console.log('Error, profile not created');
             }
         });
+    }
+
+    onBackClicked (event) {
+        this.props.history.goBack();
     }
 
     handleEmailInputChange (event) {
@@ -49,7 +55,7 @@ class Register extends React.Component {
     render () {
         const isLoading = this.state.isLoading;
         return (
-                <div className="full-page">
+                <div className="full-page flex">
                     <Banner 
                         left={
                             <img src={back} className="back-img" onClick={ (event) => this.onBackClicked(event) }/>
@@ -65,7 +71,8 @@ class Register extends React.Component {
                             {isLoading
                                 ? <Loading/>
                                 : <div className="login-content full-page">
-                                    <img src={logo} className="logo"/>
+                                    <p className="register-title">Join us !</p>
+                                    {/* <img src={logo} className="logo"/> */}
                                     <input className="input margin-top" placeholder="Pseudo" type="text" onChange={ (event) => this.handlePseudoInputChange(event) }/>
                                     <input className="input margin-top" placeholder="Email" type="text" onChange={ (event) => this.handleEmailInputChange(event) }/>
                                     <input className="input margin-top" placeholder="Password" type="password" onChange={ (event) => this.handlePasswordInputChange(event) }/>

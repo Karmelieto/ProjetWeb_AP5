@@ -4,8 +4,9 @@
     url(../assets/Josephin.ttf) format('truetype');
 }
 
-body {
+body, html {
     background-color: var(--color-grey-light);
+    height: 100%;
 }
 
 * { 
@@ -17,6 +18,24 @@ body {
     --color-primary-dark : #F2A35E;
     --color-primary-light : #F2C166;
 }
+
+#root {
+    display: flex;
+    flex-flow: column;
+}
+
+.flex-banner {
+    flex: 0 1 auto;
+}
+
+.flex-content {
+    flex: 1 1 auto;
+}
+
+.flex-footer {
+    flex: 0 1 75px;
+}
+
 
 button {
     background: url(../images/button.png);

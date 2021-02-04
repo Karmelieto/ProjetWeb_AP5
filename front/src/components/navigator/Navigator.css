@@ -1,16 +1,15 @@
 .navigator {
     text-align: center;
-    max-height: 100%;
-    margin-bottom: 75px;
     margin-top: 60px;
-    height: calc(100vh - 132px);
     background-color: var(--color-grey-light);
     padding-top: 15px;
+    margin-bottom: 10px;
 }
 
 @media only screen and (max-width: 768px) {
     .navigator {
         padding-top: 10px;
+        margin-bottom: 0px;
     }
 }
 

@@ -6,6 +6,12 @@
     margin: 5px;
 }
 
+.user:hover {
+    border-bottom: 2px solid var(--color-black);
+    transition: 0.3s ease-out;
+    cursor: pointer;
+}
+
 .user-name {
     padding: 20px;
 }
