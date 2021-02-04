@@ -17,6 +17,7 @@ body, html {
     --color-grey-light : #f9f9f9;
     --color-primary-dark : #F2A35E;
     --color-primary-light : #F2C166;
+    --color-error : #dc3545;
 }
 
 #root {

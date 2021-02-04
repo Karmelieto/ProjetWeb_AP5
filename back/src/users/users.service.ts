@@ -24,7 +24,7 @@ export class UsersService {
     const createdUser = new this.userModel(createUserDto)
     if (await this.isUserExist(createdUser.pseudo)) {
       throw new HttpException(
-        util.format('The user %s already exist', createdUser.pseudo),
+        util.format('The user name %s already exist', createdUser.pseudo),
         HttpStatus.FORBIDDEN
       )
     } else {

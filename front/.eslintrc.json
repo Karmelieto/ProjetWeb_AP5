@@ -26,6 +26,7 @@
         "no-console": ["off"],
         "no-undef": ["off"],
         "padded-blocks": ["off"],
+        "no-control-regex": ["off"],
         "react/prop-types": ["warn"],
         "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": false }]
     }

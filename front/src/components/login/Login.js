@@ -14,7 +14,9 @@ class Login extends React.Component {
     state = {
         isLoading: false,
         emailInput: '',
-        passwordInput: ''
+        emailError: '',
+        passwordInput: '',
+        passwordError: ''
     };
 
     onBackClicked (event) {
@@ -22,9 +24,55 @@ class Login extends React.Component {
     }
 
     onLoginClicked (event) {
-        APICallManager.login(this.state.emailInput, this.state.pseudo, (response) => {
+        event.preventDefault();
+        if (this.handleValidation()) {
+            this.setState({ isLoading: true });
+            APICallManager.login(this.state.emailInput, this.state.pseudo, (response) => {
+                this.setState({ isLoading: false });
+            });
+        }
+    }
 
-        });
+    setErrorOnInput (id) {
+        const input = document.getElementById(id);
+        input.classList.add('input-error');
+    }
+
+    removeErrorOnInput (id) {
+        const input = document.getElementById(id);
+        input.classList.remove('input-error');
+    }
+
+    handleValidation () {
+        const password = this.state.passwordInput;
+        const email = this.state.emailInput;
+
+        let isValid = true;
+
+        this.setState({ emailError: '', passwordError: '' });
+        this.removeErrorOnInput('emailInput');
+        this.removeErrorOnInput('passwordInput');
+
+        if (email === '') {
+            this.setState({ emailError: 'Email is empty.' });
+            console.log(this.state.emailError);
+            this.setErrorOnInput('emailInput');
+            isValid = false;
+        }
+
+        if (!email.match(/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/)) {
+            this.setState({ emailError: 'Wrong email address.' });
+            this.setErrorOnInput('emailInput');
+            isValid = false;
+        }
+
+        if (password === '') {
+            this.setState({ passwordError: 'Password is empty.' });
+            this.setErrorOnInput('passwordInput');
+            isValid = false;
+        }
+
+        return isValid;
     }
 
     handleEmailInputChange (event) {
@@ -39,6 +87,8 @@ class Login extends React.Component {
 
     render () {
         const isLoading = this.state.isLoading;
+        const emailError = this.state.emailError;
+        const passwordError = this.state.passwordError;
         return (
                 <div className="full-page">
                     <Banner 
@@ -51,13 +101,15 @@ class Login extends React.Component {
                             {isLoading
                                 ? <Loading/>
                                 : <div className="login-content full-page">
-                                    <img src={logo} className="logo"/>
-                                    <input className="input margin-top" placeholder="Email" type="email" onChange={ (event) => this.handleEmailInputChange(event) }/>
-                                    <input className="input margin-top" placeholder="Password" type="password" onChange={ (event) => this.handlePasswordInputChange(event) }/>
-                                    <button className="margin-top" onClick={ (event) => this.onLoginClicked(event) }>
+                                    <img src={logo} className="logo margin-bottom"/>
+                                    <span className="error">{emailError}</span>
+                                    <input id="emailInput" className="input margin-bottom" placeholder="Email" type="email" onChange={ (event) => this.handleEmailInputChange(event) }/>
+                                    <span className="error">{passwordError}</span>
+                                    <input id="passwordInput" className="input margin-bottom" placeholder="Password" type="password" onChange={ (event) => this.handlePasswordInputChange(event) }/>
+                                    <button className="margin-bottom" onClick={ (event) => this.onLoginClicked(event) }>
                                         Log in
                                     </button>
-                                    <NavLink className="margin-top register" to="/register">Register</NavLink>
+                                    <NavLink className="register" to="/register">Register</NavLink>
                                 </div>
                             }
                         </div>

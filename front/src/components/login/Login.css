@@ -26,8 +26,18 @@
     height: 100px;
 }
 
-.margin-top {
-    margin-top: 20px;
+.margin-bottom {
+    margin-bottom: 20px;
+}
+
+.input-error {
+    border: 2px solid var(--color-error);
+}
+
+.error {
+    color: var(--color-error);
+    font-size: 13px;
+    margin-bottom: 2px;
 }
 
 .input {
