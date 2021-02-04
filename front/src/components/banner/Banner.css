@@ -6,20 +6,30 @@
     display: flex;
     z-index: 2;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     height: 50px;
     border-bottom: solid 2px var(--color-black);
     background-color: var(--color-white);
     padding: 10px 0px 10px 0px;
 }
 
+
 .banner-left {
-    margin-left: 10px;
+    margin-left: 20px;
 }
 
-
 .banner-right {
-    margin-right: 10px;
+    margin-right: 20px;
+}
+
+@media only screen and (min-width: 768px) {
+    .banner-left {
+        margin-left: 80px;
+    }
+
+    .banner-right {
+        margin-right: 80px;
+    }
 }
 
 img {
