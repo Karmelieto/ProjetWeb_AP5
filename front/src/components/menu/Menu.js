@@ -25,7 +25,7 @@ class Menu extends React.Component {
         const isGoodLocation = (location !== '/login' && location !== '/register');
         
         return (
-            <div>
+            <div className="flex-footer">
                 { isGoodLocation &&
                     <div className='menu'>
                         <NavLink exact to='/' className='menu-item' activeClassName='selected'><img className='menu-img' src={home}/></NavLink>

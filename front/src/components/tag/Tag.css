@@ -1,17 +1,29 @@
 .tag {
     display: flex;
+    border: 1px solid;
+    border-radius: 30px;
+    margin: 10px;
     justify-content: space-between;
     border-bottom: 2px solid var(--color-black);
     align-items: center;
+    cursor: pointer;
+}
+
+.tag:hover {
+    background-color: var(--color-grey);
+    transition: 0.3s ease-out;
 }
 
 .tag-name {
     padding: 20px;
+    font-size: 20px
 }
 
 .tag-img > img {
-    height: 60px;
-    border-radius: 25px;
+    height: 75px;
+    width: 125px;
+    border-radius: 20px;
+    object-fit: cover;
 }
 
 .tag-img {

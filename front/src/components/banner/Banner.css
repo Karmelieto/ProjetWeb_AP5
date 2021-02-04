@@ -1,15 +1,16 @@
 .banner {
     text-align: center;
     position: fixed;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
     top: 0;
     width: 100%;
+    display: flex;
+    z-index: 2;
+    align-items: center;
+    justify-content: space-around;
     height: 50px;
     border-bottom: solid 2px var(--color-black);
     background-color: var(--color-white);
-    padding: 5px 0px 5px 0px;
+    padding: 10px 0px 10px 0px;
 }
 
 .banner-left {

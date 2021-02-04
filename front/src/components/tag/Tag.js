@@ -6,7 +6,7 @@ const Tag = (props) => {
     return (
         <div className="tag">
             <div className="tag-name">
-                &#x3A6;{props.tag.name}
+                &#x3A6; {props.tag.name}
             </div>
             <div className="tag-img" >
                 <img src={props.tag.imageLink}/>
