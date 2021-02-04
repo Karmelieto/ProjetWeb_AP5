@@ -31,6 +31,10 @@ export class UsersService {
       if (!createdUser.isAdmin) {
         createdUser.isAdmin = false
       }
+      
+      if(createdUser.profileImageLink === undefined || createdUser.profileImageLink === null)
+        createdUser.profileImageLink = "http://localhost:4242/images/default.svg";
+
       this.logger.debug('CREATING USER : ' + createdUser)
       return createdUser.save()
     }
