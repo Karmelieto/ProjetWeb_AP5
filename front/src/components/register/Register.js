@@ -31,9 +31,9 @@ class Register extends React.Component {
         if (this.handleValidation()) {
             // this.setState({ isLoading: true });
             APICallManager.register(this.state.emailInput, this.state.pseudoInput, this.state.passwordInput, (response) => {
-                this.setState({ isLoading: false })
+                this.setState({ isLoading: false });
+                this.props.updateUser();
                 this.props.history.push('/');
-                console.log(response);
             }, (error) => {
                 this.setState({ isLoading: false })
                 console.log(error.response.data.message);
@@ -155,7 +155,8 @@ class Register extends React.Component {
 }
 
 Register.propTypes = {
-    history: PropTypes.object
+    history: PropTypes.object,
+    updateUser: PropTypes.func.isRequired
 }
 
 export default withRouter(Register);

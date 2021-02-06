@@ -29,6 +29,9 @@ class Login extends React.Component {
             this.setState({ isLoading: true });
             APICallManager.login(this.state.emailInput, this.state.pseudo, (response) => {
                 this.setState({ isLoading: false });
+                localStorage.setItem('user', JSON.stringify(response.data));
+                this.props.updateUser();
+                this.props.history.goBack();
             });
         }
     }
@@ -120,7 +123,8 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-    history: PropTypes.object
+    history: PropTypes.object,
+    updateUser: PropTypes.func.isRequired
 }
 
 export default withRouter(Login);

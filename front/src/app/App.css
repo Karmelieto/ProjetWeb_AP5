@@ -37,6 +37,12 @@ body, html {
     flex: 0 1 75px;
 }
 
+.user-pic {
+    border: 2px solid var(--color-black);
+    cursor: pointer;
+    border-radius: 10px;
+
+}
 
 button {
     background: url(../images/button.png);

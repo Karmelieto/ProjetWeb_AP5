@@ -7,6 +7,7 @@ import Banner from '../banner/Banner';
 import Loading from '../loading/Loading';
 import Container from '../container/Container';
 import UserListItem from '../userListItem/UserListItem';
+import PropTypes from 'prop-types';
 
 class Search extends React.Component {
 
@@ -35,6 +36,7 @@ class Search extends React.Component {
         const isLoading = this.state.isLoading;
         const inputSearch = this.state.inputSearch;
         const users = this.state.users;
+        const user = this.props.user;
         return (
                 <div>
                     <Banner 
@@ -50,11 +52,18 @@ class Search extends React.Component {
                             </div>
                         }
                         right = {
-                            <Link to='/login'>
-                                <button>
-                                    Log in
-                                </button>
-                            </Link>
+                            <div>
+                                {
+                                    !user
+                                    ? <Link to="/login">
+                                        <button>
+                                            Log in
+                                        </button>
+                                    </Link>
+                                    : <img className="user-pic" src={user.profileImageLink}/>
+                                }
+                                
+                            </div>
                         }
                     />
                     <Container>
@@ -70,6 +79,10 @@ class Search extends React.Component {
                 </div>
         );
     }
+}
+
+Search.propTypes = {
+    user: PropTypes.object
 }
 
 export default Search;

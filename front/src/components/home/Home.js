@@ -7,6 +7,7 @@ import Banner from '../banner/Banner';
 import Loading from '../loading/Loading';
 import Tag from '../tag/Tag';
 import Container from '../container/Container';
+import PropTypes from 'prop-types';
 
 class Home extends React.Component {
 
@@ -17,21 +18,18 @@ class Home extends React.Component {
 
     componentDidMount () {
         APICallManager.getTags((response) => {
-            console.log(response.data);
             response.data.map((tag, index) => (tag.key = index));
             this.setState({
                 tags: response.data,
                 isLoading: false
             });
-
-            console.log(this.state.isLoading);
-            console.log(this.state.tags);
         });
     }
-
+    
     render () {
         const isLoading = this.state.isLoading;
         const tags = this.state.tags;
+        const user = this.props.user;
         return (
                 <div>
                     <Banner 
@@ -39,11 +37,18 @@ class Home extends React.Component {
                             <img src={logo}/>
                         }
                         right = {
-                            <Link to="/login">
-                                <button>
-                                    Log in
-                                </button>
-                            </Link>
+                            <div>
+                                {
+                                    !user
+                                    ? <Link to="/login">
+                                        <button>
+                                            Log in
+                                        </button>
+                                    </Link>
+                                    : <img className="user-pic" src={user.profileImageLink}/>
+                                }
+                                
+                            </div>
                         }
                     />
                     <Container>
@@ -59,6 +64,10 @@ class Home extends React.Component {
                 </div>
         );
     }
+}
+
+Home.propTypes = {
+    user: PropTypes.object
 }
 
 export default Home;

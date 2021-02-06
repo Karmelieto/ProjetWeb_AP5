@@ -28,7 +28,15 @@ export default class APICallManager {
     }
 
     static login (mail, password, callback) {
-        
+        const res = {
+            status: 200,
+            data: {
+                token: 'eKoYea331nJhfnqIzeLap8jSd4SddpalqQ93Nn2',
+                pseudo: 'Adam',
+                profileImageLink: 'http://localhost:4242/images/default.svg'
+            }
+        }
+        callback(res);
     }
 
     static async register (mail, pseudo, password, callback) {
