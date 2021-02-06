@@ -41,7 +41,21 @@ body, html {
     border: 2px solid var(--color-black);
     cursor: pointer;
     border-radius: 10px;
+}
 
+.clear-link-decoration {
+    color: var(--color-black) !important;
+    text-decoration: none !important;
+}
+
+.back-img {
+    cursor: pointer;
+    height: 35px;
+    transition: height 0.2s;
+}
+
+.back-img:hover {
+    height: 40px;
 }
 
 button {

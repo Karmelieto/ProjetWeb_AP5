@@ -16,15 +16,15 @@ export default class APICallManager {
     }
 
     static getUser (pseudo, callback, errorCallback) {
-        axios.get(APICallManager.backUrl + '/users' + pseudo).then(callback).catch(errorCallback);
+        axios.get(APICallManager.backUrl + '/users/' + pseudo).then(callback).catch(errorCallback);
     }
 
     static getTag (nom, callback, errorCallback) {
-        axios.get(APICallManager.backUrl + '/tags' + nom).then(callback).catch(errorCallback);
+        axios.get(APICallManager.backUrl + '/tags/' + nom).then(callback).catch(errorCallback);
     }
 
     static getPublication (nom, callback, errorCallback) {
-        axios.get(APICallManager.backUrl + '/publications' + nom).then(callback).catch(errorCallback);
+        axios.get(APICallManager.backUrl + '/publications/' + nom).then(callback).catch(errorCallback);
     }
 
     static login (mail, password, callback) {

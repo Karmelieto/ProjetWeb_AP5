@@ -13,7 +13,6 @@
     padding: 10px 0px 10px 0px;
 }
 
-
 .banner-left {
     margin-left: 20px;
 }
@@ -32,6 +31,6 @@
     }
 }
 
-img {
-    height: 50px;
+.banner img:first-child {
+    width: 50px;
 }

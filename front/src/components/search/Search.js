@@ -60,7 +60,9 @@ class Search extends React.Component {
                                             Log in
                                         </button>
                                     </Link>
-                                    : <img className="user-pic" src={user.profileImageLink}/>
+                                    : <Link to={'/profile/' + user.pseudo}>
+                                        <img className="user-pic" src={user.profileImageLink}/>
+                                    </Link>
                                 }
                                 
                             </div>
@@ -71,7 +73,9 @@ class Search extends React.Component {
                             {isLoading
                                 ? <Loading/>
                                 : users.map(user => (
-                                    <UserListItem user={user} key={user.key}/>
+                                    <Link style={{ textDecoration: 'none', color: '#0d0d0d' }} to={'/profile/' + user.pseudo} key={user.key}>
+                                        <UserListItem user={user}/>
+                                    </Link>
                                 ))
                             }
                         </div>

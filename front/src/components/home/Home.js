@@ -45,14 +45,17 @@ class Home extends React.Component {
                                             Log in
                                         </button>
                                     </Link>
-                                    : <img className="user-pic" src={user.profileImageLink}/>
+                                    : <Link to={'/profile/' + user.pseudo}>
+                                        <img className="user-pic" src={user.profileImageLink}/>
+                                    </Link>
+                                    
                                 }
                                 
                             </div>
                         }
                     />
                     <Container>
-                        <div className='home'>
+                        <div>
                             {isLoading
                                 ? <Loading/>
                                 : tags.map(tag => (
