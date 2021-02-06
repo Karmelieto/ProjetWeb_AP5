@@ -3,6 +3,8 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import APICallManager from '../../app/APICallManager';
 import back from '../../images/back.svg';
+import options from '../../images/options.svg';
+import disconnect from '../../images/disconnect.svg';
 
 import Banner from '../banner/Banner';
 import Loading from '../loading/Loading';
@@ -37,7 +39,7 @@ class MyProfile extends React.Component {
         this.props.clearUser();
         this.props.history.push('/');
     }
-    
+
     render () {
         const isLoading = this.state.isLoading;
         const user = this.state.user;
@@ -55,10 +57,11 @@ class MyProfile extends React.Component {
                         }
 
                         right = {
-                            <div>
-                                 <button onClick={ (event) => this.onDisconnect(event) }>
-                                    Disconnect
-                                </button>
+                            <div className="dropdown">
+                                <img src={options} className="back-img"/>
+                                <div id="options" className="dropdown-content">
+                                    <a onClick={ (event) => this.onDisconnect(event) } >Disconnect <img src={disconnect}/></a>
+                                </div>
                             </div>
                         }
                     />
