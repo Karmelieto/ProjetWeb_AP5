@@ -29,7 +29,7 @@ class Menu extends React.Component {
                 { isGoodLocation &&
                     <div className='menu'>
                         <NavLink exact to='/' className='menu-item' activeClassName='selected'><img className='menu-img' src={home}/></NavLink>
-                        <NavLink to='/search' className='menu-item' activeClassName='selected'><img className='menu-img' src={search}/></NavLink>
+                        <NavLink to='/search/users' className='menu-item' activeClassName='selected'><img className='menu-img' src={search}/></NavLink>
                         <NavLink to='/play' className='menu-item' activeClassName='selected'><img className='menu-img' src={play}/></NavLink>
                         <NavLink to='/publication' className='menu-item' activeClassName='selected'><img className='menu-img' src={publication}/></NavLink>
                     </div>

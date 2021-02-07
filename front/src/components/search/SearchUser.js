@@ -61,9 +61,11 @@ class Search extends React.Component {
                         center={
                             <div className="input-button">
                                 <input value={inputSearch} onChange={ event => this.handleInputChange(event)}/>
-                                <button>
-                                    User
-                                </button>
+                                <Link to="/search/tags" onClick={this.props.setTag('')}>
+                                    <button>
+                                        User
+                                    </button>
+                                </Link>
                             </div>
                         }
                         right = {
@@ -101,7 +103,8 @@ class Search extends React.Component {
 }
 
 Search.propTypes = {
-    user: PropTypes.object
+    user: PropTypes.object,
+    setTag: PropTypes.func.isRequired
 }
 
 export default Search;

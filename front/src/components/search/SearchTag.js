@@ -1,40 +1,52 @@
-import './Home.css';
+import './Search.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import APICallManager from '../../app/APICallManager';
+// import APICallManager from '../../app/APICallManager';
 import logo from '../../images/logo.svg'
 import Banner from '../banner/Banner';
 import Loading from '../loading/Loading';
-import Tag from '../tag/Tag';
 import Container from '../container/Container';
 import PropTypes from 'prop-types';
 
-class Home extends React.Component {
+class SearchTag extends React.Component {
 
     state = {
-        tags: [],
-        isLoading: true
+        posts: [],
+        isLoading: true,
+        inputSearch: ''
     };
 
     componentDidMount () {
-        APICallManager.getTags((response) => {
-            response.data.map((tag, index) => (tag.key = index));
-            this.setState({
-                tags: response.data,
-                isLoading: false
-            });
-        });
+        if (this.props.tag) {
+            this.setState({ inputSearch: this.props.tag });
+        }
     }
-    
+
+    handleInputChange (event) {
+        event.preventDefault();
+        this.setState({ inputSearch: event.target.value });
+    }
+
     render () {
         const isLoading = this.state.isLoading;
-        const tags = this.state.tags;
+        const inputSearch = this.state.inputSearch;
+        // const posts = this.state.posts;
         const user = this.props.user;
         return (
                 <div>
                     <Banner 
                         left={
                             <img src={logo}/>
+                        }
+                        center={
+                            <div className="input-button">
+                                <input value={inputSearch} onChange={ event => this.handleInputChange(event)}/>
+                                <Link to="/search/users">
+                                    <button>
+                                        &#x3A6;
+                                    </button>
+                                </Link>
+                            </div>
                         }
                         right = {
                             <div>
@@ -48,22 +60,16 @@ class Home extends React.Component {
                                     : <Link to={'/profile/' + user.pseudo}>
                                         <img className="user-pic" src={user.profileImageLink}/>
                                     </Link>
-                                    
                                 }
                                 
                             </div>
                         }
                     />
                     <Container>
-                        <div>
+                        <div className='search'>
                             {isLoading
                                 ? <Loading/>
-                                : tags.map(tag => (
-                                        <Link to="/search/tags" className="clear-link-decoration" key={tag.key} onClick={ (event) => this.props.setTag(tag.name) }>
-                                            <Tag tag={tag}/>
-                                        </Link>
-                                    )
-                                )
+                                : <Loading/>
                             }
                         </div>
                     </Container>
@@ -72,9 +78,9 @@ class Home extends React.Component {
     }
 }
 
-Home.propTypes = {
+SearchTag.propTypes = {
     user: PropTypes.object,
-    setTag: PropTypes.func.isRequired
+    tag: PropTypes.string
 }
 
-export default Home;
+export default SearchTag;

@@ -1,7 +1,8 @@
 import './Navigator.css';
 import { Route, Switch } from 'react-router';
 import Home from '../home/Home';
-import Search from '../search/Search';
+import SearchUser from '../search/SearchUser';
+import SearchTag from '../search/SearchTag';
 import React, { useState, useEffect } from 'react';
 import Login from '../login/Login';
 import Register from '../register/Register';
@@ -11,6 +12,7 @@ import MyProfile from '../profile/MyProfile';
 const Navigator = () => {
 
     const [user, setUser] = useState();
+    const [tag, setTag] = useState('');
     
     const updateUser = () => {
         console.log('Update');
@@ -33,10 +35,13 @@ const Navigator = () => {
         <div className='navigator flex-content' >
             <Switch>
                 <Route exact path='/'>
-                    <Home user={user} />
+                    <Home user={user} setTag={setTag} />
                 </Route>
-                <Route path='/search'>
-                    <Search user={user} />
+                <Route path='/search/users'>
+                    <SearchUser user={user} setTag={setTag} />
+                </Route>
+                <Route path='/search/tags'>
+                    <SearchTag user={user} tag={tag} />
                 </Route>
                 <Route path='/login'>
                     <Login updateUser={updateUser} />
