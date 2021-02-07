@@ -18,18 +18,33 @@ class Search extends React.Component {
     };
 
     componentDidMount () {
-        APICallManager.getUsers((response) => {
-            response.data.map((user, index) => (user.key = index));
-            this.setState({
-                users: response.data,
-                isLoading: false
+       this.getUsers('');
+    }
+
+    getUsers (pseudoInput) {
+        if (pseudoInput) {
+            APICallManager.getUsersByPseudo(pseudoInput, (response) => {
+                response.data.map((user, index) => (user.key = index));
+                this.setState({
+                    users: response.data,
+                    isLoading: false
+                });
             });
-        });
+        } else {
+            APICallManager.getUsers((response) => {
+                response.data.map((user, index) => (user.key = index));
+                this.setState({
+                    users: response.data,
+                    isLoading: false
+                });
+            });
+        }
     }
 
     handleInputChange (event) {
         event.preventDefault();
         this.setState({ inputSearch: event.target.value });
+        this.getUsers(event.target.value.trim());
     }
 
     render () {

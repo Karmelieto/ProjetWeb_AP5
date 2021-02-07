@@ -20,6 +20,10 @@ export class UsersService {
     return await this.userModel.findOne({ pseudo: pseudo })
   }
 
+  async searchUsersByPseudo (pseudo: string ): Promise<User[]> {
+    return this.userModel.find({ "pseudo": new RegExp(pseudo) }).exec();
+  }
+
   async create (createUserDto: CreateUserDto): Promise<User> {
     const createdUser = new this.userModel(createUserDto);
     console.log(createUserDto);

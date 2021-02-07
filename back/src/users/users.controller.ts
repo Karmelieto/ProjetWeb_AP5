@@ -39,6 +39,14 @@ export class UsersController {
     return this.usersService.findOne(pseudo)
   }
 
+  @Get('filter/:pseudo')
+  @ApiOperation({
+    summary: 'Retrieve a user by his pseudo'
+  })
+  async searchUsersByPseudo (@Param('pseudo') pseudo: string) {
+    return this.usersService.searchUsersByPseudo(pseudo)
+  }
+
   @Post()
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',

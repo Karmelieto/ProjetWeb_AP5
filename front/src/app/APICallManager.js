@@ -7,6 +7,10 @@ export default class APICallManager {
         axios.get(APICallManager.backUrl + '/users').then(callback).catch(errorCallback);
     }
 
+    static getUsersByPseudo (pseudo, callback, errorCallback) {
+        axios.get(APICallManager.backUrl + '/users/filter/' + pseudo).then(callback).catch(errorCallback);
+    }
+
     static getTags (callback, errorCallback) {
         axios.get(APICallManager.backUrl + '/tags').then(callback).catch(errorCallback);
     }
