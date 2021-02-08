@@ -5,7 +5,9 @@ import {
   Get,
   Param,
   Post,
-  Put
+  Put,
+  UsePipes,
+  ValidationPipe
 } from '@nestjs/common'
 import {
   ApiCreatedResponse,
@@ -36,9 +38,10 @@ export class TagsController {
     summary: 'Retrieve a tag by his name'
   })
   async findOne (@Param('name') name: string) {
-    return this.tagsService.findOne(name)
+    return this.tagsService.findOne(name.toLowerCase())
   }
 
+  @UsePipes(new ValidationPipe({ transform: true }))
   @Post()
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',
@@ -51,6 +54,7 @@ export class TagsController {
     await this.tagsService.create(createTagDto)
   }
 
+  @UsePipes(new ValidationPipe({ transform: true }))
   @Put()
   @ApiOperation({
     summary: 'Update imageLink of a tag'
@@ -77,6 +81,6 @@ export class TagsController {
     summary: 'Remove a tag by his name'
   })
   async remove (@Param('name') name: string) {
-    await this.tagsService.remove(name)
+    await this.tagsService.remove(name.toLowerCase())
   }
 }

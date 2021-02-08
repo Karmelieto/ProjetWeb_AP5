@@ -1,6 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger'
+import { Transform } from 'class-transformer'
 
 export class CreateTagDto {
+  
+  @Transform((name) => name.value.toLowerCase())
   @ApiProperty()
   name: string;
 

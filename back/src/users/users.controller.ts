@@ -5,7 +5,10 @@ import {
   Get,
   Param,
   Post,
-  Put
+  Put,
+  Res,
+  UsePipes,
+  ValidationPipe
 } from '@nestjs/common'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UsersService } from './users.service'
@@ -36,7 +39,7 @@ export class UsersController {
     summary: 'Retrieve a user by his pseudo'
   })
   async findOne (@Param('pseudo') pseudo: string) {
-    return this.usersService.findOne(pseudo)
+    return this.usersService.findOne(pseudo.toLowerCase())
   }
 
   @Get('filter/:pseudo')
@@ -44,9 +47,10 @@ export class UsersController {
     summary: 'Retrieve a user by his pseudo'
   })
   async searchUsersByPseudo (@Param('pseudo') pseudo: string) {
-    return this.usersService.searchUsersByPseudo(pseudo)
+    return this.usersService.searchUsersByPseudo(pseudo.toLowerCase())
   }
 
+  @UsePipes(new ValidationPipe({ transform: true }))
   @Post()
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',
@@ -55,10 +59,11 @@ export class UsersController {
   @ApiOperation({
     summary: 'Create a user'
   })
-  async create (@Body() createUserDto: CreateUserDto) {
-    await this.usersService.create(createUserDto)
+  async create (@Body() createUserDto: CreateUserDto, @Res() res): Promise<User> {
+    return res.json(await this.usersService.create(createUserDto));
   }
 
+  @UsePipes(new ValidationPipe({ transform: true }))
   @Put()
   @ApiOperation({
     summary: 'Update a user'
@@ -77,6 +82,6 @@ export class UsersController {
     summary: 'Remove a user by his pseudo'
   })
   async remove (@Param('pseudo') pseudo: string) {
-    await this.usersService.remove(pseudo)
+    await this.usersService.remove(pseudo.toLowerCase())
   }
 }

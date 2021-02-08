@@ -17,7 +17,7 @@ export class UsersService {
   }
 
   async findOne (pseudo: string): Promise<User> {
-    return await this.userModel.findOne({ pseudo: pseudo })
+    return await this.userModel.findOne({ "pseudo" : pseudo })
   }
 
   async searchUsersByPseudo (pseudo: string ): Promise<User[]> {
@@ -34,9 +34,17 @@ export class UsersService {
       )
     } else {
 
-      if (!createUserDto.pseudo || !createUserDto.mail || !createUserDto.password){
+      if (!createdUser.pseudo || !createdUser.mail || !createdUser.password){
         throw new HttpException(
           util.format('The user have empty required datas'),
+          HttpStatus.FORBIDDEN
+        )
+      }
+
+      console.log("USER MAIL : " + createdUser.mail);
+      if(await this.userModel.findOne({ "mail" : createdUser.mail})) {
+        throw new HttpException(
+          util.format('The user mail %s already exist', createdUser.mail),
           HttpStatus.FORBIDDEN
         )
       }
@@ -49,7 +57,7 @@ export class UsersService {
         createdUser.profileImageLink = "http://localhost:4242/images/default.svg";
         
       this.logger.debug('CREATING USER : ' + createdUser)
-      return createdUser.save()
+      return createdUser.save();
     }
   }
 
