@@ -42,7 +42,7 @@ class Profile extends React.Component {
 
                         center= {
                             <h1>
-                                { !isLoading ? user.pseudo : ''}
+                                { !isLoading ? user.pseudo.capitalize() : ''}
                             </h1>
                         }
 

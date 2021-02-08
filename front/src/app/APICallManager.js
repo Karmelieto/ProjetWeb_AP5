@@ -31,7 +31,7 @@ export default class APICallManager {
         axios.get(APICallManager.backUrl + '/publications/' + nom).then(callback).catch(errorCallback);
     }
 
-    static login (mail, password, callback) {
+    static login (mail, password, callback, errorCallback) {
         const res = {
             status: 200,
             data: {
@@ -43,10 +43,9 @@ export default class APICallManager {
         callback(res);
     }
 
-    static async register (mail, pseudo, password, callback) {
+    static async register (mail, pseudo, password, callback, errorCallback) {
         password = await hashPassword(password);
-        console.log('PASSWORD : ' + password);
-        axios.post(APICallManager.backUrl + '/users/', { mail, pseudo, password }).then(callback);
+        axios.post(APICallManager.backUrl + '/users/', { mail, pseudo, password }).then(callback).catch(errorCallback);
     } 
 };
 

@@ -32,15 +32,23 @@ class Register extends React.Component {
             // this.setState({ isLoading: true });
             APICallManager.register(this.state.emailInput, this.state.pseudoInput, this.state.passwordInput, (response) => {
                 this.setState({ isLoading: false });
+                localStorage.setItem('user', JSON.stringify(response.data));
                 this.props.updateUser();
                 this.props.history.push('/');
             }, (error) => {
                 this.setState({ isLoading: false })
-                console.log(error.response.data.message);
+                // console.log(error.response.data.message);
+                if (!error.response) {
+                    return;
+                }
+
                 if (error.response.data.message.indexOf('name') > 0) {
                     this.setState({ pseudoError: 'Pseudo alreay taken.' });
                     this.setErrorOnInput('pseudoInput');
-                }
+                } else if (error.response.data.message.indexOf('mail') > 0) {
+                    this.setState({ emailError: 'Email alreay taken.' });
+                    this.setErrorOnInput('emailInput');
+                }   
             });
         }
     }

@@ -9,7 +9,7 @@ const UserListItem = (props) => {
                 <img src={props.user.profileImageLink}/>
             </div>
             <div className="user-name">
-                {props.user.pseudo}
+                {props.user.pseudo.capitalize()}
             </div>
       </div>
     );
