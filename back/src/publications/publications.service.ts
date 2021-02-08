@@ -16,15 +16,12 @@ export class PublicationsService {
     return this.publicationModel.find().exec()
   }
 
+  async findAllByTag (tag: string): Promise<Publication[]> {
+    return this.publicationModel.find({"tags": tag}).exec()
+  }
+
   async findOne (id: number): Promise<Publication> {
-    const publication: Publication = await this.publicationModel.findOne({
-      id: id
-    })
-    if (publication) {
-      return publication
-    } else {
-      return null
-    }
+    return await this.publicationModel.findOne({ "id": id });
   }
 
   async create (createPostDto: CreatePublicationDto): Promise<Publication> {

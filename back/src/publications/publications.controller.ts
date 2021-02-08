@@ -30,6 +30,14 @@ export class PublicationsController {
     return this.publicationsService.findAll()
   }
 
+  @Get('tag/:tag')
+  @ApiOperation({
+    summary: 'Find all publications by tag'
+  })
+  async findAllByTag (@Param('tag') tag: string): Promise<Publication[]> {
+    return this.publicationsService.findAllByTag(tag)
+  }
+
   @Get(':id')
   @ApiOperation({
     summary: 'Retrieve a publication by his id'
