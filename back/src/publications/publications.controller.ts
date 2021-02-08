@@ -40,7 +40,7 @@ export class PublicationsController {
 
   @Get(':id')
   @ApiOperation({
-    summary: 'Retrieve a publication by his id'
+    summary: 'Retrieve a publication by its id'
   })
   async findOne (@Param('id') id: number) {
     return this.publicationsService.findOne(id)
@@ -60,7 +60,7 @@ export class PublicationsController {
 
   @Put(':id')
   @ApiOperation({
-    summary: 'Update a publication by his id'
+    summary: 'Update a publication by its id'
   })
   async update (
     @Param('id') id: number,

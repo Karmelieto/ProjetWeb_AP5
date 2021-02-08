@@ -17,11 +17,11 @@ export class PublicationsService {
   }
 
   async findAllByTag (tag: string): Promise<Publication[]> {
-    return this.publicationModel.find({"tags": tag}).exec()
+    return this.publicationModel.find({ tags: tag }).exec()
   }
 
   async findOne (id: number): Promise<Publication> {
-    return await this.publicationModel.findOne({ "id": id });
+    return await this.publicationModel.findOne({ id: id })
   }
 
   async create (createPostDto: CreatePublicationDto): Promise<Publication> {

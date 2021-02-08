@@ -13,36 +13,67 @@ export class UsersService {
   private readonly logger = new Logger(UsersService.name);
 
   async findAll (): Promise<User[]> {
-    return this.userModel.find().exec()
+    return this.userModel
+      .find(
+        {},
+        {
+          password: 0,
+          rewards: 0,
+          isAdmin: 0,
+          favorisPosts: 0,
+          description: 0,
+          _id: 0,
+          __v: 0
+        }
+      )
+      .exec()
   }
 
   async findOne (pseudo: string): Promise<User> {
-    return await this.userModel.findOne({ "pseudo" : pseudo })
+    return this.userModel.findOne(
+      { pseudo: pseudo },
+      {
+        password: 0
+      }
+    )
   }
 
-  async searchUsersByPseudo (pseudo: string ): Promise<User[]> {
-    return this.userModel.find({ "pseudo": new RegExp(pseudo) }).exec();
+  async searchUsersByPseudo (pseudo: string): Promise<User[]> {
+    return this.userModel
+      .find(
+        { pseudo: new RegExp(pseudo) },
+        {
+          password: 0,
+          mail: 0,
+          rewards: 0,
+          isAdmin: 0,
+          favorisPosts: 0,
+          description: 0,
+          _id: 0,
+          __v: 0
+        }
+      )
+      .exec()
   }
 
   async create (createUserDto: CreateUserDto): Promise<User> {
-    const createdUser = new this.userModel(createUserDto);
-    console.log(createUserDto);
+    const createdUser = new this.userModel(createUserDto)
+    console.log(createUserDto)
     if (await this.isUserExist(createdUser.pseudo)) {
       throw new HttpException(
         util.format('The user name %s already exist', createdUser.pseudo),
         HttpStatus.FORBIDDEN
       )
     } else {
-
-      if (!createdUser.pseudo || !createdUser.mail || !createdUser.password){
+      if (!createdUser.pseudo || !createdUser.mail || !createdUser.password) {
         throw new HttpException(
           util.format('The user have empty required datas'),
           HttpStatus.FORBIDDEN
         )
       }
 
-      console.log("USER MAIL : " + createdUser.mail);
-      if(await this.userModel.findOne({ "mail" : createdUser.mail})) {
+      console.log('USER MAIL : ' + createdUser.mail)
+      if (await this.userModel.findOne({ mail: createdUser.mail })) {
         throw new HttpException(
           util.format('The user mail %s already exist', createdUser.mail),
           HttpStatus.FORBIDDEN
@@ -53,11 +84,14 @@ export class UsersService {
         createdUser.isAdmin = false
       }
 
-      if (!createdUser.profileImageLink)
-        createdUser.profileImageLink = "http://localhost:4242/images/default.svg";
-        
+      if (!createdUser.profileImageLink) {
+        createdUser.profileImageLink =
+          'http://localhost:4242/images/default.svg'
+      }
+
       this.logger.debug('CREATING USER : ' + createdUser)
-      return createdUser.save();
+      createdUser.password = '*****'
+      return createdUser.save()
     }
   }
 
@@ -66,23 +100,32 @@ export class UsersService {
     const myUser: User = await this.userModel.findOne({
       pseudo: updateUserDto.lastPseudo
     })
-    if (myUser) {
+    if (myUser && !(await this.isUserExist(updateUserDto.newPseudo))) {
       try {
         await this.userModel.updateOne(
           { pseudo: updateUserDto.lastPseudo },
           {
             pseudo: updateUserDto.newPseudo,
             password: updateUserDto.password,
-            mail: updateUserDto.mail,
             description: updateUserDto.description,
             profileImageLink: updateUserDto.profileImageLink
           }
         )
         this.logger.debug(
           'UPDATE FINISHED ' +
-            (await this.userModel.findOne({ pseudo: updateUserDto.newPseudo }))
+            (await this.userModel.findOne(
+              { pseudo: updateUserDto.newPseudo },
+              {
+                password: 0
+              }
+            ))
         )
-        return this.userModel.findOne({ pseudo: updateUserDto.newPseudo })
+        return this.userModel.findOne(
+          { pseudo: updateUserDto.newPseudo },
+          {
+            password: 0
+          }
+        )
       } catch (e) {
         throw new HttpException(
           util.format(
@@ -94,7 +137,10 @@ export class UsersService {
       }
     } else {
       throw new HttpException(
-        util.format('The user %s does not exist', updateUserDto.lastPseudo),
+        util.format(
+          'There was a problem when trying to update the user',
+          updateUserDto.lastPseudo
+        ),
         HttpStatus.NOT_FOUND
       )
     }

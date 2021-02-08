@@ -1,9 +1,9 @@
 import { Reward } from '../../models/Reward'
 import { ApiProperty } from '@nestjs/swagger'
-import { Transform } from 'class-transformer';
+import { Transform } from 'class-transformer'
+import { IsEmail } from 'class-validator'
 
 export class CreateUserDto {
-
   @Transform((pseudo) => pseudo.value.toLowerCase())
   @ApiProperty()
   pseudo: string;
@@ -12,6 +12,7 @@ export class CreateUserDto {
   password: string;
 
   @ApiProperty()
+  @IsEmail()
   mail: string;
 
   @ApiProperty()

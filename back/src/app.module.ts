@@ -13,7 +13,9 @@ const connectionParams = {
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb+srv://dbAdminUser:MPvsNZdTNNtd8u0K@cluster0.sbi0m.mongodb.net/toppics?retryWrites=true&w=majority'),
+    MongooseModule.forRoot(
+      'mongodb+srv://dbAdminUser:MPvsNZdTNNtd8u0K@cluster0.sbi0m.mongodb.net/toppics?retryWrites=true&w=majority'
+    ),
     UsersModule,
     PublicationsModule,
     TagsModule,

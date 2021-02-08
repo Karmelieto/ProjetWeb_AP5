@@ -44,7 +44,7 @@ export class UsersController {
 
   @Get('filter/:pseudo')
   @ApiOperation({
-    summary: 'Retrieve a user by his pseudo'
+    summary: 'Retrieve users filter by a pseudo'
   })
   async searchUsersByPseudo (@Param('pseudo') pseudo: string) {
     return this.usersService.searchUsersByPseudo(pseudo.toLowerCase())
@@ -59,8 +59,11 @@ export class UsersController {
   @ApiOperation({
     summary: 'Create a user'
   })
-  async create (@Body() createUserDto: CreateUserDto, @Res() res): Promise<User> {
-    return res.json(await this.usersService.create(createUserDto));
+  async create (
+    @Body() createUserDto: CreateUserDto,
+    @Res() res
+  ): Promise<User> {
+    return res.json(await this.usersService.create(createUserDto))
   }
 
   @UsePipes(new ValidationPipe({ transform: true }))

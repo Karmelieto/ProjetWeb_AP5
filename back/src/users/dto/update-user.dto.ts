@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Transform } from 'class-transformer'
+import { IsEmail } from 'class-validator'
 
 export class UpdateUserDto {
-
   @Transform((lastPseudo) => lastPseudo.value.toLowerCase())
   @ApiProperty()
   lastPseudo: string;
@@ -13,9 +13,6 @@ export class UpdateUserDto {
 
   @ApiProperty()
   password: string;
-
-  @ApiProperty()
-  mail: string;
 
   @ApiProperty()
   profileImageLink: string;
