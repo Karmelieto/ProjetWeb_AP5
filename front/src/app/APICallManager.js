@@ -11,20 +11,24 @@ export default class APICallManager {
         axios.get(APICallManager.backUrl + '/users/filter/' + pseudo).then(callback).catch(errorCallback);
     }
 
-    static getTags (callback, errorCallback) {
-        axios.get(APICallManager.backUrl + '/tags').then(callback).catch(errorCallback);
-    }
-
-    static getPublications (callback, errorCallback) {
-        axios.get(APICallManager.backUrl + '/publications').then(callback).catch(errorCallback);
-    }
-
     static getUser (pseudo, callback, errorCallback) {
         axios.get(APICallManager.backUrl + '/users/' + pseudo).then(callback).catch(errorCallback);
     }
 
+    static getTags (callback, errorCallback) {
+        axios.get(APICallManager.backUrl + '/tags').then(callback).catch(errorCallback);
+    }
+
+    static getTagsByName (tagName, callback, errorCallback) {
+        axios.get(APICallManager.backUrl + '/tags/filter/' + tagName).then(callback).catch(errorCallback);
+    }
+   
     static getTag (nom, callback, errorCallback) {
         axios.get(APICallManager.backUrl + '/tags/' + nom).then(callback).catch(errorCallback);
+    }
+
+    static getPublications (callback, errorCallback) {
+        axios.get(APICallManager.backUrl + '/publications').then(callback).catch(errorCallback);
     }
 
     static getPublication (nom, callback, errorCallback) {

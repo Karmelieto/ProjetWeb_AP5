@@ -59,7 +59,7 @@ class MyProfile extends React.Component {
                         right = {
                             <div className="dropdown">
                                 <img src={options} className="back-img"/>
-                                <div id="options" className="dropdown-content">
+                                <div id="options" className="dropdown-content transform-for-profile">
                                     <a onClick={ (event) => this.onDisconnect(event) } >Disconnect <img src={disconnect}/></a>
                                 </div>
                             </div>
