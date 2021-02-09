@@ -25,6 +25,18 @@ export class TagsService {
     }
   }
 
+  async searchTagsByName (name: string): Promise<Tag[]> {
+    return this.tagModel
+      .find(
+        { name: new RegExp(name) },
+        {
+          name: 1,
+          imageLink: 1
+        }
+      )
+      .exec()
+  }
+
   async create (createTagDto: CreateTagDto): Promise<Tag> {
     const createdTag = new this.tagModel(createTagDto)
     if (await this.isTagExist(createdTag.name)) {

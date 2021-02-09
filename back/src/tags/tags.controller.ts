@@ -33,6 +33,14 @@ export class TagsController {
     return this.tagsService.findAll()
   }
 
+  @Get('filter/:name')
+  @ApiOperation({
+    summary: 'Retrieve tags filter by a name'
+  })
+  async searchTagsByName (@Param('name') name: string) {
+    return this.tagsService.searchTagsByName(name.toLowerCase())
+  }
+
   @Get(':name')
   @ApiOperation({
     summary: 'Retrieve a tag by his name'
