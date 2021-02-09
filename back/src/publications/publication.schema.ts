@@ -17,6 +17,10 @@ export class Publication {
 
   @ApiProperty()
   @Prop()
+  tags: string[];
+
+  @ApiProperty()
+  @Prop()
   metaDatas: MetaData;
 
   @ApiProperty()

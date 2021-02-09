@@ -1,5 +1,5 @@
 import { Model } from 'mongoose'
-import { Injectable } from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Publication, PublicationDocument } from './publication.schema'
 import { CreatePublicationDto } from './dto/create-publication.dto'
@@ -20,12 +20,23 @@ export class PublicationsService {
     return this.publicationModel.find({ tags: tag }).exec()
   }
 
+  async findAllByPseudo (pseudo: string): Promise<Publication[]> {
+    return this.publicationModel.find({ "pseudo": pseudo }).exec()
+  }
+
   async findOne (id: number): Promise<Publication> {
     return await this.publicationModel.findOne({ id: id })
   }
 
   async create (createPostDto: CreatePublicationDto): Promise<Publication> {
     const createdPost = new this.publicationModel(createPostDto)
+
+    if(!createdPost.tags || createdPost.tags.length === 0) {
+      throw new HttpException(
+        util.format('The publication %s doesn\'t have any tags', createdPost.id),
+        HttpStatus.FORBIDDEN
+      )
+    }
     return createdPost.save()
   }
 
