@@ -1,0 +1,18 @@
+.gallery {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-self: center;
+}
+
+.gallery-img {
+    height: 180px;
+    margin: 2px;
+    border-radius: 2px;
+    border: 2px solid var(--color-grey);
+}
+
+.gallery-img:hover {
+    border: 2px solid var(--color-black);
+    transition: 0.2s ease-in-out;
+}

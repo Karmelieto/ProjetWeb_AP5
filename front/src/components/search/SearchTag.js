@@ -6,6 +6,7 @@ import logo from '../../images/logo.svg'
 import Banner from '../banner/Banner';
 import Loading from '../loading/Loading';
 import Container from '../container/Container';
+import Gallery from '../gallery/Gallery'
 import PropTypes from 'prop-types';
 import SearchList from './SearchList';
 
@@ -15,7 +16,7 @@ class SearchTag extends React.Component {
         super(props);
 
         this.state = {
-            posts: [],
+            publications: [],
             tags: [],
             isLoading: true,
             inputSearch: ''
@@ -27,6 +28,7 @@ class SearchTag extends React.Component {
     componentDidMount () {
         if (this.props.tag) {
             this.setState({ inputSearch: this.props.tag });
+            this.getPublications(this.props.tag);
         }
     }
 
@@ -45,9 +47,23 @@ class SearchTag extends React.Component {
         }
     }
 
+    getPublications (tagName) {
+        if (tagName) {
+            this.setState({ isLoading: true });
+            APICallManager.getPublicationsByTag(tagName, (response) => {
+                response.data.map((post, index) => (post.key = index));
+                this.setState({
+                    publications: response.data,
+                    isLoading: false
+                });
+            });
+        }
+    }
+
     onTagSelected (clickedOn) {
         console.log('SELECTED ! ' + clickedOn);
         this.setState({ inputSearch: clickedOn });
+        this.getPublications(clickedOn);
     }
 
     handleInputChange (event) {
@@ -61,6 +77,7 @@ class SearchTag extends React.Component {
         const inputSearch = this.state.inputSearch;
         const tags = this.state.tags;
         const user = this.props.user;
+        const publications = this.state.publications
         return (
                 <div>
                     <Banner 
@@ -99,9 +116,9 @@ class SearchTag extends React.Component {
                         <div className='search'>
                             {isLoading
                                 ? <Loading/>
-                                : <Loading/>
-                            }
-                        </div>
+                                : <Gallery publications={publications} />
+                            }  
+                          </div>
                     </Container>
                 </div>
         );

@@ -31,6 +31,10 @@ export default class APICallManager {
         axios.get(APICallManager.backUrl + '/publications').then(callback).catch(errorCallback);
     }
 
+    static getPublicationsByTag (tagName, callback, errorCallback) {
+        axios.get(APICallManager.backUrl + '/publications/tag/' + tagName).then(callback).catch(errorCallback);
+    }
+
     static getPublication (nom, callback, errorCallback) {
         axios.get(APICallManager.backUrl + '/publications/' + nom).then(callback).catch(errorCallback);
     }
