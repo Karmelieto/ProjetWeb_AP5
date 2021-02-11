@@ -17,7 +17,11 @@ class Home extends React.Component {
     };
 
     componentDidMount () {
-        APICallManager.getTags((response) => {
+        let pseudo = '';
+        if (this.props.user) {
+            pseudo = this.props.user.pseudo;
+        }
+        APICallManager.getTags(pseudo, (response) => {
             response.data.map((tag, index) => (tag.key = index));
             this.setState({
                 tags: response.data,

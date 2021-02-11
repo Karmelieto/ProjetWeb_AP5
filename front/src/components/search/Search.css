@@ -1,14 +1,20 @@
 .search {
     display: flex;
-    justify-content: space-around;
+    justify-content: left;
     flex-wrap: wrap;
     align-self: center;
+}
+
+.search > * {
+    flex-grow: 1;
 }
 
 .input-button > input {
     height: 34px;
     font-size: 18px;
-    width: 45%;
+    max-width: 65%;
+    min-width: 45%;
+    width: auto;
     border : 2px solid var(--color-grey);
     border-radius: 5px 0px 0px 5px;
     padding-left: 5px;
@@ -19,11 +25,18 @@
 }
 
 .transform-for-search {
-    transform: translateX(25%);
+    transform: translateX(22%);
 }
 
 .limit-height {
     max-height: 150px;
     overflow: hidden;
     overflow-y:scroll;
+}
+
+
+@media only screen and (min-width: 768px) {
+    .transform-for-search {
+        transform: translateX(18%);
+    }
 }

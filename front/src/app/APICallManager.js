@@ -15,16 +15,12 @@ export default class APICallManager {
         axios.get(APICallManager.backUrl + '/users/' + pseudo).then(callback).catch(errorCallback);
     }
 
-    static getTags (callback, errorCallback) {
-        axios.get(APICallManager.backUrl + '/tags').then(callback).catch(errorCallback);
+    static getTags (pseudo, callback, errorCallback) {
+        axios.get(APICallManager.backUrl + '/tags/' + pseudo).then(callback).catch(errorCallback);
     }
 
-    static getTagsByName (tagName, callback, errorCallback) {
-        axios.get(APICallManager.backUrl + '/tags/filter/' + tagName).then(callback).catch(errorCallback);
-    }
-   
-    static getTag (nom, callback, errorCallback) {
-        axios.get(APICallManager.backUrl + '/tags/' + nom).then(callback).catch(errorCallback);
+    static getTagsByName (tagName, pseudo, callback, errorCallback) {
+        axios.get(APICallManager.backUrl + '/tags/filter/' + tagName + '/' + pseudo).then(callback).catch(errorCallback);
     }
 
     static getPublications (callback, errorCallback) {
@@ -35,8 +31,8 @@ export default class APICallManager {
         axios.get(APICallManager.backUrl + '/publications/tag/' + tagName).then(callback).catch(errorCallback);
     }
 
-    static getPublication (nom, callback, errorCallback) {
-        axios.get(APICallManager.backUrl + '/publications/' + nom).then(callback).catch(errorCallback);
+    static getPublication (id, callback, errorCallback) {
+        axios.get(APICallManager.backUrl + '/publications/' + id).then(callback).catch(errorCallback);
     }
 
     static login (mail, password, callback, errorCallback) {

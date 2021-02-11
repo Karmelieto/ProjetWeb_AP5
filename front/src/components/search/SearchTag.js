@@ -34,7 +34,11 @@ class SearchTag extends React.Component {
 
     getTags (tagName) {
         if (tagName) {
-            APICallManager.getTagsByName(tagName, (response) => {
+            let pseudo = '';
+            if (this.props.user) {
+                pseudo = this.props.user.pseudo;
+            }
+            APICallManager.getTagsByName(tagName, pseudo, (response) => {
                 response.data.map((tag, index) => (tag.key = index));
                 this.setState({
                     tags: response.data
@@ -61,7 +65,6 @@ class SearchTag extends React.Component {
     }
 
     onTagSelected (clickedOn) {
-        console.log('SELECTED ! ' + clickedOn);
         this.setState({ inputSearch: clickedOn });
         this.getPublications(clickedOn);
     }
