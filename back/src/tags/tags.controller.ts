@@ -25,28 +25,36 @@ import { UpdateImageTagDto } from './dto/update-image-tag.dto'
 export class TagsController {
   constructor (private readonly tagsService: TagsService) {}
 
+  @Get(':pseudo')
+  @ApiOperation({
+    summary: 'Retrieve all tags with a pseudo'
+  })
+  async findAllByPseudo (@Param('pseudo') pseudo: string): Promise<Tag[]> {
+    return this.tagsService.findAll(pseudo.toLowerCase());
+  }
+
   @Get()
   @ApiOperation({
     summary: 'Retrieve all tags'
   })
   async findAll (): Promise<Tag[]> {
-    return this.tagsService.findAll()
+    return this.tagsService.findAll('');
+  }
+
+  @Get('filter/:name/:pseudo')
+  @ApiOperation({
+    summary: 'Retrieve tags filter by a name, and check is private'
+  })
+  async searchTagsByNameWithPseudo (@Param('name') name: string, @Param('pseudo') pseudo: string) {
+    return this.tagsService.searchTagsByName(name.toLowerCase(), pseudo.toLowerCase());
   }
 
   @Get('filter/:name')
   @ApiOperation({
-    summary: 'Retrieve tags filter by a name'
+    summary: 'Retrieve tags filter by a name, and check is private'
   })
   async searchTagsByName (@Param('name') name: string) {
-    return this.tagsService.searchTagsByName(name.toLowerCase())
-  }
-
-  @Get(':name')
-  @ApiOperation({
-    summary: 'Retrieve a tag by his name'
-  })
-  async findOne (@Param('name') name: string) {
-    return this.tagsService.findOne(name.toLowerCase())
+    return this.tagsService.searchTagsByName(name.toLowerCase(), '');
   }
 
   @UsePipes(new ValidationPipe({ transform: true }))

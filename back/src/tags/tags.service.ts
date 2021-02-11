@@ -12,8 +12,22 @@ export class TagsService {
 
   private readonly logger = new Logger(TagsService.name);
 
-  async findAll (): Promise<Tag[]> {
-    return this.tagModel.find().exec()
+  async findAll (pseudo: string): Promise<Tag[]> {
+    return this.tagModel.find(
+      { 
+        $or: [
+          { isPrivate: false },
+          { $and: [
+            { isPrivate: true },
+            { usersAllow: pseudo }
+          ]}
+        ]
+      },
+      {
+        name: 1,
+        imageLink: 1
+      }
+    ).exec()
   }
 
   async findOne (name: string): Promise<Tag> {
@@ -25,10 +39,21 @@ export class TagsService {
     }
   }
 
-  async searchTagsByName (name: string): Promise<Tag[]> {
+  async searchTagsByName (name: string, pseudo: string): Promise<Tag[]> {
     return this.tagModel
       .find(
-        { name: new RegExp(name) },
+        { 
+          $and: [
+            { name: new RegExp(name) },
+            { $or: [
+              { isPrivate: false },
+              { $and: [
+                { isPrivate: true },
+                { usersAllow: pseudo }
+              ]}
+            ]}         
+          ]
+        },
         {
           name: 1,
           imageLink: 1
