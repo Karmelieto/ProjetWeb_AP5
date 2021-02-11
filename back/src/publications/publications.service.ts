@@ -17,7 +17,11 @@ export class PublicationsService {
   }
 
   async findAllByTag (tag: string): Promise<Publication[]> {
-    return this.publicationModel.find({ tags: tag }, { imageLink: 1, id: 1}).exec()
+    return this.publicationModel.aggregate([
+      { $sample: { size: 50 } },
+      { $match:  {"tags": tag} },
+      { $project: { imageLink: 1, id: 1} }
+    ]);
   }
 
   async findAllByPseudo (pseudo: string): Promise<Publication[]> {
