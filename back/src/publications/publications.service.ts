@@ -17,7 +17,7 @@ export class PublicationsService {
   }
 
   async findAllByTag (tag: string): Promise<Publication[]> {
-    const totalCount = await this.publicationModel.find().count();
+    const totalCount = await this.publicationModel.find().countDocuments();
     return this.publicationModel.aggregate([
       { $sample: { size: totalCount } },
       { $match:  {"tags": tag} },

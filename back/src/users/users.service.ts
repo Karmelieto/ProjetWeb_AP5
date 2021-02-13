@@ -17,13 +17,8 @@ export class UsersService {
       .find(
         {},
         {
-          password: 0,
-          rewards: 0,
-          isAdmin: 0,
-          favorisPosts: 0,
-          description: 0,
-          _id: 0,
-          __v: 0
+          pseudo: 1,
+          profileImageLink: 1
         }
       )
       .exec()
@@ -33,7 +28,19 @@ export class UsersService {
     return this.userModel.findOne(
       { pseudo: pseudo },
       {
-        password: 0
+        password: 0,
+        mail: 0
+      }
+    )
+  }
+
+  async findOneConnected (pseudo: string): Promise<User> {
+    return this.userModel.findOne(
+      { pseudo: pseudo },
+      {
+        pseudo: 1,
+        profileImageLink: 1,
+        isAdmin: 1
       }
     )
   }
@@ -43,14 +50,8 @@ export class UsersService {
       .find(
         { pseudo: new RegExp(pseudo) },
         {
-          password: 0,
-          mail: 0,
-          rewards: 0,
-          isAdmin: 0,
-          favorisPosts: 0,
-          description: 0,
-          _id: 0,
-          __v: 0
+          pseudo: 1,
+          profileImageLink: 1
         }
       )
       .exec()
@@ -58,7 +59,7 @@ export class UsersService {
 
   async create (createUserDto: CreateUserDto): Promise<User> {
     const createdUser = new this.userModel(createUserDto)
-    console.log(createUserDto)
+
     if (await this.isUserExist(createdUser.pseudo)) {
       throw new HttpException(
         util.format('The user name %s already exist', createdUser.pseudo),
@@ -72,7 +73,6 @@ export class UsersService {
         )
       }
 
-      console.log('USER MAIL : ' + createdUser.mail)
       if (await this.userModel.findOne({ mail: createdUser.mail })) {
         throw new HttpException(
           util.format('The user mail %s already exist', createdUser.mail),
@@ -89,9 +89,8 @@ export class UsersService {
           'http://localhost:4242/images/default.svg'
       }
 
-      this.logger.debug('CREATING USER : ' + createdUser)
-      createdUser.password = '*****'
-      return createdUser.save()
+      await createdUser.save();
+      return await this.findOneConnected(createdUser.pseudo);
     }
   }
 
