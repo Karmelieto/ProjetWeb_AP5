@@ -31,6 +31,8 @@ const Navigator = () => {
         setUser(undefined);
     };
 
+    console.log(user);
+
     return (
         <div className='navigator flex-content' >
             <Switch>
@@ -53,8 +55,12 @@ const Navigator = () => {
                     <MyProfile user={user} clearUser={clearUser} />
                 </Route>
                 <Route path='/profile'>
-                    <Profile user={user}/>
+                    { (user && user.isAdmin)
+                        ? <MyProfile user={user} clearUser={clearUser} />
+                        : <Profile user={user}/>
+                    }
                 </Route>
+                
             </Switch>
         </div>
         );

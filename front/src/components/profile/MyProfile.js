@@ -5,6 +5,7 @@ import APICallManager from '../../app/APICallManager';
 import back from '../../images/back.svg';
 import options from '../../images/options.svg';
 import disconnect from '../../images/disconnect.svg';
+import edit from '../../images/edit.svg';
 
 import Banner from '../banner/Banner';
 import Loading from '../loading/Loading';
@@ -24,7 +25,8 @@ class MyProfile extends React.Component {
             this.props.history.push('/');
             return;
         }
-        APICallManager.getUser(this.props.user.pseudo, (response) => {
+        const pseudo = this.props.history.location.pathname.split('/')[2];
+        APICallManager.getUser(pseudo, (response) => {
             this.setState({ user: response.data, isLoading: false });
         }, (error) => {
             console.log(error);
@@ -40,8 +42,13 @@ class MyProfile extends React.Component {
         this.props.history.push('/');
     }
 
+    onEdit (event) {
+
+    }
+
     render () {
         const isLoading = this.state.isLoading;
+        const userConnected = this.props.user;
         const user = this.state.user;
         return (
                 <div>
@@ -60,7 +67,12 @@ class MyProfile extends React.Component {
                             <div className="dropdown">
                                 <img src={options} className="back-img"/>
                                 <div id="options" className="dropdown-content transform-for-profile">
-                                    <a onClick={ (event) => this.onDisconnect(event) } >Disconnect <img src={disconnect}/></a>
+                                    { (user && userConnected.pseudo === user.pseudo) &&
+                                        <a onClick={ (event) => this.onDisconnect(event) } >Disconnect <img src={disconnect}/></a>
+                                    }
+                                    { (user && (userConnected.pseudo === user.pseudo || userConnected.isAdmin)) &&
+                                        <a onClick={ (event) => this.onEdit(event) } >Edit <img src={edit}/></a>
+                                    }
                                 </div>
                             </div>
                         }
