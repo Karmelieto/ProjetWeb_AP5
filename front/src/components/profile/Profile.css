@@ -3,6 +3,50 @@
     transform: translateX(-60%);
 }
 
+.user-profile {
+    display: block;
+    border-bottom: 2px solid var(--color-black);
+    margin-bottom: 10px;
+}
+
+.user-datas {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.user-datas > * {
+    flex-grow: 1;
+    width: 50%;
+}
+
+.user-datas > img {
+    max-height: 200px;
+    border-radius: 10px;
+}
+
+.user-datas > p {
+    padding: 5px;
+}
+
+.user-rewards {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.user-rewards > * {
+    flex-grow: 1;
+    width: 30%;
+}
+
+.user-rewards img {
+    height: 70px;
+}
+
 @media only screen and (min-width: 768px) {
     .transform-for-profile {
         transform: translateX(-30%);

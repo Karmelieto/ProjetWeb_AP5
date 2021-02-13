@@ -10,12 +10,15 @@ import edit from '../../images/edit.svg';
 import Banner from '../banner/Banner';
 import Loading from '../loading/Loading';
 import Container from '../container/Container';
+import ProfileInformation from './ProfileInformation';
+import Gallery from '../gallery/Gallery';
 import PropTypes from 'prop-types';
 
 class MyProfile extends React.Component {
 
     state = {
         user: null,
+        publications: [],
         isLoading: true
     };
 
@@ -27,10 +30,15 @@ class MyProfile extends React.Component {
         }
         const pseudo = this.props.history.location.pathname.split('/')[2];
         APICallManager.getUser(pseudo, (response) => {
-            this.setState({ user: response.data, isLoading: false });
+            APICallManager.getPublicationsOfUser(response.data.pseudo, (secondResponse) => {
+                this.setState({ user: response.data, publications: secondResponse.data, isLoading: false });
+            }, (error) => {
+                console.log(error);
+            });
         }, (error) => {
             console.log(error);
         });
+        
     }
     
     onBackClicked (event) {
@@ -50,6 +58,7 @@ class MyProfile extends React.Component {
         const isLoading = this.state.isLoading;
         const userConnected = this.props.user;
         const user = this.state.user;
+        const publications = this.state.publications;
         return (
                 <div>
                     <Banner 
@@ -81,7 +90,10 @@ class MyProfile extends React.Component {
                         <div>
                             {isLoading
                                 ? <Loading/>
-                                : <Loading/>
+                                : <div>
+                                    <ProfileInformation user={user}/>
+                                    <Gallery publications={publications}/>
+                                </div>
                             }
                         </div>
                     </Container>

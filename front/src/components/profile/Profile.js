@@ -7,19 +7,26 @@ import back from '../../images/back.svg';
 import Banner from '../banner/Banner';
 import Loading from '../loading/Loading';
 import Container from '../container/Container';
+import ProfileInformation from './ProfileInformation';
+import Gallery from '../gallery/Gallery';
 import PropTypes from 'prop-types';
 
 class Profile extends React.Component {
 
     state = {
         user: null,
+        publications: [],
         isLoading: true
     };
 
     componentDidMount () {
         const pseudo = this.props.history.location.pathname.split('/')[2];
         APICallManager.getUser(pseudo, (response) => {
-            this.setState({ user: response.data, isLoading: false });
+            APICallManager.getPublicationsOfUser(response.data.pseudo, (secondResponse) => {
+                this.setState({ user: response.data, publications: secondResponse.data, isLoading: false });
+            }, (error) => {
+                console.log(error);
+            });
         }, (error) => {
             console.log(error);
         });
@@ -33,6 +40,7 @@ class Profile extends React.Component {
         const isLoading = this.state.isLoading;
         const userConnected = this.props.user;
         const user = this.state.user;
+        const publications = this.state.publications;
         return (
                 <div>
                     <Banner 
@@ -69,7 +77,10 @@ class Profile extends React.Component {
                         <div>
                             {isLoading
                                 ? <Loading/>
-                                : <Loading/>
+                                : <div>
+                                    <ProfileInformation user={user}/>
+                                    <Gallery publications={publications}/>
+                                </div>
                             }
                         </div>
                     </Container>

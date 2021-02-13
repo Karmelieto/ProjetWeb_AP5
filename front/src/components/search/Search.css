@@ -12,8 +12,8 @@
 .input-button > input {
     height: 34px;
     font-size: 18px;
-    max-width: 65%;
-    min-width: 45%;
+    max-width: 45%;
+    min-width: 35%;
     width: auto;
     border : 2px solid var(--color-grey);
     border-radius: 5px 0px 0px 5px;
@@ -38,5 +38,9 @@
 @media only screen and (min-width: 768px) {
     .transform-for-search {
         transform: translateX(18%);
+    }
+
+    .input-button > input {
+        max-width: 65%;
     }
 }

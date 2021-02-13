@@ -13,12 +13,12 @@
 }
 
 .user-name {
-    padding: 20px;
+    padding: 10px;
 }
 
 .user-img > img {
     height: 60px;
-    border-radius: 25px;
+    border-radius: 10px;
 }
 
 .user-img {
