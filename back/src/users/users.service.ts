@@ -81,12 +81,16 @@ export class UsersService {
       }
 
       if (!createdUser.isAdmin) {
-        createdUser.isAdmin = false
+        createdUser.isAdmin = false;
+      }
+
+      if (!createdUser.description) {
+        createdUser.description = 'What a great description !';
       }
 
       if (!createdUser.profileImageLink) {
         createdUser.profileImageLink =
-          'http://localhost:4242/images/default.svg'
+          'http://localhost:4242/images/default.svg';
       }
 
       await createdUser.save();
