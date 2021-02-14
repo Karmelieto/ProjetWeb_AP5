@@ -19,6 +19,7 @@ class MyProfile extends React.Component {
     state = {
         user: null,
         publications: [],
+        favorites: [],
         isLoading: true
     };
 
@@ -38,7 +39,6 @@ class MyProfile extends React.Component {
         }, (error) => {
             console.log(error);
         });
-        
     }
     
     onBackClicked (event) {
@@ -51,7 +51,12 @@ class MyProfile extends React.Component {
     }
 
     onEdit (event) {
-
+        this.setState({ isLoading: true });
+        APICallManager.getPublicationsByArrayOfId(this.state.user.favorites, (response) => {
+            this.setState({ publications: response.data, isLoading: false });
+        }, (error) => {
+            console.log(error);
+        });
     }
 
     render () {
