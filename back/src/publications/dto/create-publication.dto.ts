@@ -2,8 +2,6 @@ import { ApiProperty } from '@nestjs/swagger'
 import { MetaData } from '../../models/MetaData'
 
 export class CreatePublicationDto {
-  _id: number;
-
   @ApiProperty()
   imageLink: string;
 

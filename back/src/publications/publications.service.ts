@@ -29,7 +29,19 @@ export class PublicationsService {
     return this.publicationModel.find({ "pseudo": pseudo }).exec()
   }
 
-  async findOne (id: number): Promise<Publication> {
+  async findAllByArrayOfId (ids: Array<string>): Promise<Publication[]> {
+    return this.publicationModel.find(
+      {
+        _id:
+          {
+            $in : ids
+          }
+      },
+      { imageLink: 1}
+    ).exec()
+  }
+
+  async findOne (id: string): Promise<Publication> {
     return await this.publicationModel.findOne({ id: id })
   }
 

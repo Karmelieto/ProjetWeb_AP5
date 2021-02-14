@@ -46,11 +46,19 @@ export class PublicationsController {
     return this.publicationsService.findAllByPseudo(pseudo)
   }
 
+  @Get('favorites/:ids')
+  @ApiOperation({
+    summary: 'Find all publications in the array of ids given'
+  })
+  async findAllByArrayOfId (@Param('ids') ids: string): Promise<Publication[]> {
+    return this.publicationsService.findAllByArrayOfId(ids.split(','))
+  }
+
   @Get(':id')
   @ApiOperation({
     summary: 'Retrieve a publication by its id'
   })
-  async findOne (@Param('id') id: number) {
+  async findOne (@Param('id') id: string) {
     return this.publicationsService.findOne(id)
   }
 
