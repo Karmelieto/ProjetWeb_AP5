@@ -6,6 +6,8 @@ import back from '../../images/back.svg';
 import options from '../../images/options.svg';
 import disconnect from '../../images/disconnect.svg';
 import edit from '../../images/edit.svg';
+import publicationsIcon from '../../images/publications.svg';
+import favoritesIcon from '../../images/heart_fill.svg';
 
 import Banner from '../banner/Banner';
 import Loading from '../loading/Loading';
@@ -20,7 +22,8 @@ class MyProfile extends React.Component {
         user: null,
         publications: [],
         favorites: [],
-        isLoading: true
+        isLoading: true,
+        isFavoriteDisplay: false
     };
 
     componentDidMount () {
@@ -31,11 +34,8 @@ class MyProfile extends React.Component {
         }
         const pseudo = this.props.history.location.pathname.split('/')[2];
         APICallManager.getUser(pseudo, (response) => {
-            APICallManager.getPublicationsOfUser(response.data.pseudo, (secondResponse) => {
-                this.setState({ user: response.data, publications: secondResponse.data, isLoading: false });
-            }, (error) => {
-                console.log(error);
-            });
+            this.setState({ user: response.data, isLoading: false });
+            this.onPublicationsClicked(response.data.pseudo);
         }, (error) => {
             console.log(error);
         });
@@ -51,12 +51,29 @@ class MyProfile extends React.Component {
     }
 
     onEdit (event) {
-        this.setState({ isLoading: true });
-        APICallManager.getPublicationsByArrayOfId(this.state.user.favorites, (response) => {
-            this.setState({ publications: response.data, isLoading: false });
-        }, (error) => {
-            console.log(error);
-        });
+       
+    }
+
+    onPublicationsClicked (pseudo) {
+        this.setState({ isFavoriteDisplay: false });
+        if (this.state.publications.length === 0) {
+            APICallManager.getPublicationsOfUser(pseudo, (response) => {
+                this.setState({ publications: response.data, isLoading: false });
+            }, (error) => {
+                console.log(error);
+            });
+        }
+    }
+
+    onFavoriteClicked (event) {
+        this.setState({ isFavoriteDisplay: true });
+        if (this.state.favorites.length === 0) {
+            APICallManager.getPublicationsByArrayOfId(this.state.user.favorites, (response) => {
+                this.setState({ favorites: response.data });
+            }, (error) => {
+                console.log(error);
+            });
+        }
     }
 
     render () {
@@ -64,6 +81,8 @@ class MyProfile extends React.Component {
         const userConnected = this.props.user;
         const user = this.state.user;
         const publications = this.state.publications;
+        const favorites = this.state.favorites;
+        const isFavoriteDisplay = this.state.isFavoriteDisplay;
         return (
                 <div>
                     <Banner 
@@ -97,7 +116,20 @@ class MyProfile extends React.Component {
                                 ? <Loading/>
                                 : <div>
                                     <ProfileInformation user={user}/>
-                                    <Gallery publications={publications}/>
+                                    <div className="flex-nowrap select-post">
+                                        <div onClick={ (event) => this.onPublicationsClicked(event)} className={!isFavoriteDisplay ? 'selected' : ''}>
+                                            <img src={publicationsIcon}/>
+                                        </div>
+                                        <div onClick={ (event) => this.onFavoriteClicked(event)} className={isFavoriteDisplay ? 'selected' : ''}>
+                                            <img src={favoritesIcon}/>
+                                        </div>
+                                    </div>
+                                    {
+                                        !isFavoriteDisplay
+                                        ? <Gallery publications={publications}/>
+                                        : <Gallery publications={favorites}/>
+                                    }
+                                    
                                 </div>
                             }
                         </div>

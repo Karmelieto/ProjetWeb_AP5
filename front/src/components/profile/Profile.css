@@ -6,10 +6,9 @@
 .user-profile {
     display: block;
     border-bottom: 2px solid var(--color-black);
-    margin-bottom: 10px;
 }
 
-.user-datas {
+.flex-nowrap {
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-around;
@@ -32,10 +31,6 @@
 
 .user-rewards {
     margin-top: 10px;
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-around;
-    align-items: center;
 }
 
 .user-rewards > * {
@@ -47,8 +42,31 @@
     height: 70px;
 }
 
+.select-post {
+    border-bottom: 2px solid var(--color-black);
+    border-right: 2px solid var(--color-black);
+    border-left: 2px solid var(--color-black);
+    margin-right: 15px;
+    margin-left: 15px;
+    height: 45px;
+}
+
+.select-post img {
+    height: 25px;
+}
+
+.select-post > div {
+    cursor: pointer;
+    width: 50%;
+}
+
 @media only screen and (min-width: 768px) {
     .transform-for-profile {
         transform: translateX(-30%);
+    }
+
+    .select-post > div:hover > img {
+        height: 30px;
+        transition: 0.2s ease-in-out;
     }
 }

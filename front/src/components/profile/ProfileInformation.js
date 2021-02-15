@@ -17,11 +17,11 @@ const ProfileInformation = ({ user }) => {
 
     return (
         <div className="user-profile">
-            <div className="user-datas">
+            <div className="user-datas flex-nowrap">
                 <img src={user.profileImageLink}/>
                 <p>{user.description}</p>
             </div>
-            <div className="user-rewards">
+            <div className="user-rewards flex-nowrap">
                 <div>
                     <img src={reward1}/>
                     <p>{nbRewards[0]}</p>

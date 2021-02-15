@@ -25,13 +25,7 @@
     transform: translateY(-50%);
 }
 
-
-.menu-img.selected {
-    border-bottom: 3px solid var(--color-primary-dark);
-
-}
-
-.selected > .menu-img{
+.selected > img {
     border-bottom: 3px solid var(--color-primary-dark);
     padding-bottom: 3px;
 }
