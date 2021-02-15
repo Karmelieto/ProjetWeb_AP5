@@ -21,12 +21,20 @@ export class PublicationsService {
     return this.publicationModel.aggregate([
       { $sample: { size: totalCount } },
       { $match:  {"tags": tag} },
-      { $project: { imageLink: 1, id: 1} }
+      { $project: { imageLink: 1, rank: 1} }
     ]);
   }
 
   async findAllByPseudo (pseudo: string): Promise<Publication[]> {
-    return this.publicationModel.find({ "pseudo": pseudo }).exec()
+    return this.publicationModel.find(
+      {
+        "pseudo": pseudo
+      },
+      {
+        imageLink: 1,
+        rank: 1
+      }
+    ).exec()
   }
 
   async findAllByArrayOfId (ids: Array<string>): Promise<Publication[]> {
@@ -37,7 +45,7 @@ export class PublicationsService {
             $in : ids
           }
       },
-      { imageLink: 1}
+      { imageLink: 1, rank: 1}
     ).exec()
   }
 
