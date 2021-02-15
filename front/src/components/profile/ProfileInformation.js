@@ -18,7 +18,9 @@ const ProfileInformation = ({ user }) => {
     return (
         <div className="user-profile">
             <div className="user-datas flex-nowrap">
-                <img src={user.profileImageLink}/>
+                <div>
+                    <img src={user.profileImageLink}/>
+                </div>
                 <p>{user.description}</p>
             </div>
             <div className="user-rewards flex-nowrap">

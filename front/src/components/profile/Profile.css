@@ -20,7 +20,7 @@
     width: 50%;
 }
 
-.user-datas > img {
+.user-datas img {
     max-height: 200px;
     border-radius: 10px;
 }

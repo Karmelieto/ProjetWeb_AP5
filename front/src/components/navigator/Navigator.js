@@ -30,9 +30,7 @@ const Navigator = () => {
         localStorage.clear();
         setUser(undefined);
     };
-
-    console.log(user);
-
+    
     return (
         <div className='navigator flex-content' >
             <Switch>

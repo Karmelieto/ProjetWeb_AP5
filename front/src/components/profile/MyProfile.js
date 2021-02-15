@@ -69,7 +69,9 @@ class MyProfile extends React.Component {
         this.setState({ isFavoriteDisplay: true });
         if (this.state.favorites.length === 0) {
             APICallManager.getPublicationsByArrayOfId(this.state.user.favorites, (response) => {
-                this.setState({ favorites: response.data });
+                if (response.data) {
+                    this.setState({ favorites: response.data });
+                }
             }, (error) => {
                 console.log(error);
             });

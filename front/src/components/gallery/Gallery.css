@@ -4,11 +4,16 @@
     flex-wrap: wrap;
     align-self: center;
     animation: fadeIn 0.2s linear;
+    margin-top: 10px;
 }
 
 @keyframes fadeIn {
     from{opacity: 0.3;}
     to {opacity: 1;}
+}
+
+.gallery-container {
+    position: relative;
 }
   
 .gallery-img {
@@ -21,6 +26,13 @@
 .gallery-img:hover {
     border: 2px solid var(--color-black);
     transition: 0.2s ease-in-out;
+}
+
+.reward-img {
+    height: 35px;
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
 }
 
 @media only screen and (min-width: 768px) {
