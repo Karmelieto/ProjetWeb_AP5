@@ -21,6 +21,7 @@ import {
   ApiTags
 } from '@nestjs/swagger'
 import { UpdateUserDto } from './dto/update-user.dto'
+import {LoginUserDto} from "./dto/login-user.dto";
 
 @Controller('users')
 @ApiTags('users')
@@ -65,6 +66,18 @@ export class UsersController {
     @Res() res
   ): Promise<User> {
     return res.json(await this.usersService.create(createUserDto))
+  }
+
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @Post('/login/')
+  @ApiOperation({
+    summary: 'Login a user'
+  })
+  async login (
+      @Body() loginUserDto: LoginUserDto,
+      @Res() res
+  ): Promise<any> {
+    return res.json(await this.usersService.login(loginUserDto))
   }
 
   @UsePipes(new ValidationPipe({ transform: true }))

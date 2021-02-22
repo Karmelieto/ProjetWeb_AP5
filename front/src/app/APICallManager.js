@@ -47,7 +47,8 @@ export default class APICallManager {
         axios.get(APICallManager.backUrl + '/publications/' + id).then(callback).catch(errorCallback);
     }
 
-    static login (mail, password, callback, errorCallback) {
+    static async login (mail, password, callback, errorCallback) {
+        password = await hashPassword(password);
         axios.post(APICallManager.backUrl + '/users/login/', { mail, password }).then(callback).catch(errorCallback);
     }
 

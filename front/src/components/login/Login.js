@@ -27,7 +27,7 @@ class Login extends React.Component {
         event.preventDefault();
         if (this.handleValidation()) {
             this.setState({ isLoading: true });
-            APICallManager.login(this.state.emailInput, this.state.pseudo, (response) => {
+            APICallManager.login(this.state.emailInput, this.state.passwordInput, (response) => {
                 this.setState({ isLoading: false });
                 localStorage.setItem('user', JSON.stringify(response.data));
                 this.props.updateUser();
