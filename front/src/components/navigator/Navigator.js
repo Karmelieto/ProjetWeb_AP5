@@ -8,6 +8,7 @@ import Login from '../login/Login';
 import Register from '../register/Register';
 import Profile from '../profile/Profile';
 import MyProfile from '../profile/MyProfile';
+import Gamestart from '../gamestart/Gamestart';
 
 const Navigator = () => {
 
@@ -57,6 +58,9 @@ const Navigator = () => {
                         ? <MyProfile user={user} clearUser={clearUser} />
                         : <Profile user={user}/>
                     }
+                </Route>
+                <Route path='/play'>
+                    <Gamestart/>
                 </Route>
 
             </Switch>
