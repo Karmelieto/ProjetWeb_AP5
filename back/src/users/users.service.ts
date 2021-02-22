@@ -5,6 +5,7 @@ import { User, UserDocument } from './user.schema'
 import { CreateUserDto } from './dto/create-user.dto'
 import * as util from 'util'
 import { UpdateUserDto } from './dto/update-user.dto'
+import { LoginUserDto } from './dto/login-user.dto'
 
 @Injectable()
 export class UsersService {
@@ -34,6 +35,18 @@ export class UsersService {
     )
   }
 
+  async findOneByMail (mail: string): Promise<User> {
+    return this.userModel.findOne(
+      { mail: mail },
+      {
+        pseudo: 1,
+        password: 1,
+        isAdmin: 1,
+        profileImageLink: 1
+      }
+    )
+  }
+
   async findOneConnected (pseudo: string): Promise<User> {
     return this.userModel.findOne(
       { pseudo: pseudo },
@@ -57,6 +70,33 @@ export class UsersService {
       .exec()
   }
 
+  async login (loginUserDto: LoginUserDto): Promise<any> {
+    const user = new this.userModel(loginUserDto)
+    console.log(user)
+    if (await this.isUserExistByMail(user.mail)) {
+      const myUser = await this.findOneByMail(user.mail)
+      console.log(myUser)
+      if (myUser.password === user.password) {
+        return {
+          pseudo: myUser.pseudo,
+          isAdmin: myUser.isAdmin,
+          profileImageLink: myUser.profileImageLink,
+          token: 'eKoYea331nJhfnqIzeLap8jSd4SddpalqQ93Nn2'
+        }
+      } else {
+        throw new HttpException(
+          util.format('Wrong password'),
+          HttpStatus.UNAUTHORIZED
+        )
+      }
+    } else {
+      throw new HttpException(
+        util.format('The user does not exist'),
+        HttpStatus.NOT_FOUND
+      )
+    }
+  }
+  
   async create (createUserDto: CreateUserDto): Promise<User> {
     const createdUser = new this.userModel(createUserDto)
 
@@ -68,7 +108,7 @@ export class UsersService {
     } else {
       if (!createdUser.pseudo || !createdUser.mail || !createdUser.password) {
         throw new HttpException(
-          util.format('The user have empty required datas'),
+          util.format('The user has empty required datas'),
           HttpStatus.FORBIDDEN
         )
       }
@@ -81,20 +121,20 @@ export class UsersService {
       }
 
       if (!createdUser.isAdmin) {
-        createdUser.isAdmin = false;
+        createdUser.isAdmin = false
       }
 
       if (!createdUser.description) {
-        createdUser.description = 'What a great description !';
+        createdUser.description = 'What a great description !'
       }
 
       if (!createdUser.profileImageLink) {
         createdUser.profileImageLink =
-          'http://localhost:4242/images/default.svg';
+          'http://localhost:4242/images/default.svg'
       }
 
-      await createdUser.save();
-      return await this.findOneConnected(createdUser.pseudo);
+      await createdUser.save()
+      return await this.findOneConnected(createdUser.pseudo)
     }
   }
 
@@ -151,6 +191,10 @@ export class UsersService {
 
   async isUserExist (pseudo: string): Promise<boolean> {
     return !!(await this.findOne(pseudo))
+  }
+
+  async isUserExistByMail (mail: string): Promise<boolean> {
+    return !!(await this.findOneByMail(mail))
   }
 
   async remove (pseudo: string) {
