@@ -7,8 +7,6 @@ import reward2 from '../../images/reward_2.svg';
 import reward3 from '../../images/reward_3.svg';
 
 const Gallery = ({ publications }) => {
-
-    console.log(publications);
     return (
         <div className="gallery">
             {
