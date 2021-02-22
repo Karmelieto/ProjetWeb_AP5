@@ -24,7 +24,6 @@ class Search extends React.Component {
     getUsers (pseudoInput) {
         if (pseudoInput) {
             APICallManager.getUsersByPseudo(pseudoInput, (response) => {
-                response.data.map((user, index) => (user.key = index));
                 this.setState({
                     users: response.data,
                     isLoading: false
@@ -32,7 +31,6 @@ class Search extends React.Component {
             });
         } else {
             APICallManager.getUsers((response) => {
-                response.data.map((user, index) => (user.key = index));
                 this.setState({
                     users: response.data,
                     isLoading: false
@@ -89,8 +87,8 @@ class Search extends React.Component {
                         <div className='search'>
                             {isLoading
                                 ? <Loading/>
-                                : users.map(user => (
-                                    <Link style={{ textDecoration: 'none', color: '#0d0d0d' }} to={'/profile/' + user.pseudo} key={user.key}>
+                                : users.map((user, index) => (
+                                    <Link style={{ textDecoration: 'none', color: '#0d0d0d' }} to={'/profile/' + user.pseudo} key={index}>
                                         <UserListItem user={user}/>
                                     </Link>
                                 ))

@@ -22,7 +22,6 @@ class Home extends React.Component {
             pseudo = this.props.user.pseudo;
         }
         APICallManager.getTags(pseudo, (response) => {
-            response.data.map((tag, index) => (tag.key = index));
             this.setState({
                 tags: response.data,
                 isLoading: false
@@ -62,8 +61,8 @@ class Home extends React.Component {
                         <div>
                             {isLoading
                                 ? <Loading/>
-                                : tags.map(tag => (
-                                        <Link to="/search/tags" className="clear-link-decoration" key={tag.key} onClick={ () => this.props.setTag(tag.name) }>
+                                : tags.map((tag, index) => (
+                                        <Link to="/search/tags" className="clear-link-decoration" key={index} onClick={ () => this.props.setTag(tag.name) }>
                                             <Tag tag={tag}/>
                                         </Link>
                                     )
