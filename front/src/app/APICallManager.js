@@ -15,6 +15,10 @@ export default class APICallManager {
         axios.get(APICallManager.backUrl + '/users/' + pseudo).then(callback).catch(errorCallback);
     }
 
+    static deleteUser (pseudo, pseudoUserConnected) {
+        axios.delete(APICallManager.backUrl + '/users', { data: { pseudo, pseudoUserConnected } });
+    }
+
     static getTags (pseudo, callback, errorCallback) {
         axios.get(APICallManager.backUrl + '/tags/' + pseudo).then(callback).catch(errorCallback);
     }

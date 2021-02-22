@@ -109,7 +109,7 @@ class Login extends React.Component {
                                     <input id="emailInput" className="input margin-bottom" placeholder="Email" type="email" onChange={ (event) => this.handleEmailInputChange(event) }/>
                                     <span className="error">{passwordError}</span>
                                     <input id="passwordInput" className="input margin-bottom" placeholder="Password" type="password" onChange={ (event) => this.handlePasswordInputChange(event) }/>
-                                    <button className="margin-bottom" onClick={ (event) => this.onLoginClicked(event) }>
+                                    <button className="margin-bottom button-marble" onClick={ (event) => this.onLoginClicked(event) }>
                                         Log in
                                     </button>
                                     <NavLink className="register" to="/register">Register</NavLink>

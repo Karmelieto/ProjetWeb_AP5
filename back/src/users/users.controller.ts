@@ -11,6 +11,7 @@ import {
   ValidationPipe
 } from '@nestjs/common'
 import { CreateUserDto } from './dto/create-user.dto'
+import { DeleteUserDto } from './dto/delete-user.dto'
 import { UsersService } from './users.service'
 import { User } from './user.schema'
 import {
@@ -75,7 +76,8 @@ export class UsersController {
     await this.usersService.update(updateUserDto)
   }
 
-  @Delete(':pseudo')
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @Delete()
   @ApiResponse({
     status: 201,
     description: 'The user has been successfully deleted.'
@@ -84,7 +86,7 @@ export class UsersController {
   @ApiOperation({
     summary: 'Remove a user by his pseudo'
   })
-  async remove (@Param('pseudo') pseudo: string) {
-    await this.usersService.remove(pseudo.toLowerCase())
+  async remove (@Body() deleteUserDto: DeleteUserDto) {
+    await this.usersService.remove(deleteUserDto)
   }
 }

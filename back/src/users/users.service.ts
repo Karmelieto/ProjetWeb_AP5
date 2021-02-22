@@ -3,6 +3,7 @@ import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { User, UserDocument } from './user.schema'
 import { CreateUserDto } from './dto/create-user.dto'
+import { DeleteUserDto } from './dto/delete-user.dto'
 import * as util from 'util'
 import { UpdateUserDto } from './dto/update-user.dto'
 
@@ -153,17 +154,21 @@ export class UsersService {
     return !!(await this.findOne(pseudo))
   }
 
-  async remove (pseudo: string) {
-    const res = await this.userModel.deleteOne({ pseudo: pseudo })
-    if (res.deletedCount !== 0) {
-      return {
-        status: 204,
-        message: util.format('User %s successfully remove', pseudo)
-      }
+  async remove (deleteUserDto: DeleteUserDto) {
+    const userConnected = await this.userModel.findOne({ pseudo: deleteUserDto.pseudoUserConnected }, { isAdmin: 1});
+    if(!userConnected.isAdmin) {
+      throw new HttpException(
+        util.format('The user connected %s might be an admin !', deleteUserDto.pseudoUserConnected),
+        HttpStatus.FORBIDDEN
+      )
     }
-    throw new HttpException(
-      util.format('The user %s might be already remove', pseudo),
-      HttpStatus.NOT_FOUND
-    )
+
+    const res = await this.userModel.deleteOne({ pseudo: deleteUserDto.pseudo })
+    if (res.deletedCount === 0) {
+      throw new HttpException(
+        util.format('The user %s might be already remove', deleteUserDto.pseudo),
+        HttpStatus.NOT_FOUND
+      )
+    }
   }
 }

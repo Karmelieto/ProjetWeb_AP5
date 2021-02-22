@@ -13,18 +13,27 @@ import Banner from '../banner/Banner';
 import Loading from '../loading/Loading';
 import Container from '../container/Container';
 import ProfileInformation from './ProfileInformation';
+import Popup from '../popup/Popup';
 import Gallery from '../gallery/Gallery';
 import PropTypes from 'prop-types';
 
 class MyProfile extends React.Component {
 
-    state = {
-        user: null,
-        publications: [],
-        favorites: [],
-        isLoading: true,
-        isFavoriteDisplay: false
-    };
+    constructor (props) {
+        super(props);
+
+        this.removePopup = this.removePopup.bind(this);
+        this.deleteAccount = this.deleteAccount.bind(this);
+
+        this.state = {
+            user: null,
+            publications: [],
+            favorites: [],
+            isLoading: true,
+            isFavoriteDisplay: false,
+            isPopupDisplay: false
+        };
+    }
 
     componentDidMount () {
         if (!this.props.user) {
@@ -51,7 +60,18 @@ class MyProfile extends React.Component {
     }
 
     onEdit (event) {
-       
+       this.setState({ isPopupDisplay: true });
+    }
+
+    removePopup () {
+        this.setState({ isPopupDisplay: false });
+    }
+
+    deleteAccount () {
+        if (!this.state.user || !this.props.user) return;
+        APICallManager.deleteUser(this.state.user.pseudo, this.props.user.pseudo);
+        this.setState({ isPopupDisplay: true });
+        this.props.history.goBack();
     }
 
     onPublicationsClicked (pseudo) {
@@ -85,6 +105,7 @@ class MyProfile extends React.Component {
         const publications = this.state.publications;
         const favorites = this.state.favorites;
         const isFavoriteDisplay = this.state.isFavoriteDisplay;
+        const isPopupDisplay = this.state.isPopupDisplay;
         return (
                 <div>
                     <Banner 
@@ -118,6 +139,10 @@ class MyProfile extends React.Component {
                                 ? <Loading/>
                                 : <div>
                                     <ProfileInformation user={user}/>
+                                    {
+                                        isPopupDisplay &&
+                                        <Popup title="Do you really want do delete this account ?" actionOnCancel={this.removePopup} actionOnValidate={this.deleteAccount}/>
+                                    }
                                     <div className="flex-nowrap select-post">
                                         <div onClick={ (event) => this.onPublicationsClicked(event)} className={!isFavoriteDisplay ? 'selected' : ''}>
                                             <img src={publicationsIcon}/>

@@ -92,7 +92,7 @@ class SearchTag extends React.Component {
                                 <input value={inputSearch} onChange={ event => this.handleInputChange(event) }/>
                                 <SearchList elements={tags} actionOnClick={ this.onTagSelected } type="&#x3A6;"/>
                                 <Link to="/search/users">
-                                    <button>
+                                    <button className="button-marble">
                                         &#x3A6;
                                     </button>
                                 </Link>
@@ -103,7 +103,7 @@ class SearchTag extends React.Component {
                                 {
                                     !user
                                     ? <Link to="/login">
-                                        <button>
+                                        <button className="button-marble">
                                             Log in
                                         </button>
                                     </Link>

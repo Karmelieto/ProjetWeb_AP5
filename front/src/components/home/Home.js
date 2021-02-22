@@ -45,7 +45,7 @@ class Home extends React.Component {
                                 {
                                     !user
                                     ? <Link to="/login">
-                                        <button>
+                                        <button className="button-marble">
                                             Log in
                                         </button>
                                     </Link>

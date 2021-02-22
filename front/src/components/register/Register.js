@@ -150,7 +150,7 @@ class Register extends React.Component {
                                     <input id="emailInput" className="input margin-bottom" placeholder="Email" type="text" onChange={ (event) => this.handleEmailInputChange(event) }/>
                                     <span className="error">{passwordError}</span>
                                     <input id="passwordInput" className="input margin-bottom" placeholder="Password" type="password" onChange={ (event) => this.handlePasswordInputChange(event) }/>
-                                    <button onClick={ (event) => this.onRegisterClicked(event) } className="margin-top">
+                                    <button onClick={ (event) => this.onRegisterClicked(event) } className="margin-top button-marble">
                                         Register
                                     </button>
                                 </div>

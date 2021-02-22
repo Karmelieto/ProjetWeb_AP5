@@ -62,7 +62,7 @@ class Search extends React.Component {
                             <div className="input-button">
                                 <input value={inputSearch} onChange={ event => this.handleInputChange(event)}/>
                                 <Link to="/search/tags" onClick={this.props.setTag('')}>
-                                    <button>
+                                    <button className="button-marble">
                                         User
                                     </button>
                                 </Link>
@@ -73,7 +73,7 @@ class Search extends React.Component {
                                 {
                                     !user
                                     ? <Link to="/login">
-                                        <button>
+                                        <button className="button-marble">
                                             Log in
                                         </button>
                                     </Link>
