@@ -58,7 +58,7 @@ const Navigator = () => {
                         : <Profile user={user}/>
                     }
                 </Route>
-                
+
             </Switch>
         </div>
         );

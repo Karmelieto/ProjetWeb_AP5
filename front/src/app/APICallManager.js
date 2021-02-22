@@ -44,16 +44,7 @@ export default class APICallManager {
     }
 
     static login (mail, password, callback, errorCallback) {
-        const res = {
-            status: 200,
-            data: {
-                token: 'eKoYea331nJhfnqIzeLap8jSd4SddpalqQ93Nn2',
-                pseudo: 'adam',
-                isAdmin: 'true',
-                profileImageLink: 'http://localhost:4242/images/default.svg'
-            }
-        }
-        callback(res);
+        axios.post(APICallManager.backUrl + '/users/login/', { mail, password }).then(callback).catch(errorCallback);
     }
 
     static async register (mail, pseudo, password, callback, errorCallback) {
