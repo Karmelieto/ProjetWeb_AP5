@@ -24,14 +24,22 @@ class Login extends React.Component {
     }
 
     onLoginClicked (event) {
+        this.removeErrorOnInput('emailInput');
+        this.removeErrorOnInput('passwordInput');
         event.preventDefault();
         if (this.handleValidation()) {
-            this.setState({ isLoading: true });
             APICallManager.login(this.state.emailInput, this.state.passwordInput, (response) => {
-                this.setState({ isLoading: false });
                 localStorage.setItem('user', JSON.stringify(response.data));
                 this.props.updateUser();
                 this.props.history.goBack();
+            }, (error) => {
+                if (error.response.data.statusCode === 404) {
+                    this.setErrorOnInput('emailInput');
+                    this.setState({ emailError: 'Email is not in our database.' });
+                } else if (error.response.data.statusCode === 401) {
+                    this.setErrorOnInput('passwordInput');
+                    this.setState({ passwordError: 'Password is wrong.' });
+                }
             });
         }
     }
