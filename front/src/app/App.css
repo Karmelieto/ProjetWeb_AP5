@@ -43,6 +43,11 @@ body, html {
     border-radius: 10px;
 }
 
+.user-pic:hover {
+    border: 2px solid var(--color-primary-dark);
+    transition: border 0.3s;
+}
+
 .clear-link-decoration {
     color: var(--color-black) !important;
     text-decoration: none !important;
@@ -76,6 +81,18 @@ body, html {
     cursor: pointer;
 }
 
+input {
+    height: 34px;
+    font-size: 18px;
+    max-width: 45%;
+    min-width: 35%;
+    width: auto;
+    border : 2px solid var(--color-grey);
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 5px;
+}
+
 .transform-60 {
     transform: translateX(-60%);
 }
@@ -87,6 +104,8 @@ body, html {
     min-width: 150px;
     box-shadow: 0px 8px 16px 0px var(--color-grey);
     z-index: 1;
+    right: 0;
+    left: 0;
 }
 
 .dropdown {
@@ -100,7 +119,7 @@ body, html {
     padding: 12px 16px;
     text-decoration: none;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-around;
 }
 
@@ -115,4 +134,10 @@ body, html {
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+@media only screen and (min-width: 768px) {
+    input {
+        max-width: 65%;
+    }
 }

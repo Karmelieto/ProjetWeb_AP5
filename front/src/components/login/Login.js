@@ -20,7 +20,14 @@ class Login extends React.Component {
     };
 
     onBackClicked (event) {
-        this.props.history.goBack();
+        const comingFrom = this.props.history.location.search.split('=')[1];
+        console.log(comingFrom);
+        if (comingFrom === 'postpublication' || comingFrom === 'play') {
+            this.props.history.goBack();
+            this.props.history.goBack();
+        } else {
+            this.props.history.goBack();
+        } 
     }
 
     onLoginClicked (event) {

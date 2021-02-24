@@ -10,25 +10,14 @@
 }
 
 .input-button > input {
-    height: 34px;
-    font-size: 18px;
-    max-width: 45%;
-    min-width: 35%;
-    width: auto;
-    border : 2px solid var(--color-grey);
     border-radius: 5px 0px 0px 5px;
-    padding-left: 5px;
 }
 
 .input-button button {
     border-radius: 0px 5px 5px 0px;
 }
 
-.transform-for-search {
-    transform: translateX(22%);
-}
-
-.limit-height {
+.limit-size {
     max-height: 150px;
     overflow: hidden;
     overflow-y:scroll;
@@ -36,9 +25,6 @@
 
 
 @media only screen and (min-width: 768px) {
-    .transform-for-search {
-        transform: translateX(18%);
-    }
 
     .input-button > input {
         max-width: 65%;

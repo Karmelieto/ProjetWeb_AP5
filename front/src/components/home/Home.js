@@ -43,7 +43,7 @@ class Home extends React.Component {
                             <div>
                                 {
                                     !user
-                                    ? <Link to="/login">
+                                    ? <Link to="/login?comingFrom=home">
                                         <button className="button-marble">
                                             Log in
                                         </button>

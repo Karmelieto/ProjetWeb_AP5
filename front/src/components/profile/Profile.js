@@ -62,7 +62,7 @@ class Profile extends React.Component {
                                         ? <Link to={'/profile/' + userConnected.pseudo} >
                                             <img className="user-pic" src={userConnected.profileImageLink}/>
                                         </Link>
-                                        : <Link to="/login">
+                                        : <Link to="/login?comingFrom=profile">
                                             <button className="button-marble">
                                                 Log in
                                             </button>
