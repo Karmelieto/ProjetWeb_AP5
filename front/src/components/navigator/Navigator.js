@@ -91,9 +91,8 @@ class Navigator extends React.Component {
                             : <Profile user={user}/>
                         }
                     </Route>
-                    </Route>
                     <Route path='/publication'>
-                        <Publication user={user} setTag={setTag} />
+                        <Publication user={user} setTag={this.setTag} />
                     </Route>
                 </Switch>
             </div>
