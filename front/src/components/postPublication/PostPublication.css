@@ -1,7 +1,63 @@
-.postPublication {
+.post-publication {
     display: flex;
     flex-direction: column;
     justify-content: center;
     flex-wrap: nowrap;
     align-self: center;
+}
+
+.publication-select {
+    width: 100%;
+    height: fit-content;
+    border-bottom: 2px solid var(--color-black);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.publication-select > img {
+    max-width: 300px;
+}
+
+.publication-select > input {
+    margin: 10px;
+    font-size: 12px;
+}
+
+
+.publication-tags {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    flex-wrap: wrap;
+    align-self: center;
+    width: 90%;
+    min-height: 45px;
+    border-bottom: 2px solid var(--color-black);
+    border-left: 2px solid var(--color-black);
+    border-right: 2px solid var(--color-black);
+}
+
+.publication-tag {
+    margin: 5px;
+    width: fit-content;
+    border-radius: 5px;
+    border: 2px solid var(--color-black);
+    padding: 5px;
+    cursor: pointer;
+    transition: border 0.3s ease-in-out;
+}
+
+.publication-tag:hover {
+    border: 2px solid var(--color-error);
+    transition: border 0.3s ease-in-out;
+}
+
+.delete-tag {
+    padding-left: 5px;
+    width: 10px;
+    
 }

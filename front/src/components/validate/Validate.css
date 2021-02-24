@@ -1,0 +1,18 @@
+.validate {
+    position: relative;
+    cursor: pointer;
+}
+
+.validate-check {
+    position: absolute;
+    width: 50px;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    transition: transform .4s ease-in-out;
+}
+
+.validate:hover > .validate-check {
+    transform: rotate(-360deg) scale(1.1);
+}
