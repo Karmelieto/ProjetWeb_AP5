@@ -22,7 +22,7 @@ class Menu extends React.Component {
 
     render () {
         const location = this.state.location;
-        const isGoodLocation = (location !== '/login' && location !== '/register');
+        const isGoodLocation = (location !== '/login' && location !== '/register' && location !== '/publication/post');
         
         return (
             <div className="flex-footer">

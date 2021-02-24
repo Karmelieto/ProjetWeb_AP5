@@ -39,7 +39,6 @@ class SearchTag extends React.Component {
                 pseudo = this.props.user.pseudo;
             }
             APICallManager.getTagsByName(tagName, pseudo, (response) => {
-                response.data.map((tag, index) => (tag.key = index));
                 this.setState({
                     tags: response.data
                 });
@@ -55,7 +54,6 @@ class SearchTag extends React.Component {
         if (tagName) {
             this.setState({ isLoading: true });
             APICallManager.getPublicationsByTag(tagName, (response) => {
-                response.data.map((post, index) => (post.key = index));
                 this.setState({
                     publications: response.data,
                     isLoading: false
@@ -102,7 +100,7 @@ class SearchTag extends React.Component {
                             <div>
                                 {
                                     !user
-                                    ? <Link to="/login">
+                                    ? <Link to="/login?comingFrom=searchtag">
                                         <button className="button-marble">
                                             Log in
                                         </button>

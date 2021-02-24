@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const SearchList = ({ elements, actionOnClick, type }) => {
-
+    console.log(elements);
     function onItemSelected (value) {
         const el = document.getElementById('options');
         el.style.display = 'none';
@@ -13,10 +13,10 @@ const SearchList = ({ elements, actionOnClick, type }) => {
     }
 
     return (
-        <div id="options" className="dropdown-content transform-for-search limit-height">
+        <div id="options" className="dropdown-content limit-size">
             {
-                elements.map(el => (
-                    <a onClick={ () => onItemSelected(el.name) } key={el.key} >{type} {el.name}</a>
+                elements.map((el, index) => (
+                    <a onClick={ () => onItemSelected(el.name) } key={index} >{type} {el.name}</a>
                 ))
             }
         </div>
