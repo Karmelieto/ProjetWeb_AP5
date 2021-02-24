@@ -70,7 +70,7 @@ class Publication extends React.Component {
                                 <img className="user-pic" src={userConnected.profileImageLink}/>
                             </Link>
                             : <Link to="/login">
-                                <button>
+                                <button className="button-marble">
                                     Log in
                                 </button>
                             </Link>

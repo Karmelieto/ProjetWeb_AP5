@@ -11,7 +11,7 @@
 
 .publication-informations{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     margin-top: 15px;
     padding: 10px;
@@ -20,11 +20,21 @@
 .publication-tags{
     display: flex;
     flex-direction: column;
+    overflow: auto;
+    max-height: 50px;
+}
+
+.publication-tags > p {
+    padding-right: 5px;
+}
+
+.publication-votes {
+    margin-left: -40px;
 }
 
 .publication-description {
     text-align: justify;
-    padding: 15px;
+    padding-top: 10px;
 }
 
 .vote-img {
@@ -38,6 +48,7 @@
     cursor: pointer;
 }
 
+
 @media only screen and (min-width: 768px) {
 
     .publication-page{
@@ -47,7 +58,11 @@
     .publication-img{
         border: 2px solid;
         border-radius: 10px;
-        max-height: 600px;
-        max-width: 650px;
+        max-height: 800px;
+        max-width: 750px;
+    }
+
+    .publication-description {
+        padding-top: 25px;
     }
 }
