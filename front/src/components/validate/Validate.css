@@ -1,6 +1,7 @@
 .validate {
     position: relative;
     cursor: pointer;
+    animation: fadeIn 0.2s linear;
 }
 
 .validate-check {

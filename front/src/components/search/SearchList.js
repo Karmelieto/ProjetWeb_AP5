@@ -16,7 +16,7 @@ const SearchList = ({ elements, actionOnClick, type }) => {
         <div id="options" className="dropdown-content limit-size">
             {
                 elements.map((el, index) => (
-                    <a onClick={ () => onItemSelected(el.name) } key={index} >{type} {el.name}</a>
+                    <a onClick={ () => onItemSelected(el) } key={index} >{type} {(type === 'Φ') ? el.name : el.pseudo} <img src={(type === 'Φ') ? el.imageLink : el.profileImageLink}/></a>
                 ))
             }
         </div>

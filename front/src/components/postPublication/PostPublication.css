@@ -17,16 +17,33 @@
     justify-content: center;
 }
 
-
 .publication-select > img {
     max-width: 300px;
+    max-height: 300px;
 }
 
-.publication-select > input {
+input[type="file"] {
+    display: none;
+}
+.custom-file-input {
     margin: 10px;
-    font-size: 12px;
+    border: 1px solid var(--color-black);
+    transition: border 0.2s ease-in-out;
+    box-shadow: 0px 4px 10px 2px var(--color-grey);
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
 }
 
+.custom-file-input:hover {
+    border: 1px solid var(--color-primary-dark);
+    transition: border 0.2s ease-in-out;
+}
+
+.custom-file-input > img {
+    width: 20px;
+    vertical-align: top;
+}
 
 .publication-tags {
     display: flex;
@@ -39,25 +56,68 @@
     border-bottom: 2px solid var(--color-black);
     border-left: 2px solid var(--color-black);
     border-right: 2px solid var(--color-black);
+    box-shadow: 0px 4px 10px 2px var(--color-grey);
 }
 
 .publication-tag {
     margin: 5px;
     width: fit-content;
     border-radius: 5px;
-    border: 2px solid var(--color-black);
+    border: 2px solid;
     padding: 5px;
     cursor: pointer;
-    transition: border 0.3s ease-in-out;
+    transition: border 0.2s ease-in-out;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
 }
 
 .publication-tag:hover {
-    border: 2px solid var(--color-error);
-    transition: border 0.3s ease-in-out;
+    border: 2px solid var(--color-error) !important;
+    transition: border 0.2s ease-in-out;
 }
 
 .delete-tag {
     padding-left: 5px;
     width: 10px;
-    
+}
+
+.publication-description {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.publication-description > textarea {
+    width: 100%;
+    resize: none;
+    font-size: 14px;
+    height: 120px;
+    padding: 5px;
+}
+
+.publication-is-private {
+    border-top: 2px solid var(--color-black);
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.input-large {
+    max-width: 100% !important;
+    margin-right: 10px;
+}
+
+.publication-is-private > .dropdown {
+    flex-grow: 1;
+}
+
+.publication-is-private > .publication-tags {
+    flex-grow: 3;
+}
+
+@media only screen and (min-width: 768px) {
+    .publication-select > img {
+        max-width: 600px;
+        max-height: 400px;
+    }
 }
