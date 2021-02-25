@@ -13,6 +13,8 @@ export class PublicationsService {
     private publicationModel: Model<PublicationDocument>
   ) {}
 
+  CLOUD_URL: string = 'http://89.158.244.191:17001/images';
+
   async findAll (): Promise<Publication[]> {
     return this.publicationModel.find().exec()
   }
@@ -72,16 +74,21 @@ export class PublicationsService {
     createdPost.rank = 0;
     createdPost.points = 0;
 
-    const newImageLink = createPostDto.pseudo + '_' + dateString.replace(/[ :]/g, '_');
-    this.renameImageLink(createdPost.imageLink, newImageLink);
-    createdPost.imageLink = newImageLink;
+    if(createdPost.imageLink.indexOf('default') === -1) {
+      const newImageLink = createPostDto.pseudo + '_' + dateString.replace(/[ :]/g, '_');
+      createdPost.imageLink = await this.renameImageLink(createdPost.imageLink, newImageLink);
+    }
 
     return createdPost.save()
   }
 
-  renameImageLink (actualName: string, newName: string) {
-    axios.put('http://localhost:17001/images', { actualName: actualName, newName: newName}).catch((error) => {
+  async renameImageLink (actualName: string, newName: string): Promise<string> {
+    return axios.put(this.CLOUD_URL, { actualName: actualName, newName: newName})
+    .then((response) => {
+      return response.data;
+    }).catch((error) => {
       console.log(error);
+      return '';
     });
   }
 
