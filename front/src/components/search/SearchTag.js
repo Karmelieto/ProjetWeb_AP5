@@ -63,8 +63,8 @@ class SearchTag extends React.Component {
     }
 
     onTagSelected (clickedOn) {
-        this.setState({ inputSearch: clickedOn });
-        this.getPublications(clickedOn);
+        this.setState({ inputSearch: clickedOn.name });
+        this.getPublications(clickedOn.name);
     }
 
     handleInputChange (event) {

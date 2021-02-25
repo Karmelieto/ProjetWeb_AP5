@@ -70,6 +70,18 @@ export default class APICallManager {
         .then(callback)
         .catch(errorCallback);
     }
+    
+    static async createTag (tag, callback, errorCallback) {
+        axios.post(APICallManager.backUrl + '/tags', tag).then(callback).catch(errorCallback);
+    }
+
+    static async createPublication (publication, callback, errorCallback) {
+        axios.post(APICallManager.backUrl + '/publications', publication).then(callback).catch(errorCallback);
+    }
+
+    static async updateTagImage (tagName, imageLink, callback, errorCallback) {
+        axios.put(APICallManager.backUrl + '/tags', { name: tagName, newImageLink: imageLink }).then(callback).catch(errorCallback);
+    }
 };
 
 async function hashPassword (password) {

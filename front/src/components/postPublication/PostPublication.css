@@ -93,6 +93,8 @@ input[type="file"] {
     font-size: 14px;
     height: 120px;
     padding: 5px;
+    border-radius: 5px;
+    border: 1px solid var(--color-grey);
 }
 
 .publication-is-private {

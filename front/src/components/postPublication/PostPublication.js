@@ -42,7 +42,9 @@ class PostPublication extends React.Component {
     componentDidMount () {
         if (!this.props.user) {
             this.props.history.push('/login?comingFrom=postpublication');
+            return;
         }
+        this.onUserSelected({ pseudo: this.props.user.pseudo });
     }
 
     getTags (tagName) {
@@ -85,15 +87,60 @@ class PostPublication extends React.Component {
     }
 
     onValidate () {
-        
+        const tags = this.state.publication.tags.map(tag => tag);
+        const publication = this.state.publication;
+        if (!publication.tags || !this.state.usersAllow) return;
+
+        publication.tags.forEach(tag => {
+            if (tag.isPrivate) {
+                tag.usersAllow = this.state.usersAllow;
+                tag.imageLink = '';
+                APICallManager.createTag(tag);
+            } 
+        })
+
+        publication.tags = publication.tags.map(tag => tag.name);
+        console.log(publication.tags);
+        publication.pseudo = this.props.user.pseudo;
+        APICallManager.createPublication(publication, (response) => {
+            console.log(tags);
+            const maxPrivate = this.getNbPrivateTags(tags);
+            let nbPrivate = 0;
+            tags.forEach(tag => {
+                if (tag.isPrivate) {
+                    APICallManager.updateTagImage(tag.name, response.data.imageLink, () => {
+                        nbPrivate++;
+                        if (maxPrivate === nbPrivate) {
+                            this.props.history.push('/login/' + this.props.user.pseudo);
+                        }
+                    });
+                }
+            })
+        })
     }
 
     onTagSelected (clickedOn) {
         const publication = this.state.publication;
-        if (!publication.tags.includes(clickedOn.name)) {
+        if (!this.isTagAlreadyAdded(publication.tags, clickedOn)) {
             publication.tags.push(clickedOn);
+            this.setState({ publication: publication, tagsSearch: [], tagSearch: '', isTagAddedIsPrivate: this.isTagsArePrivate(publication.tags) });
         }
-        this.setState({ publication: publication, tagsSearch: [], tagSearch: '', isTagAddedIsPrivate: this.isTagsArePrivate(publication.tags) });
+    }
+
+    getNbPrivateTags (tags) {
+        let nb = 0;
+        tags.forEach(tag => {
+            if (tag.isPrivate) nb++;
+        });
+        return nb;
+    }
+
+    isTagAlreadyAdded (tags, tag) {
+        let isAlreadyAdded = false;
+        tags.forEach(el => {
+            if (el.name === tag.name) isAlreadyAdded = true;
+        })
+        return isAlreadyAdded;
     }
 
     onTagDeleted (tag) {
@@ -137,6 +184,7 @@ class PostPublication extends React.Component {
     }
 
     onUserDeleted (userName) {
+        if (userName === this.props.user.pseudo) return;
         const usersAllow = this.state.usersAllow;
         const index = usersAllow.indexOf(userName);
         if (index !== -1) {
