@@ -3,6 +3,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Publication, PublicationDocument } from './publication.schema'
 import { CreatePublicationDto } from './dto/create-publication.dto'
+import axios from 'axios'
 import * as util from 'util'
 
 @Injectable()
@@ -62,12 +63,27 @@ export class PublicationsService {
         HttpStatus.FORBIDDEN
       )
     }
+
+    const date = new Date();
+    const dateString = date.toDateString() + " " + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+
+    createdPost.date = dateString;
+    createdPost.nbVotes = 0;
+    createdPost.rank = 0;
+    createdPost.points = 0;
+
+    const newImageLink = createPostDto.pseudo + '_' + dateString.replace(/[ :]/g, '_');
+    this.renameImageLink(createdPost.imageLink, newImageLink);
+    createdPost.imageLink = newImageLink;
+
     return createdPost.save()
   }
 
-  /* async update (updateUserDto: CreateUserDto) {
-
-  } */
+  renameImageLink (actualName: string, newName: string) {
+    axios.put('http://localhost:17001/images', { actualName: actualName, newName: newName}).catch((error) => {
+      console.log(error);
+    });
+  }
 
   async remove (id: number) {
     const res = await this.publicationModel.deleteOne({ id: id })
