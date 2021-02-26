@@ -5,7 +5,7 @@ import APICallManager from '../../app/APICallManager';
 import back from '../../images/back.svg';
 
 import Banner from '../banner/Banner';
-import Loading from '../loading/Loading';
+import LoadingPage from '../loading/LoadingPage';
 import Container from '../container/Container';
 import ProfileInformation from './ProfileInformation';
 import Gallery from '../gallery/Gallery';
@@ -76,7 +76,7 @@ class Profile extends React.Component {
                     <Container>
                         <div>
                             {isLoading
-                                ? <Loading/>
+                                ? <LoadingPage/>
                                 : <div>
                                     <ProfileInformation user={user}/>
                                     <Gallery publications={publications}/>

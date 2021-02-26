@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import APICallManager from '../../app/APICallManager';
 import logo from '../../images/logo.svg'
 import Banner from '../banner/Banner';
-import Loading from '../loading/Loading';
+import LoadingPage from '../loading/LoadingPage';
 import Container from '../container/Container';
 import Gallery from '../gallery/Gallery'
 import PropTypes from 'prop-types';
@@ -116,7 +116,7 @@ class SearchTag extends React.Component {
                     <Container>
                         <div className='search'>
                             {isLoading
-                                ? <Loading/>
+                                ? <LoadingPage/>
                                 : <Gallery publications={publications} />
                             }  
                           </div>

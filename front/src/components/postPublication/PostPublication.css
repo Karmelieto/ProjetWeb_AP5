@@ -17,9 +17,14 @@
     justify-content: center;
 }
 
-.publication-select > img {
-    max-width: 300px;
-    max-height: 300px;
+.publication-select-contains-img {
+    width: 350px;
+    height: 203px;
+}
+
+.publication-select-img {
+    max-width: 350px;
+    max-height: 203px;
 }
 
 input[type="file"] {
@@ -118,8 +123,13 @@ input[type="file"] {
 }
 
 @media only screen and (min-width: 768px) {
-    .publication-select > img {
+    .publication-select-img {
         max-width: 600px;
-        max-height: 400px;
+        max-height: 350px;
+    }
+
+    .publication-select-contains-img {
+        width: 600px;
+        height: 350px;
     }
 }

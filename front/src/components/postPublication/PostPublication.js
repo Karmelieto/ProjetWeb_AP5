@@ -6,6 +6,7 @@ import back from '../../images/back.svg';
 import cross from '../../images/cross.svg';
 import post from '../../images/post.svg';
 import Banner from '../banner/Banner';
+import LoadingElement from '../loading/LoadingElement';
 import Container from '../container/Container';
 import SearchList from '../search/SearchList';
 import Validate from '../validate/Validate';
@@ -19,6 +20,7 @@ class PostPublication extends React.Component {
         this.state = {
             tagsSearch: [],
             usersSearch: [],
+            isImageLoading: false,
             publication: {
                 tags: [],
                 imageLink: 'http://89.158.244.191:17001/images/default.svg',
@@ -89,7 +91,7 @@ class PostPublication extends React.Component {
     onValidate () {
         const tags = this.state.publication.tags.map(tag => tag);
         const publication = this.state.publication;
-        if (!publication.tags || !this.state.usersAllow) return;
+        if (!publication.tags || !this.state.usersAllow || this.isImageLoading) return;
 
         publication.tags.forEach(tag => {
             if (tag.isPrivate) {
@@ -106,16 +108,20 @@ class PostPublication extends React.Component {
             console.log(tags);
             const maxPrivate = this.getNbPrivateTags(tags);
             let nbPrivate = 0;
-            tags.forEach(tag => {
-                if (tag.isPrivate) {
-                    APICallManager.updateTagImage(tag.name, response.data.imageLink, () => {
-                        nbPrivate++;
-                        if (maxPrivate === nbPrivate) {
-                            this.props.history.push('/login/' + this.props.user.pseudo);
-                        }
-                    });
-                }
-            })
+            if (this.state.isTagAddedIsPrivate) {
+                tags.forEach(tag => {
+                    if (tag.isPrivate) {
+                        APICallManager.updateTagImage(tag.name, response.data.imageLink, () => {
+                            nbPrivate++;
+                            if (maxPrivate === nbPrivate) {
+                                this.props.history.push('/profile/' + this.props.user.pseudo);
+                            }
+                        });
+                    }
+                })
+            } else {
+                this.props.history.push('/profile/' + this.props.user.pseudo);
+            }
         })
     }
 
@@ -164,11 +170,11 @@ class PostPublication extends React.Component {
 
     onFileUpdated (event) {
         const file = event.target.files[0];
-        console.log(file);
+        this.setState({ isImageLoading: true })
         APICallManager.uploadImage(this.props.user.token, file, (response) => {
             const publication = this.state.publication;
             publication.imageLink = response.data;
-            this.setState({ publication: publication });
+            this.setState({ publication: publication, isImageLoading: false });
         },
         (error) => {
             console.log(error.response);
@@ -227,6 +233,7 @@ class PostPublication extends React.Component {
         const isTagAddedIsPrivate = this.state.isTagAddedIsPrivate;
         if (isTagsSearchUpdated && tagSearch.trim() !== '' && !tagsSearch.find(tag => { return (tag.name === tagSearch) })) tagsSearch.push({ name: tagSearch, isPrivate: true });
         const publication = this.state.publication;
+        const isImageLoading = this.state.isImageLoading;
         const usersAllow = this.state.usersAllow;
         return (
                 <div>
@@ -243,7 +250,7 @@ class PostPublication extends React.Component {
                         right = {
                             <div>
                             {
-                                publication.tags.length > 0 && ((isTagAddedIsPrivate && usersAllow.length > 0) || !isTagAddedIsPrivate) &&
+                                publication.tags.length > 0 && ((isTagAddedIsPrivate && usersAllow.length > 0) || !isTagAddedIsPrivate) && !isImageLoading &&
                                 <Validate onClick={this.onValidate}/>
                             }
                             </div>
@@ -252,7 +259,14 @@ class PostPublication extends React.Component {
                     <Container>
                         <div className='post-publication'>
                             <div className='publication-select'>
-                                <img src={publication.imageLink}/>
+                                <div className='publication-select-contains-img'>
+                                    {
+                                        isImageLoading
+                                        ? <LoadingElement/>
+                                        : <img className='publication-select-img' src={publication.imageLink}/>
+                                    }
+                                </div>
+                                
                                 <label className="custom-file-input">
                                     <input type="file" onChange={this.onFileUpdated} />
                                     <img src={post}/> Add image
