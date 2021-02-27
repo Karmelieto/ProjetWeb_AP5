@@ -8,6 +8,7 @@ import Login from '../login/Login';
 import Register from '../register/Register';
 import Profile from '../profile/Profile';
 import MyProfile from '../profile/MyProfile';
+import Publication from '../publication/Publication';
 import PostPublication from '../postPublication/PostPublication';
 
 class Navigator extends React.Component {
@@ -90,7 +91,9 @@ class Navigator extends React.Component {
                             : <Profile user={user}/>
                         }
                     </Route>
-    
+                    <Route path='/publication'>
+                        <Publication user={user} setTag={this.setTag} />
+                    </Route>
                 </Switch>
             </div>
         );

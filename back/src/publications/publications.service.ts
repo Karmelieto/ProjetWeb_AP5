@@ -20,18 +20,18 @@ export class PublicationsService {
   }
 
   async findAllByTag (tag: string): Promise<Publication[]> {
-    const totalCount = await this.publicationModel.find().countDocuments();
+    const totalCount = await this.publicationModel.find().countDocuments()
     return this.publicationModel.aggregate([
       { $sample: { size: totalCount } },
-      { $match:  {"tags": tag} },
-      { $project: { imageLink: 1, rank: 1} }
-    ]);
+      { $match: { tags: tag } },
+      { $project: { imageLink: 1, rank: 1 } }
+    ])
   }
 
   async findAllByPseudo (pseudo: string): Promise<Publication[]> {
     return this.publicationModel.find(
       {
-        "pseudo": pseudo
+        pseudo: pseudo
       },
       {
         imageLink: 1,
@@ -45,21 +45,21 @@ export class PublicationsService {
       {
         _id:
           {
-            $in : ids
+            $in: ids
           }
       },
-      { imageLink: 1, rank: 1}
+      { imageLink: 1, rank: 1 }
     ).exec()
   }
 
   async findOne (id: string): Promise<Publication> {
-    return await this.publicationModel.findOne({ id: id })
+    return this.publicationModel.findOne({ _id: id })
   }
 
   async create (createPostDto: CreatePublicationDto): Promise<Publication> {
     const createdPost = new this.publicationModel(createPostDto)
 
-    if(!createdPost.tags || createdPost.tags.length === 0) {
+    if (!createdPost.tags || createdPost.tags.length === 0) {
       throw new HttpException(
         util.format('The publication %s doesn\'t have any tags', createdPost.id),
         HttpStatus.FORBIDDEN
