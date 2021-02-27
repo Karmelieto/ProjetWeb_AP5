@@ -10,7 +10,7 @@ import publicationsIcon from '../../images/publications.svg';
 import favoritesIcon from '../../images/heart_fill.svg';
 
 import Banner from '../banner/Banner';
-import Loading from '../loading/Loading';
+import LoadingPage from '../loading/LoadingPage';
 import Container from '../container/Container';
 import ProfileInformation from './ProfileInformation';
 import Popup from '../popup/Popup';
@@ -136,7 +136,7 @@ class MyProfile extends React.Component {
                     <Container>
                         <div>
                             {isLoading
-                                ? <Loading/>
+                                ? <LoadingPage/>
                                 : <div>
                                     <ProfileInformation user={user}/>
                                     {

@@ -71,7 +71,7 @@ export class PublicationsController {
     summary: 'Create a publication'
   })
   async create (@Body() createPublicationDto: CreatePublicationDto) {
-    await this.publicationsService.create(createPublicationDto)
+    return await this.publicationsService.create(createPublicationDto)
   }
 
   @Put(':id')

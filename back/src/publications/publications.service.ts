@@ -3,6 +3,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Publication, PublicationDocument } from './publication.schema'
 import { CreatePublicationDto } from './dto/create-publication.dto'
+import axios from 'axios'
 import * as util from 'util'
 
 @Injectable()
@@ -11,6 +12,8 @@ export class PublicationsService {
     @InjectModel(Publication.name)
     private publicationModel: Model<PublicationDocument>
   ) {}
+
+  CLOUD_URL: string = 'http://89.158.244.191:17001/images';
 
   async findAll (): Promise<Publication[]> {
     return this.publicationModel.find().exec()
@@ -62,12 +65,32 @@ export class PublicationsService {
         HttpStatus.FORBIDDEN
       )
     }
+
+    const date = new Date();
+    const dateString = date.toDateString() + " " + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+
+    createdPost.date = dateString;
+    createdPost.nbVotes = 0;
+    createdPost.rank = 0;
+    createdPost.points = 0;
+
+    if(createdPost.imageLink.indexOf('default') === -1) {
+      const newImageLink = createPostDto.pseudo + '_' + dateString.replace(/[ :]/g, '_');
+      createdPost.imageLink = await this.renameImageLink(createdPost.imageLink, newImageLink);
+    }
+
     return createdPost.save()
   }
 
-  /* async update (updateUserDto: CreateUserDto) {
-
-  } */
+  async renameImageLink (actualName: string, newName: string): Promise<string> {
+    return axios.put(this.CLOUD_URL, { actualName: actualName, newName: newName})
+    .then((response) => {
+      return response.data;
+    }).catch((error) => {
+      console.log(error);
+      return '';
+    });
+  }
 
   async remove (id: number) {
     const res = await this.publicationModel.deleteOne({ id: id })

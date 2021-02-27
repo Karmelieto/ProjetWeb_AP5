@@ -13,6 +13,10 @@
     padding: 10px 0px 10px 0px;
 }
 
+.banner > div {
+    min-width: 50px;
+}
+
 .banner-left {
     margin-left: 20px;
 }

@@ -131,7 +131,7 @@ export class UsersService {
 
       if (!createdUser.profileImageLink) {
         createdUser.profileImageLink =
-          'http://localhost:4242/images/default.svg'
+          'http://89.158.244.191:17001/images/default.svg'
       }
 
       await createdUser.save()

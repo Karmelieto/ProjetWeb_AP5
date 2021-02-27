@@ -3,7 +3,7 @@ import React from 'react';
 
 /* CSS FOUND HERE : https://codepen.io/ahmadbassamemran/pen/bXRPdr */
 
-const Loading = () => {
+const  LoadingPage = () => {
     return (
         <div className="loading">
             <div className="circle"></div>
@@ -17,4 +17,4 @@ const Loading = () => {
     );
 }
 
-export default Loading;
+export default LoadingPage;
