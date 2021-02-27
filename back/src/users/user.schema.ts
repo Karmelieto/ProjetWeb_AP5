@@ -31,6 +31,9 @@ export class User {
 
   @Prop()
   rewards: Reward[];
+
+  @Prop()
+  token: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)

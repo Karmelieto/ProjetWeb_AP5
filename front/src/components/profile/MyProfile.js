@@ -47,6 +47,7 @@ class MyProfile extends React.Component {
             this.onPublicationsClicked(response.data.pseudo);
         }, (error) => {
             console.log(error);
+            this.props.history.push('/');
         });
     }
     
@@ -71,7 +72,7 @@ class MyProfile extends React.Component {
         if (!this.state.user || !this.props.user) return;
         APICallManager.deleteUser(this.state.user.pseudo, this.props.user.pseudo);
         this.setState({ isPopupDisplay: true });
-        this.props.history.goBack();
+        this.onDisconnect();
     }
 
     onPublicationsClicked (pseudo) {

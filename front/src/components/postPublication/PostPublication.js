@@ -258,12 +258,12 @@ class PostPublication extends React.Component {
                     />
                     <Container>
                         <div className='post-publication'>
-                            <div className='publication-select'>
-                                <div className='publication-select-contains-img'>
+                            <div className='post-publication-select'>
+                                <div className='post-publication-select-contains-img'>
                                     {
                                         isImageLoading
                                         ? <LoadingElement/>
-                                        : <img className='publication-select-img' src={publication.imageLink}/>
+                                        : <img className='post-publication-select-img' src={publication.imageLink}/>
                                     }
                                 </div>
                                 
@@ -272,30 +272,30 @@ class PostPublication extends React.Component {
                                     <img src={post}/> Add image
                                 </label>
                             </div>
-                            <div className='publication-tags'>
+                            <div className='post-publication-tags'>
                                 {
                                     publication.tags.map((tag, index) => (
-                                        <div className='publication-tag' style={{ borderColor: (tag.isPrivate) ? 'var(--color-primary-dark)' : 'var(--color-black)' }} key={index} onClick={() => this.onTagDeleted(tag)}>
+                                        <div className='post-publication-tag' style={{ borderColor: (tag.isPrivate) ? 'var(--color-primary-dark)' : 'var(--color-black)' }} key={index} onClick={() => this.onTagDeleted(tag)}>
                                             <label>&#x3A6; {tag.name}</label>
                                             <img className='delete-tag' src={cross}/>
                                         </div>
                                     ))
                                 }
                             </div>
-                            <div className='publication-description'>
+                            <div className='post-publication-description'>
                                 <textarea value={publication.description} onChange={(event) => this.handleDescriptionChange(event)}/>
                             </div>
                             {
                                 isTagAddedIsPrivate &&
-                                <div className='publication-is-private'>
+                                <div className='post-publication-is-private'>
                                     <div className="dropdown">
                                         <input placeholder="Users allowed" className="input-large" value={userSearch} onChange={ event => this.handleUserInputChange(event)}/>
                                         <SearchList elements={usersSearch} actionOnClick={ this.onUserSelected } type=""/>
                                     </div>
-                                    <div className='publication-tags'>
+                                    <div className='post-publication-tags'>
                                         {
                                             usersAllow.map((user, index) => (
-                                                <div className='publication-tag' key={index} onClick={() => this.onUserDeleted(user)}>
+                                                <div className='post-publication-tag' key={index} onClick={() => this.onUserDeleted(user)}>
                                                     <label>{user}</label>
                                                     <img className='delete-tag' src={cross}/>
                                                 </div>

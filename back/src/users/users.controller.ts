@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
   Post,
   Put,
@@ -20,6 +22,7 @@ import {
   ApiResponse,
   ApiTags
 } from '@nestjs/swagger'
+import * as util from 'util'
 import { UpdateUserDto } from './dto/update-user.dto'
 import {LoginUserDto} from "./dto/login-user.dto";
 
@@ -41,7 +44,14 @@ export class UsersController {
     summary: 'Retrieve a user by his pseudo'
   })
   async findOne (@Param('pseudo') pseudo: string) {
-    return this.usersService.findOne(pseudo.toLowerCase())
+    const user = await this.usersService.findOne(pseudo.toLowerCase());
+    if(!user) {
+      throw new HttpException(
+        util.format('The user does not exist'),
+        HttpStatus.NOT_FOUND
+      )
+    }
+    return user; 
   }
 
   @Get('filter/:pseudo')
@@ -76,7 +86,7 @@ export class UsersController {
   async login (
       @Body() loginUserDto: LoginUserDto,
       @Res() res
-  ): Promise<any> {
+  ): Promise<User> {
     return res.json(await this.usersService.login(loginUserDto))
   }
 

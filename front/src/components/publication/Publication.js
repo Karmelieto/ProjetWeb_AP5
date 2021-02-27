@@ -6,12 +6,12 @@ import back from '../../images/back.svg';
 import options from '../../images/options.svg';
 
 import Banner from '../banner/Banner';
-import Loading from '../loading/Loading';
+import LoadingPage from '../loading/LoadingPage';
 import Container from '../container/Container';
 import PropTypes from 'prop-types';
-import reward from "../../images/reward.svg";
-import heartEmpty from "../../images/heart_empty.svg";
-import heartFill from "../../images/heart_fill.svg";
+import reward from '../../images/reward.svg';
+import heartEmpty from '../../images/heart_empty.svg';
+import heartFill from '../../images/heart_fill.svg';
 
 class Publication extends React.Component {
 
@@ -33,7 +33,7 @@ class Publication extends React.Component {
     }
 
     onFavoriteClicked (event) {
-        console.log("Clicked on favorite");
+        console.log('Clicked on favorite');
         this.setState({
             isFavorite: !this.state.isFavorite
         })
@@ -78,7 +78,7 @@ class Publication extends React.Component {
                 />
                 <Container>
                         {isLoading
-                            ? <Loading/>
+                            ? <LoadingPage/>
                             : <div className="publication-page">
                                 <img className="publication-img" src={publication.imageLink}/>
                                 <p className="publication-date"> {publication.date}</p>
