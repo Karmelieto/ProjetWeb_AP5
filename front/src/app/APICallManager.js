@@ -48,6 +48,10 @@ export default class APICallManager {
         axios.get(APICallManager.backUrl + '/publications/' + id).then(callback).catch(errorCallback);
     }
 
+    static getFavoritesOfUser (pseudo, callback, errorCallback) {
+        axios.get(APICallManager.backUrl + '/users/favorites/' + pseudo).then(callback).catch(errorCallback);
+    }
+
     static async login (mail, password, callback, errorCallback) {
         password = await hashPassword(password);
         axios.post(APICallManager.backUrl + '/users/login/', { mail, password }).then(callback).catch(errorCallback);
@@ -81,6 +85,14 @@ export default class APICallManager {
 
     static async updateTagImage (tagName, imageLink, callback, errorCallback) {
         axios.put(APICallManager.backUrl + '/tags', { name: tagName, newImageLink: imageLink }).then(callback).catch(errorCallback);
+    }
+
+    static async addPublicationToFavorites (pseudo, idPost, callback, errorCallback) {
+        axios.post(APICallManager.backUrl + '/users/favorites', { pseudo: pseudo, idPost: idPost }).then(callback).catch(errorCallback);
+    }
+
+    static async removePublicationFromFavorites (pseudo, idPost, callback, errorCallback) {
+        axios.delete(APICallManager.backUrl + '/users/favorites', { data: { pseudo: pseudo, idPost: idPost } }).then(callback).catch(errorCallback);
     }
 };
 

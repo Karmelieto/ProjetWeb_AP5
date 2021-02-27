@@ -91,8 +91,8 @@ class SearchUser extends React.Component {
                         <div className='search'>
                             {isLoading
                                 ? <LoadingPage/>
-                                : users.map(user => (
-                                    <Link style={{ textDecoration: 'none', color: '#0d0d0d', maxWidth: '200px' }} to={'/profile/' + user.pseudo} key={user.key}>
+                                : users.map((user, index) => (
+                                    <Link style={{ textDecoration: 'none', color: '#0d0d0d', maxWidth: '200px' }} to={'/profile/' + user.pseudo} key={index}>
                                         <UserListItem user={user}/>
                                     </Link>
                                 ))

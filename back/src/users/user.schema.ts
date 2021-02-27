@@ -27,7 +27,7 @@ export class User {
   isAdmin: boolean;
 
   @Prop()
-  favorites: number[];
+  favorites: string[];
 
   @Prop()
   rewards: Reward[];

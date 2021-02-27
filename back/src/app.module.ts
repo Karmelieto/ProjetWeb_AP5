@@ -9,7 +9,8 @@ import { ConfigModule } from "@nestjs/config";
   imports: [
     ConfigModule.forRoot(),
     MongooseModule.forRoot(
-      'mongodb+srv://' + process.env.DATABASE_USER + ':' + process.env.DATABASE_PASSWORD + '@cluster0.sbi0m.mongodb.net/toppics?retryWrites=true&w=majority'
+      'mongodb+srv://' + process.env.DATABASE_USER + ':' + process.env.DATABASE_PASSWORD + '@cluster0.sbi0m.mongodb.net/toppics?retryWrites=true&w=majority',
+      { useFindAndModify: false }
     ),
     UsersModule,
     PublicationsModule,

@@ -192,6 +192,35 @@ export class UsersService {
     }
   }
 
+  async getFavoritesOfUser (pseudo: string): Promise<string[]> {
+    const res = await this.userModel.findOne(
+      { pseudo: pseudo },
+      { favorites: 1 }
+    );
+
+    if(!res) return null;
+    return res.favorites;
+  }
+
+  async addFavoriteToUser (pseudo: string, postId: string): Promise<boolean> {
+    const user = await this.findOne(pseudo);
+    if (!user) return false;
+
+    if (user.favorites.includes(postId))
+      return false;
+    
+    await this.userModel.updateOne({ pseudo: user.pseudo }, { $push: { favorites : postId } });
+    return true;
+  }
+  
+  async removeFavoriteToUser (pseudo: string, postId: string): Promise<boolean> {
+    const user = await this.findOne(pseudo);
+    if (!user) return false;
+
+    await this.userModel.updateOne({ pseudo: user.pseudo }, { $pull: { favorites : postId } });
+    return true;
+  }
+
   async isUserExist (pseudo: string): Promise<boolean> {
     return !!(await this.findOne(pseudo))
   }

@@ -1,6 +1,3 @@
-.publication-page{
-    margin-top: 50px;
-}
 
 .publication-img{
     border: 2px solid;
@@ -46,20 +43,23 @@
     height: 50px;
     margin-top: 10px;
     cursor: pointer;
+    transform: scale(1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.favorite-img:hover {
+    transform: scale(1.2);
+    transition: transform 0.2s ease-in-out;
 }
 
 
 @media only screen and (min-width: 768px) {
 
-    .publication-page{
-        margin-top: 100px;
-    }
-
     .publication-img{
         border: 2px solid;
         border-radius: 10px;
-        max-height: 800px;
-        max-width: 750px;
+        max-height: 700px;
+        max-width: 650px;
     }
 
     .publication-description {
