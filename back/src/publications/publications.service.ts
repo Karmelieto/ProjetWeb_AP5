@@ -13,7 +13,7 @@ export class PublicationsService {
     private publicationModel: Model<PublicationDocument>
   ) {}
 
-  CLOUD_URL: string = 'http://89.158.244.191:17001/images';
+  CLOUD_URL: string = 'http://localhost:17001/images';
 
   async findAll (): Promise<Publication[]> {
     return this.publicationModel.find().exec()
@@ -92,24 +92,20 @@ export class PublicationsService {
     });
   }
 
-  async remove (id: number) {
-    const res = await this.publicationModel.deleteOne({ id: id })
-    if (res.result.ok === 1 && res.result.n === 1) {
-      return {
-        status: 204,
-        message: util.format(
-          'Publication with the id %s successfully deleted',
-          id
-        )
-      }
+  async remove (id: string) : Promise<boolean> {
+    const publication = await this.findOne(id);
+    if(!publication) {
+      return false;
     }
-    return {
-      status: 404,
-      message: util.format(
-        'An error occured when trying to remove the publication with the id : %s ',
-        id
-      )
+
+    axios.delete(this.CLOUD_URL, { data : { url: publication.imageLink } });
+
+    const res = await this.publicationModel.deleteOne({ _id: id })
+    console.log(res);
+    if (res.ok === 0 || res.n === 0) {
+      return false
     }
+    return true
   }
 
   /*    getNextSequenceValue () {

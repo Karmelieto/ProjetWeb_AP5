@@ -7,6 +7,7 @@ export type PublicationDocument = Publication & Document;
 
 @Schema()
 export class Publication {
+
   @ApiProperty()
   @Prop()
   imageLink: string;
