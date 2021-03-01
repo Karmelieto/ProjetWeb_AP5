@@ -138,7 +138,6 @@ export class UsersService {
       await createdUser.save()
       const user: any = await this.findOneConnected(createdUser.pseudo);
       user.token = 'eKoYea331nJhfnqIzeLap8jSd4SddpalqQ93Nn2';
-      console.log(user.token);
       return user;
     }
   }
@@ -243,7 +242,8 @@ export class UsersService {
     }
 
     await axios.delete(this.SERVER_URL + 'publications/user/' + deleteUserDto.pseudo, { data: { pseudo: deleteUserDto.pseudoUserConnected, token: 'eKoYea331nJhfnqIzeLap8jSd4SddpalqQ93Nn2' } })
-    .catch((err) => console.error(err.response.statusText));
+    .catch((err) => console.error
+    (err.response.statusText));
     const res = await this.userModel.deleteOne({ pseudo: deleteUserDto.pseudo })
     if (res.deletedCount === 0) {
       throw new HttpException(
