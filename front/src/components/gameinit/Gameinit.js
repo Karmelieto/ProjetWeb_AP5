@@ -4,7 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 import APICallManager from '../../app/APICallManager';
 import logo from '../../images/logo.svg'
 import Banner from '../banner/Banner';
-import Loading from '../loading/Loading';
+import LoadingPage from '../loading/LoadingPage';
 import Container from '../container/Container';
 import PropTypes from 'prop-types';
 import SearchList from '../search/SearchList';
@@ -113,7 +113,7 @@ class Gameinit extends React.Component {
                     <div className='favoritesTags'>
                         <h1>Favorites Tags</h1>
                         {isLoading
-                            ? <Loading />
+                            ? <LoadingPage />
                             : tags.slice(0, 3).map((tag, index) => (
                                 <Link to={`/play/${tag.name}`} className="clear-link-decoration" key={index} onClick={ () => this.props.setTag(tag.name) }>
                                     <Tag tag={tag}/>
@@ -124,7 +124,7 @@ class Gameinit extends React.Component {
                     <div className="randomTag">
                         <h1>Random tag</h1>
                         {isLoading
-                            ? <Loading />
+                            ? <LoadingPage />
                             : tags.slice(0, 1).map((tag, index) => (
                                 <Link to={`/play/${tag.name}`} className="clear-link-decoration" key={index} onClick={ () => this.props.setTag(tag.name) }>
                                     <Tag tag={tag}/>

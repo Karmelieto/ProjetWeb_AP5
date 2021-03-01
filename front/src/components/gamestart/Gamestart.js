@@ -4,7 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 import APICallManager from '../../app/APICallManager';
 import logo from '../../images/logo.svg'
 import Banner from '../banner/Banner';
-import Loading from '../loading/Loading';
+import Loading from '../loading/LoadingPage';
 import Container from '../container/Container';
 import PropTypes from 'prop-types';
 import SearchList from '../search/SearchList';

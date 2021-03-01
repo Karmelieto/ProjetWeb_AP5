@@ -29,7 +29,7 @@ class Navigator extends React.Component {
         this.clearUser = this.clearUser.bind(this);
         this.setTag = this.setTag.bind(this);
     }
-   
+
     componentDidMount () {
         this.updateUser();
     }
@@ -48,7 +48,7 @@ class Navigator extends React.Component {
             this.setUser(undefined);
         }
     }
-    
+
     clearUser () {
         console.log('Clear');
         localStorage.clear();
@@ -58,7 +58,7 @@ class Navigator extends React.Component {
     setTag (tag) {
         this.setState({ tag: tag });
     }
-            
+
     render () {
         if (!this.state.isReady) return null;
         const user = this.state.user;
@@ -70,7 +70,7 @@ class Navigator extends React.Component {
                         <Home user={user} setTag={this.setTag} />
                     </Route>
                     <Route path='/search/users'>
-                        <SearchUser user={user}/>
+                        <SearchUser user={user} />
                     </Route>
                     <Route path='/search/tags'>
                         <SearchTag user={user} tag={tag} />
@@ -82,19 +82,25 @@ class Navigator extends React.Component {
                         <Register updateUser={this.updateUser} />
                     </Route>
                     <Route path='/publication/post'>
-                        <PostPublication user={user} updateUser={this.updateUser}/>
+                        <PostPublication user={user} updateUser={this.updateUser} />
                     </Route>
-                    <Route exact path={'/profile/' + (user ? user.pseudo : '') }>
+                    <Route exact path={'/profile/' + (user ? user.pseudo : '')}>
                         <MyProfile user={user} clearUser={this.clearUser} />
                     </Route>
                     <Route path='/profile'>
-                        { (user && user.isAdmin)
+                        {(user && user.isAdmin)
                             ? <MyProfile user={user} clearUser={this.clearUser} />
-                            : <Profile user={user}/>
+                            : <Profile user={user} />
                         }
                     </Route>
                     <Route path='/publication'>
                         <Publication user={user} setTag={this.setTag} />
+                    </Route>
+                    <Route exact path='/play'>
+                        <Gameinit user={user} setTag={this.setTag} />
+                    </Route>
+                    <Route name="gamestart" path='/play/'>
+                        <Gamestart user={user} setTag={this.setTag} />
                     </Route>
                 </Switch>
             </div>
