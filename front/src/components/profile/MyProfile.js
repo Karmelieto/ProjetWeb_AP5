@@ -72,7 +72,8 @@ class MyProfile extends React.Component {
         if (!this.state.user || !this.props.user) return;
         APICallManager.deleteUser(this.state.user.pseudo, this.props.user.pseudo);
         this.setState({ isPopupDisplay: true });
-        this.onDisconnect();
+        if (this.state.user.pseudo === this.props.user.pseudo) this.onDisconnect();
+        else this.props.history.push('/');
     }
 
     onPublicationsClicked (pseudo) {

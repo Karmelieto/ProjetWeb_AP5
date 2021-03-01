@@ -7,12 +7,14 @@ import { DeleteUserDto } from './dto/delete-user.dto'
 import * as util from 'util'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { LoginUserDto } from './dto/login-user.dto'
+import axios from 'axios'
 
 @Injectable()
 export class UsersService {
   constructor (@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   private readonly logger = new Logger(UsersService.name);
+  SERVER_URL: string = 'http://localhost:4242/';
 
   async findAll (): Promise<User[]> {
     return this.userModel
@@ -240,6 +242,8 @@ export class UsersService {
       }
     }
 
+    await axios.delete(this.SERVER_URL + 'publications/user/' + deleteUserDto.pseudo, { data: { pseudo: deleteUserDto.pseudoUserConnected, token: 'eKoYea331nJhfnqIzeLap8jSd4SddpalqQ93Nn2' } })
+    .catch((err) => console.error(err.response.statusText));
     const res = await this.userModel.deleteOne({ pseudo: deleteUserDto.pseudo })
     if (res.deletedCount === 0) {
       throw new HttpException(

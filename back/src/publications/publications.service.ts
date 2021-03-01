@@ -5,6 +5,7 @@ import { Publication, PublicationDocument } from './publication.schema'
 import { CreatePublicationDto } from './dto/create-publication.dto'
 import axios from 'axios'
 import * as util from 'util'
+import { json } from 'express'
 
 @Injectable()
 export class PublicationsService {
@@ -13,7 +14,8 @@ export class PublicationsService {
     private publicationModel: Model<PublicationDocument>
   ) {}
 
-  CLOUD_URL: string = 'http://localhost:17001/images';
+  CLOUD_URL: string = 'http://89.158.244.191:17001/images';
+  SERVER_URL: string = 'http://localhost:4242/';
 
   async findAll (): Promise<Publication[]> {
     return this.publicationModel.find().exec()
@@ -92,25 +94,51 @@ export class PublicationsService {
     });
   }
 
-  async remove (id: string) : Promise<boolean> {
+  async remove (id: string, pseudoUserConnected: string, token: string) : Promise<boolean> {
     const publication = await this.findOne(id);
-    if(!publication) {
+    if (!publication) {
       return false;
     }
 
-    axios.delete(this.CLOUD_URL, { data : { url: publication.imageLink } });
+    const isVerified = await this.verifyUserAndToken(publication.pseudo, pseudoUserConnected, token);
+    if(!isVerified) {
+      return false;
+    }
+
+    axios.delete(this.CLOUD_URL, { data : { url: publication.imageLink, token: token } });
 
     const res = await this.publicationModel.deleteOne({ _id: id })
-    console.log(res);
+
     if (res.ok === 0 || res.n === 0) {
       return false
     }
     return true
   }
 
-  /*    getNextSequenceValue () {
-    const sequenceDocument = this.userModel.estimatedDocumentCount();
-    console.log("NB DOCUMENT" + sequenceDocument.getQuery()._id);
-    return sequenceDocument.getQuery();
-  } */
+  async removeAllFromUser(pseudo: string, pseudoUserConnected: string, token: string) : Promise<boolean> {
+    const isVerified = await this.verifyUserAndToken(pseudo, pseudoUserConnected, token);
+    if(!isVerified) {
+      return false;
+    }
+
+    const publications = await this.publicationModel.find({ pseudo: pseudo },{ _id: 1 }).exec();
+    for(let i = 0; i < publications.length; i++) {
+      await this.remove(publications[i]._id, pseudoUserConnected, token);
+    }
+
+    console.log('All publications of %s have been deleted !', pseudo);
+    return true
+  }
+
+  async verifyUserAndToken (pseudo: string, pseudoUserConnected: string, token: string) {
+    if(token !== 'eKoYea331nJhfnqIzeLap8jSd4SddpalqQ93Nn2') {
+      return false;
+    }
+
+    const user = await axios.get(this.SERVER_URL + 'users/' + pseudoUserConnected).then((response) => response.data);
+    if (!user.isAdmin && pseudo !== pseudoUserConnected) {
+      return false;
+    }
+    return true;
+  }
 }
