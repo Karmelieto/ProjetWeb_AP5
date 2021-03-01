@@ -4,6 +4,7 @@
 }
 
 .user-profile {
+    padding-top: 25px;
     display: block;
     border-bottom: 2px solid var(--color-black);
 }
@@ -21,10 +22,11 @@
 }
 
 .user-datas img {
-    max-height: 200px;
+    max-height: 175px;
     max-width: 100%;
     height: auto;
     border-radius: 10px;
+    border: 2px solid;
 }
 
 .user-datas > p {
@@ -32,7 +34,7 @@
 }
 
 .user-rewards {
-    margin-top: 10px;
+    margin-top: 25px;
 }
 
 .user-rewards > * {

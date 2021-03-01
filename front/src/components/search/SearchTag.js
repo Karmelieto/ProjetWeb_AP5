@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import APICallManager from '../../app/APICallManager';
 import logo from '../../images/logo.svg'
 import Banner from '../banner/Banner';
-import Loading from '../loading/Loading';
+import LoadingPage from '../loading/LoadingPage';
 import Container from '../container/Container';
 import Gallery from '../gallery/Gallery'
 import PropTypes from 'prop-types';
@@ -39,7 +39,6 @@ class SearchTag extends React.Component {
                 pseudo = this.props.user.pseudo;
             }
             APICallManager.getTagsByName(tagName, pseudo, (response) => {
-                response.data.map((tag, index) => (tag.key = index));
                 this.setState({
                     tags: response.data
                 });
@@ -55,7 +54,6 @@ class SearchTag extends React.Component {
         if (tagName) {
             this.setState({ isLoading: true });
             APICallManager.getPublicationsByTag(tagName, (response) => {
-                response.data.map((post, index) => (post.key = index));
                 this.setState({
                     publications: response.data,
                     isLoading: false
@@ -65,8 +63,8 @@ class SearchTag extends React.Component {
     }
 
     onTagSelected (clickedOn) {
-        this.setState({ inputSearch: clickedOn });
-        this.getPublications(clickedOn);
+        this.setState({ inputSearch: clickedOn.name });
+        this.getPublications(clickedOn.name);
     }
 
     handleInputChange (event) {
@@ -102,7 +100,7 @@ class SearchTag extends React.Component {
                             <div>
                                 {
                                     !user
-                                    ? <Link to="/login">
+                                    ? <Link to="/login?comingFrom=searchtag">
                                         <button className="button-marble">
                                             Log in
                                         </button>
@@ -118,7 +116,7 @@ class SearchTag extends React.Component {
                     <Container>
                         <div className='search'>
                             {isLoading
-                                ? <Loading/>
+                                ? <LoadingPage/>
                                 : <Gallery publications={publications} />
                             }  
                           </div>

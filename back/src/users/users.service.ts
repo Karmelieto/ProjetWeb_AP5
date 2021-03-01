@@ -73,10 +73,9 @@ export class UsersService {
 
   async login (loginUserDto: LoginUserDto): Promise<any> {
     const user = new this.userModel(loginUserDto)
-    console.log(user)
+
     if (await this.isUserExistByMail(user.mail)) {
       const myUser = await this.findOneByMail(user.mail)
-      console.log(myUser)
       if (myUser.password === user.password) {
         return {
           pseudo: myUser.pseudo,
@@ -98,7 +97,7 @@ export class UsersService {
     }
   }
   
-  async create (createUserDto: CreateUserDto): Promise<User> {
+  async create (createUserDto: CreateUserDto): Promise<any> {
     const createdUser = new this.userModel(createUserDto)
 
     if (await this.isUserExist(createdUser.pseudo)) {
@@ -131,11 +130,14 @@ export class UsersService {
 
       if (!createdUser.profileImageLink) {
         createdUser.profileImageLink =
-          'http://localhost:4242/images/default.svg'
+          'http://89.158.244.191:17001/images/default.svg'
       }
 
       await createdUser.save()
-      return await this.findOneConnected(createdUser.pseudo)
+      const user: any = await this.findOneConnected(createdUser.pseudo);
+      user.token = 'eKoYea331nJhfnqIzeLap8jSd4SddpalqQ93Nn2';
+      console.log(user.token);
+      return user;
     }
   }
 
@@ -190,6 +192,35 @@ export class UsersService {
     }
   }
 
+  async getFavoritesOfUser (pseudo: string): Promise<string[]> {
+    const res = await this.userModel.findOne(
+      { pseudo: pseudo },
+      { favorites: 1 }
+    );
+
+    if(!res) return null;
+    return res.favorites;
+  }
+
+  async addFavoriteToUser (pseudo: string, postId: string): Promise<boolean> {
+    const user = await this.findOne(pseudo);
+    if (!user) return false;
+
+    if (user.favorites.includes(postId))
+      return false;
+    
+    await this.userModel.updateOne({ pseudo: user.pseudo }, { $push: { favorites : postId } });
+    return true;
+  }
+  
+  async removeFavoriteToUser (pseudo: string, postId: string): Promise<boolean> {
+    const user = await this.findOne(pseudo);
+    if (!user) return false;
+
+    await this.userModel.updateOne({ pseudo: user.pseudo }, { $pull: { favorites : postId } });
+    return true;
+  }
+
   async isUserExist (pseudo: string): Promise<boolean> {
     return !!(await this.findOne(pseudo))
   }
@@ -199,12 +230,14 @@ export class UsersService {
   }
 
   async remove (deleteUserDto: DeleteUserDto) {
-    const userConnected = await this.userModel.findOne({ pseudo: deleteUserDto.pseudoUserConnected }, { isAdmin: 1});
-    if(!userConnected.isAdmin) {
-      throw new HttpException(
-        util.format('The user connected %s might be an admin !', deleteUserDto.pseudoUserConnected),
-        HttpStatus.FORBIDDEN
-      )
+    if(deleteUserDto.pseudoUserConnected !== deleteUserDto.pseudo) {
+      const userConnected = await this.userModel.findOne({ pseudo: deleteUserDto.pseudoUserConnected }, { isAdmin: 1});
+      if(!userConnected.isAdmin) {
+        throw new HttpException(
+          util.format('The user connected %s might be an admin !', deleteUserDto.pseudoUserConnected),
+          HttpStatus.FORBIDDEN
+        )
+      }
     }
 
     const res = await this.userModel.deleteOne({ pseudo: deleteUserDto.pseudo })

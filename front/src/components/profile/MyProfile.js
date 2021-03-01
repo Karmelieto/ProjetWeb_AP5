@@ -10,7 +10,7 @@ import publicationsIcon from '../../images/publications.svg';
 import favoritesIcon from '../../images/heart_fill.svg';
 
 import Banner from '../banner/Banner';
-import Loading from '../loading/Loading';
+import LoadingPage from '../loading/LoadingPage';
 import Container from '../container/Container';
 import ProfileInformation from './ProfileInformation';
 import Popup from '../popup/Popup';
@@ -47,6 +47,7 @@ class MyProfile extends React.Component {
             this.onPublicationsClicked(response.data.pseudo);
         }, (error) => {
             console.log(error);
+            this.props.history.push('/');
         });
     }
     
@@ -71,7 +72,7 @@ class MyProfile extends React.Component {
         if (!this.state.user || !this.props.user) return;
         APICallManager.deleteUser(this.state.user.pseudo, this.props.user.pseudo);
         this.setState({ isPopupDisplay: true });
-        this.props.history.goBack();
+        this.onDisconnect();
     }
 
     onPublicationsClicked (pseudo) {
@@ -136,7 +137,7 @@ class MyProfile extends React.Component {
                     <Container>
                         <div>
                             {isLoading
-                                ? <Loading/>
+                                ? <LoadingPage/>
                                 : <div>
                                     <ProfileInformation user={user}/>
                                     {

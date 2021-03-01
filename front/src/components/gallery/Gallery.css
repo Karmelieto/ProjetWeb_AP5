@@ -7,11 +7,6 @@
     margin-top: 10px;
 }
 
-@keyframes fadeIn {
-    from{opacity: 0.3;}
-    to {opacity: 1;}
-}
-
 .gallery-container {
     position: relative;
 }

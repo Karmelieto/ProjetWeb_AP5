@@ -5,7 +5,7 @@ import back from '../../images/back.svg';
 import logo from '../../images/logo.svg';
 import Banner from '../banner/Banner';
 import Container from '../container/Container';
-import Loading from '../loading/Loading';
+import LoadingPage from '../loading/LoadingPage';
 import { NavLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -20,7 +20,14 @@ class Login extends React.Component {
     };
 
     onBackClicked (event) {
-        this.props.history.goBack();
+        const comingFrom = this.props.history.location.search.split('=')[1];
+        console.log(comingFrom);
+        if (comingFrom === 'postpublication' || comingFrom === 'play') {
+            this.props.history.goBack();
+            this.props.history.goBack();
+        } else {
+            this.props.history.goBack();
+        } 
     }
 
     onLoginClicked (event) {
@@ -110,7 +117,7 @@ class Login extends React.Component {
                     <Container>
                         <div className="full-page">
                             {isLoading
-                                ? <Loading/>
+                                ? <LoadingPage/>
                                 : <div className="login-content full-page">
                                     <img src={logo} className="logo margin-bottom"/>
                                     <span className="error">{emailError}</span>

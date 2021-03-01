@@ -27,10 +27,13 @@ export class User {
   isAdmin: boolean;
 
   @Prop()
-  favorites: number[];
+  favorites: string[];
 
   @Prop()
   rewards: Reward[];
+
+  @Prop()
+  token: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)

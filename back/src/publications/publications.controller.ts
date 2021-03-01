@@ -5,7 +5,8 @@ import {
   Get,
   Param,
   Post,
-  Put
+  Put,
+  Res
 } from '@nestjs/common'
 import {
   ApiCreatedResponse,
@@ -71,7 +72,7 @@ export class PublicationsController {
     summary: 'Create a publication'
   })
   async create (@Body() createPublicationDto: CreatePublicationDto) {
-    await this.publicationsService.create(createPublicationDto)
+    return await this.publicationsService.create(createPublicationDto)
   }
 
   @Put(':id')
@@ -95,7 +96,13 @@ export class PublicationsController {
   @ApiOperation({
     summary: 'Remove a publication by his id'
   })
-  async remove (@Param('id') id: number) {
-    await this.publicationsService.remove(id)
+  async remove (@Param('id') id: string, @Res() res) {
+    const isDeleted = await this.publicationsService.remove(id);
+
+    if(!isDeleted) {
+      res.sendStatus(404);
+    }
+
+    res.sendStatus(200);
   }
 }

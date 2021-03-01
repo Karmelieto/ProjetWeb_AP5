@@ -4,21 +4,25 @@ import { Link } from 'react-router-dom';
 import APICallManager from '../../app/APICallManager';
 import logo from '../../images/logo.svg'
 import Banner from '../banner/Banner';
-import Loading from '../loading/Loading';
+import LoadingPage from '../loading/LoadingPage';
 import Container from '../container/Container';
 import UserListItem from '../userListItem/UserListItem';
 import PropTypes from 'prop-types';
 
-class Search extends React.Component {
+class SearchUser extends React.Component {
 
-    state = {
-        users: [],
-        isLoading: true,
-        inputSearch: ''
-    };
+    constructor (props) {
+        super(props);
+
+        this.state = {
+            users: [],
+            isLoading: true,
+            inputSearch: ''
+        };
+    }
 
     componentDidMount () {
-       this.getUsers('');
+       this.getUsers(this.state.inputSearch);
     }
 
     getUsers (pseudoInput) {
@@ -59,7 +63,7 @@ class Search extends React.Component {
                         center={
                             <div className="input-button">
                                 <input value={inputSearch} onChange={ event => this.handleInputChange(event)}/>
-                                <Link to="/search/tags" onClick={this.props.setTag('')}>
+                                <Link to="/search/tags">
                                     <button className="button-marble">
                                         User
                                     </button>
@@ -70,7 +74,7 @@ class Search extends React.Component {
                             <div>
                                 {
                                     !user
-                                    ? <Link to="/login">
+                                    ? <Link to="/login?comingFrom=searchuser">
                                         <button className="button-marble">
                                             Log in
                                         </button>
@@ -86,9 +90,9 @@ class Search extends React.Component {
                     <Container>
                         <div className='search'>
                             {isLoading
-                                ? <Loading/>
+                                ? <LoadingPage/>
                                 : users.map((user, index) => (
-                                    <Link style={{ textDecoration: 'none', color: '#0d0d0d' }} to={'/profile/' + user.pseudo} key={index}>
+                                    <Link style={{ textDecoration: 'none', color: '#0d0d0d', maxWidth: '200px' }} to={'/profile/' + user.pseudo} key={index}>
                                         <UserListItem user={user}/>
                                     </Link>
                                 ))
@@ -100,9 +104,8 @@ class Search extends React.Component {
     }
 }
 
-Search.propTypes = {
-    user: PropTypes.object,
-    setTag: PropTypes.func.isRequired
+SearchUser.propTypes = {
+    user: PropTypes.object
 }
 
-export default Search;
+export default SearchUser;
