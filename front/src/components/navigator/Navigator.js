@@ -9,12 +9,13 @@ import Register from '../register/Register';
 import Profile from '../profile/Profile';
 import MyProfile from '../profile/MyProfile';
 import Gamestart from '../gamestart/Gamestart';
+import Gameinit from '../gameinit/Gameinit';
 
 const Navigator = () => {
 
     const [user, setUser] = useState();
     const [tag, setTag] = useState('');
-    
+
     const updateUser = () => {
         console.log('Update');
         const loggedInUser = localStorage.getItem('user');
@@ -31,7 +32,7 @@ const Navigator = () => {
         localStorage.clear();
         setUser(undefined);
     };
-    
+
     return (
         <div className='navigator flex-content' >
             <Switch>
@@ -50,22 +51,24 @@ const Navigator = () => {
                 <Route path='/register'>
                     <Register updateUser={updateUser} />
                 </Route>
-                <Route exact path={'/profile/' + (user ? user.pseudo : '') }>
+                <Route exact path={'/profile/' + (user ? user.pseudo : '')}>
                     <MyProfile user={user} clearUser={clearUser} />
                 </Route>
                 <Route path='/profile'>
-                    { (user && user.isAdmin)
+                    {(user && user.isAdmin)
                         ? <MyProfile user={user} clearUser={clearUser} />
-                        : <Profile user={user}/>
+                        : <Profile user={user} />
                     }
                 </Route>
-                <Route path='/play'>
-                    <Gamestart/>
+                <Route exact path='/play'>
+                    <Gameinit user={user} setTag={setTag} />
                 </Route>
-
+                <Route name="gamestart" path='/play/'>
+                    <Gamestart user={user} setTag={setTag} />
+                </Route>
             </Switch>
         </div>
-        );
-}
-
-export default Navigator;
+            );
+    }
+    
+    export default Navigator;
