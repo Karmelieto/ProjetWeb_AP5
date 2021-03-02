@@ -25,10 +25,14 @@ class Publication extends React.Component {
     componentDidMount () {
         const id = this.props.history.location.pathname.split('/')[2];
         APICallManager.getPublication(id, (response) => {
-            this.setState({ publication: response.data, isLoading: false });
+            const publication = response.data;
+            APICallManager.getAllTagsByIds(publication.tags, (response) => {
+                publication.tags = response.data.map(tag => tag.name);
+                this.setState({ publication: publication, isLoading: false });
+            });
             if (this.props.user) {
                 APICallManager.getFavoritesOfUser(this.props.user.pseudo, (response) => {
-                    this.setState({ favorites: response.data, isFavorite: response.data.includes(this.state.publication._id) });
+                    this.setState({ favorites: response.data, isFavorite: response.data.includes(publication._id) });
                 })
             }
         });

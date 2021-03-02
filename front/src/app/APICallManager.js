@@ -28,6 +28,10 @@ export default class APICallManager {
         axios.get(APICallManager.backUrl + '/tags/filter/' + tagName + '/' + pseudo).then(callback).catch(errorCallback);
     }
 
+    static getAllTagsByIds (ids, callback, errorCallback) {
+        axios.get(APICallManager.backUrl + '/tags/ids/' + ids.join()).then(callback).catch(errorCallback);
+    }
+
     static getPublications (callback, errorCallback) {
         axios.get(APICallManager.backUrl + '/publications').then(callback).catch(errorCallback);
     }
@@ -36,8 +40,8 @@ export default class APICallManager {
         axios.get(APICallManager.backUrl + '/publications/user/' + pseudo).then(callback).catch(errorCallback);
     }
 
-    static getPublicationsByTag (tagName, callback, errorCallback) {
-        axios.get(APICallManager.backUrl + '/publications/tag/' + tagName).then(callback).catch(errorCallback);
+    static getPublicationsByTag (tagId, callback, errorCallback) {
+        axios.get(APICallManager.backUrl + '/publications/tag/' + tagId).then(callback).catch(errorCallback);
     }
 
     static getPublicationsByArrayOfId (ids, callback, errorCallback) {
@@ -76,15 +80,15 @@ export default class APICallManager {
     }
     
     static async createTag (tag, callback, errorCallback) {
-        axios.post(APICallManager.backUrl + '/tags', tag).then(callback).catch(errorCallback);
+        return await axios.post(APICallManager.backUrl + '/tags', tag).then(callback).catch(errorCallback);
     }
 
     static async createPublication (publication, callback, errorCallback) {
         axios.post(APICallManager.backUrl + '/publications', publication).then(callback).catch(errorCallback);
     }
 
-    static async updateTagImage (tagName, imageLink, callback, errorCallback) {
-        axios.put(APICallManager.backUrl + '/tags', { name: tagName, newImageLink: imageLink }).then(callback).catch(errorCallback);
+    static async updateTagImage (tagId, imageLink, callback, errorCallback) {
+        axios.put(APICallManager.backUrl + '/tags', { id: tagId, newImageLink: imageLink }).then(callback).catch(errorCallback);
     }
 
     static async addPublicationToFavorites (pseudo, idPost, callback, errorCallback) {

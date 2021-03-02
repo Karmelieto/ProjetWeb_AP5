@@ -27,13 +27,16 @@ class GameStart extends React.Component {
     }
 
     componentDidMount () {
+        if (!this.props.user) {
+            this.props.history.push('/login?comingFrom=play');
+            return;
+        }
         let pseudo = '';
         if (this.props.user) {
             pseudo = this.props.user.pseudo;
         }
         if (this.props.tag) {
             this.setState({ inputSearch: this.props.tag });
-            this.getPublications(this.props.tag);
         }
         APICallManager.getTags(pseudo, (response) => {
             this.setState({
@@ -44,22 +47,8 @@ class GameStart extends React.Component {
         this.setState.tag = this.props.tag;
     }
 
-    getPublications (tagName) {
-        if (tagName) {
-            this.setState({ isLoading: true });
-            APICallManager.getPublicationsByTag(tagName, (response) => {
-                response.data.map((post, index) => (post.key = index));
-                this.setState({
-                    publications: response.data,
-                    isLoading: false
-                });
-            });
-        }
-    }
-
     onTagSelected (clickedOn) {
         this.setState({ inputSearch: clickedOn });
-        this.getPublications(clickedOn);
     }
 
     handleInputChange (event) {

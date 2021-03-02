@@ -89,29 +89,41 @@ class PostPublication extends React.Component {
     }
 
     onValidate () {
-        const tags = this.state.publication.tags.map(tag => tag);
         const publication = this.state.publication;
-        if (!publication.tags || !this.state.usersAllow || this.isImageLoading) return;
+        if (!publication.tags || (this.state.isTagAddedIsPrivate && !this.state.usersAllow) || this.state.isImageLoading) return;
 
-        publication.tags.forEach(tag => {
+        const maxPrivate = this.getNbPrivateTags(publication.tags);
+
+        let nbPrivateCreated = 0;
+        publication.tags.forEach((tag) => {
             if (tag.isPrivate) {
                 tag.usersAllow = this.state.usersAllow;
                 tag.imageLink = '';
-                APICallManager.createTag(tag);
-            } 
+                APICallManager.createTag(tag, (response) => {
+                    tag._id = response.data._id;
+                    nbPrivateCreated++;
+                    if (nbPrivateCreated === maxPrivate) {
+                        this.createPublication(publication);
+                    }
+                });
+                
+            } else if (maxPrivate === 0) {
+                this.createPublication(publication);
+            }
         })
+    }
 
-        publication.tags = publication.tags.map(tag => tag.name);
-        console.log(publication.tags);
+    createPublication (publication) {
+        const tags = publication.tags.map(tag => tag);
+        publication.tags = publication.tags.map(tag => tag._id);
+
         publication.pseudo = this.props.user.pseudo;
         APICallManager.createPublication(publication, (response) => {
-            console.log(tags);
-            const maxPrivate = this.getNbPrivateTags(tags);
             let nbPrivate = 0;
             if (this.state.isTagAddedIsPrivate) {
                 tags.forEach(tag => {
                     if (tag.isPrivate) {
-                        APICallManager.updateTagImage(tag.name, response.data.imageLink, () => {
+                        APICallManager.updateTagImage(tag._id, response.data.imageLink, () => {
                             nbPrivate++;
                             if (maxPrivate === nbPrivate) {
                                 this.props.history.push('/profile/' + this.props.user.pseudo);

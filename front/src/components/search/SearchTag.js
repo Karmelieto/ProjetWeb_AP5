@@ -27,7 +27,9 @@ class SearchTag extends React.Component {
 
     componentDidMount () {
         if (this.props.tag) {
-            this.setState({ inputSearch: this.props.tag });
+            APICallManager.getAllTagsByIds([this.props.tag], (response) => {
+                this.setState({ inputSearch: response.data[0].name });
+            });
             this.getPublications(this.props.tag);
         }
     }
@@ -50,10 +52,10 @@ class SearchTag extends React.Component {
         }
     }
 
-    getPublications (tagName) {
-        if (tagName) {
+    getPublications (tagId) {
+        if (tagId) {
             this.setState({ isLoading: true });
-            APICallManager.getPublicationsByTag(tagName, (response) => {
+            APICallManager.getPublicationsByTag(tagId, (response) => {
                 this.setState({
                     publications: response.data,
                     isLoading: false
@@ -64,7 +66,7 @@ class SearchTag extends React.Component {
 
     onTagSelected (clickedOn) {
         this.setState({ inputSearch: clickedOn.name });
-        this.getPublications(clickedOn.name);
+        this.getPublications(clickedOn._id);
     }
 
     handleInputChange (event) {

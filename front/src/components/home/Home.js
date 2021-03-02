@@ -62,7 +62,7 @@ class Home extends React.Component {
                             {isLoading
                                 ? <LoadingPage/>
                                 : tags.map((tag, index) => (
-                                        <Link to="/search/tags" className="clear-link-decoration" key={index} onClick={ () => this.props.setTag(tag.name) }>
+                                        <Link to="/search/tags" className="clear-link-decoration" key={index} onClick={ () => this.props.setTag(tag._id) }>
                                             <Tag tag={tag}/>
                                         </Link>
                                     )

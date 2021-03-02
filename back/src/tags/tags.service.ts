@@ -30,13 +30,24 @@ export class TagsService {
     ).exec()
   }
 
-  async findOne (name: string): Promise<Tag> {
-    const tag: Tag = await this.tagModel.findOne({ name: name })
+  async findOne (id: string): Promise<Tag> {
+    const tag: Tag = await this.tagModel.findOne({ id: id })
     if (tag) {
       return tag
     } else {
       return null
     }
+  }
+
+  async getAllTagsByIds (ids: string[]): Promise<Tag[]> {
+    return await this.tagModel.find(
+      {
+        _id:
+          {
+            $in: ids
+          }
+      }
+    ).exec()
   }
 
   async searchTagsByName (name: string, pseudo: string): Promise<Tag[]> {
@@ -64,7 +75,7 @@ export class TagsService {
 
   async create (createTagDto: CreateTagDto): Promise<Tag> {
     const createdTag = new this.tagModel(createTagDto)
-    if (await this.isTagExist(createdTag.name)) {
+    if (!createdTag.isPrivate && await this.isTagExist(createdTag.name)) {
       throw new HttpException(
         util.format('The tag %s already exist', createdTag.name),
         HttpStatus.FORBIDDEN
@@ -78,88 +89,52 @@ export class TagsService {
   async updateImageTag (updateImageTagDto: UpdateImageTagDto): Promise<Tag> {
     this.logger.debug(updateImageTagDto)
     const myTag: Tag = await this.tagModel.findOne({
-      name: updateImageTagDto.name
+      _id: updateImageTagDto.id
     })
     if (myTag) {
       try {
         await this.tagModel.updateOne(
-          { name: updateImageTagDto.name },
+          { _id: updateImageTagDto.id },
           {
             imageLink: updateImageTagDto.newImageLink
           }
         )
         const updatedTag = await this.tagModel.findOne({
-          name: updateImageTagDto.name
+          _id: updateImageTagDto.id
         })
         this.logger.debug('UPDATE FINISHED ' + updatedTag)
         return updatedTag
       } catch (e) {
         throw new HttpException(
           util.format(
-            'There was a problem when trying to update the tag',
-            updateImageTagDto.name
+            'There was a problem when trying to update the tag ',
+            updateImageTagDto.id
           ),
           HttpStatus.NOT_ACCEPTABLE
         )
       }
     } else {
       throw new HttpException(
-        util.format('The tag %s does not exist', updateImageTagDto.name),
+        util.format('The tag %s does not exist', updateImageTagDto.id),
         HttpStatus.NOT_FOUND
       )
     }
   }
 
-  /* async update (updateTagDto: UpdateTagDto): Promise<Tag> {
-    this.logger.debug(updateTagDto)
-    const myTag: Tag = await this.userModel.findOne({
-      name: updateTagDto.lastPseudo
-    })
-    if (myTag) {
-      try {
-        await this.tagModel.updateOne(
-          { name: updateTagDto.lastName },
-          {
-            name: updateTagDto.newPseudo,
-            password: updateTagDto.password,
-            mail: updateTagDto.mail,
-            description: updateTagDto.description,
-            profileImageLink: updateTagDto.profileImageLink
-          }
-        )
-        this.logger.debug(
-          'UPDATE FINISHED ' +
-            (await this.userModel.findOne({ name: updateTagDto.newPseudo }))
-        )
-        return this.userModel.findOne({ name: updateTagDto.newPseudo })
-      } catch (e) {
-        throw new HttpException(
-          util.format('There was a problem when trying to update the user', updateTagDto.lastPseudo),
-          HttpStatus.NOT_ACCEPTABLE
-        )
-      }
-    } else {
-      throw new HttpException(
-        util.format('The user %s does not exist', updateTagDto.lastPseudo),
-        HttpStatus.NOT_FOUND
-      )
-    }
-  }
-*/
-  async isTagExist (name: string): Promise<boolean> {
-    return !!(await this.findOne(name))
+  async isTagExist (id: string): Promise<boolean> {
+    return !!(await this.findOne(id))
   }
 
-  async remove (name: string) {
-    const res = await this.tagModel.deleteOne({ name: name })
+  async remove (id: string) {
+    const res = await this.tagModel.deleteOne({ id: id })
     if (res.deletedCount !== 0) {
       return {
         status: 204,
-        message: util.format('Tag %s successfully remove', name)
+        message: util.format('Tag %s successfully remove', id)
       }
     }
     throw new HttpException(
-      util.format('The tag %s might be already remove', name),
+      util.format('The tag %s might be already remove', id),
       HttpStatus.NOT_FOUND
     )
   }
