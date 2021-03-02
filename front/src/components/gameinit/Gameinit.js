@@ -61,8 +61,7 @@ class Gameinit extends React.Component {
     }
 
     onTagSelected (clickedOn) {
-        this.setState({ inputSearch: clickedOn });
-        this.getPublications(clickedOn);
+        this.setState({ inputSearch: clickedOn.name });
     }
 
     handleInputChange (event) {
@@ -84,12 +83,9 @@ class Gameinit extends React.Component {
                         <Link to="/"><img src={logo} /></Link>
                     }
                     center={
-                        <div className="input-button dropdown">
+                        <div className="dropdown">
                             <input value={inputSearch} onChange={event => this.handleInputChange(event)} />
                             <SearchList elements={tags} actionOnClick={this.onTagSelected} type="&#x3A6;" />
-                            <button className="button-marble">
-                                &#x3A6;
-                            </button>
                         </div>
                     }
                     right={
