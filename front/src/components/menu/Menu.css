@@ -34,12 +34,13 @@
     border-right: 2px solid var(--color-black);
     background-color: var(--color-white);
     right: calc(50% - 20px);
-    animation: moveToBottom 0.2s ease-in-out;
     bottom: 0px;
     opacity: 0;
+    transition: opacity 0.2s ease-in-out, bottom 0.2s ease-in-out;
     display: flex;
     flex-direction: column-reverse;
     flex-wrap: nowrap;
+
 }
 
 .menu-search-dropup-item > img {
@@ -51,12 +52,10 @@
 
 .menu-search-dropup-item > img:hover {
     width: 35px;
-    transition: width 0.2s ease-in-out;
 } 
 
 .menu-item:hover > .menu-search-dropup {
     bottom: 70px;
-    animation: moveFromBottom 0.3s ease-in-out;
     opacity: 1;
 }
 
@@ -70,17 +69,6 @@
 .selected > img {
     border-bottom: 3px solid var(--color-primary-dark);
     padding-bottom: 3px;
-}
-
-
-@keyframes moveFromBottom {
-    from{bottom: 0px; opacity: 0;}
-    to {bottom: 70px; opacity: 1;}
-}
-
-@keyframes moveToBottom {
-    from{bottom: 70px; opacity: 1;}
-    to {bottom: 0px; opacity: 0;}
 }
 
 @media only screen and (min-width: 768px) {
