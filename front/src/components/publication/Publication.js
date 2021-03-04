@@ -4,6 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 import APICallManager from '../../app/APICallManager';
 import back from '../../images/back.svg';
 import options from '../../images/options.svg';
+import deleteIcon from '../../images/delete.svg';
 
 import Banner from '../banner/Banner';
 import LoadingPage from '../loading/LoadingPage';
@@ -41,6 +42,18 @@ class Publication extends React.Component {
 
     onBackClicked (event) {
         this.props.history.goBack();
+    }
+    
+    onDelete (event) {
+        const userConnected = this.props.user;
+        const publication = this.state.publication;
+        if (userConnected.pseudo !== publication.pseudo && !userConnected.isAdmin) return;
+
+        APICallManager.removePublication(userConnected.pseudo, userConnected.token, publication._id, (response) => {
+            if (response.status === 201) {
+                this.props.history.goBack();
+            }
+        })
     }
 
     onFavoriteClicked (event) {
@@ -80,11 +93,13 @@ class Publication extends React.Component {
                     }
 
                     right={
-                        (userConnected && publication && userConnected.pseudo === publication.pseudo)
+                        (userConnected && publication && (userConnected.pseudo === publication.pseudo || userConnected.isAdmin))
                             ? <div className="dropdown">
                                 <img src={options} className="back-img"/>
                                 <div id="options" className="dropdown-content transform-for-profile">
-
+                                    { (userConnected && (userConnected.pseudo === publication.pseudo || userConnected.isAdmin)) &&
+                                        <a onClick={ (event) => this.onDelete(event) } >Delete <img src={deleteIcon}/></a>
+                                    }
                                 </div>
                             </div>
                             : (userConnected)

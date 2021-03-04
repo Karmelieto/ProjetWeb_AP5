@@ -87,6 +87,10 @@ export default class APICallManager {
         axios.post(APICallManager.backUrl + '/publications', publication).then(callback).catch(errorCallback);
     }
 
+    static async removePublication (pseudo, token, idPost, callback, errorCallback) {
+        axios.delete(APICallManager.backUrl + '/publications/' + idPost, { data: { pseudo: pseudo, token: token } }).then(callback).catch(errorCallback);
+    }
+
     static async updateTagImage (tagId, imageLink, callback, errorCallback) {
         axios.put(APICallManager.backUrl + '/tags', { id: tagId, newImageLink: imageLink }).then(callback).catch(errorCallback);
     }
