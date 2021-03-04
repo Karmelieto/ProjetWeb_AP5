@@ -28,6 +28,7 @@
     "@nestjs/mongoose": "^7.2.2",
     "@nestjs/platform-express": "^7.5.1",
     "@nestjs/swagger": "^4.7.12",
+    "axios": "^0.21.1",
     "class-transformer": "^0.3.2",
     "class-validator": "^0.13.1",
     "mongoose": "^5.11.14",

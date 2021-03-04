@@ -3,7 +3,9 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Publication, PublicationDocument } from './publication.schema'
 import { CreatePublicationDto } from './dto/create-publication.dto'
+import axios from 'axios'
 import * as util from 'util'
+import { json } from 'express'
 
 @Injectable()
 export class PublicationsService {
@@ -62,36 +64,78 @@ export class PublicationsService {
         HttpStatus.FORBIDDEN
       )
     }
+
+    const date = new Date();
+    const dateString = date.toDateString() + " " + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+
+    createdPost.date = dateString;
+    createdPost.nbVotes = 0;
+    createdPost.rank = 0;
+    createdPost.points = 0;
+
+    if(createdPost.imageLink.indexOf('default') === -1) {
+      const newImageLink = createPostDto.pseudo + '_' + dateString.replace(/[ :]/g, '_');
+      createdPost.imageLink = await this.renameImageLink(createdPost.imageLink, newImageLink);
+    }
+
     return createdPost.save()
   }
 
-  /* async update (updateUserDto: CreateUserDto) {
-
-  } */
-
-  async remove (id: number) {
-    const res = await this.publicationModel.deleteOne({ id: id })
-    if (res.result.ok === 1 && res.result.n === 1) {
-      return {
-        status: 204,
-        message: util.format(
-          'Publication with the id %s successfully deleted',
-          id
-        )
-      }
-    }
-    return {
-      status: 404,
-      message: util.format(
-        'An error occured when trying to remove the publication with the id : %s ',
-        id
-      )
-    }
+  async renameImageLink (actualName: string, newName: string): Promise<string> {
+    return axios.put(process.env.CLOUD_URL, { actualName: actualName, newName: newName})
+    .then((response) => {
+      return response.data;
+    }).catch((error) => {
+      console.log(error);
+      return '';
+    });
   }
 
-  /*    getNextSequenceValue () {
-    const sequenceDocument = this.userModel.estimatedDocumentCount();
-    console.log("NB DOCUMENT" + sequenceDocument.getQuery()._id);
-    return sequenceDocument.getQuery();
-  } */
+  async remove (id: string, pseudoUserConnected: string, token: string) : Promise<boolean> {
+    const publication = await this.findOne(id);
+    if (!publication) {
+      return false;
+    }
+
+    const isVerified = await this.verifyUserAndToken(publication.pseudo, pseudoUserConnected, token);
+    if(!isVerified) {
+      return false;
+    }
+
+    axios.delete(process.env.CLOUD_URL, { data : { url: publication.imageLink, token: token } });
+
+    const res = await this.publicationModel.deleteOne({ _id: id })
+
+    if (res.ok === 0 || res.n === 0) {
+      return false
+    }
+    return true
+  }
+
+  async removeAllFromUser(pseudo: string, pseudoUserConnected: string, token: string) : Promise<boolean> {
+    const isVerified = await this.verifyUserAndToken(pseudo, pseudoUserConnected, token);
+    if(!isVerified) {
+      return false;
+    }
+
+    const publications = await this.publicationModel.find({ pseudo: pseudo },{ _id: 1 }).exec();
+    for(let i = 0; i < publications.length; i++) {
+      await this.remove(publications[i]._id, pseudoUserConnected, token);
+    }
+
+    console.log('All publications of %s have been deleted !', pseudo);
+    return true
+  }
+
+  async verifyUserAndToken (pseudo: string, pseudoUserConnected: string, token: string) {
+    if(token !== 'eKoYea331nJhfnqIzeLap8jSd4SddpalqQ93Nn2') {
+      return false;
+    }
+
+    const user = await axios.get(process.env.SERVER_URL + 'users/' + pseudoUserConnected).then((response) => response.data);
+    if (!user.isAdmin && pseudo !== pseudoUserConnected) {
+      return false;
+    }
+    return true;
+  }
 }

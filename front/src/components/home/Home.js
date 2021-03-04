@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import APICallManager from '../../app/APICallManager';
 import logo from '../../images/logo.svg'
 import Banner from '../banner/Banner';
-import Loading from '../loading/Loading';
+import LoadingPage from '../loading/LoadingPage';
 import Tag from '../tag/Tag';
 import Container from '../container/Container';
 import PropTypes from 'prop-types';
@@ -60,9 +60,9 @@ class Home extends React.Component {
                     <Container>
                         <div>
                             {isLoading
-                                ? <Loading/>
+                                ? <LoadingPage/>
                                 : tags.map((tag, index) => (
-                                        <Link to="/search/tags" className="clear-link-decoration" key={index} onClick={ () => this.props.setTag(tag.name) }>
+                                        <Link to="/search/tags" className="clear-link-decoration" key={index} onClick={ () => this.props.setTag(tag._id) }>
                                             <Tag tag={tag}/>
                                         </Link>
                                     )

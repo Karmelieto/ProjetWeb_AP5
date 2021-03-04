@@ -5,7 +5,8 @@ import {
   Get,
   Param,
   Post,
-  Put
+  Put,
+  Res
 } from '@nestjs/common'
 import {
   ApiCreatedResponse,
@@ -16,6 +17,7 @@ import {
 import { PublicationsService } from './publications.service'
 import { Publication } from './publication.schema'
 import { CreatePublicationDto } from './dto/create-publication.dto'
+import { DeletePublicationDto } from './dto/delete-publication.dto'
 
 @Controller('publications')
 @ApiTags('publications')
@@ -71,7 +73,7 @@ export class PublicationsController {
     summary: 'Create a publication'
   })
   async create (@Body() createPublicationDto: CreatePublicationDto) {
-    await this.publicationsService.create(createPublicationDto)
+    return await this.publicationsService.create(createPublicationDto)
   }
 
   @Put(':id')
@@ -91,11 +93,38 @@ export class PublicationsController {
     status: 201,
     description: 'The publication has been successfully remove.'
   })
-  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  @ApiResponse({ status: 404, description: 'Not found.' })
   @ApiOperation({
     summary: 'Remove a publication by his id'
   })
-  async remove (@Param('id') id: number) {
-    await this.publicationsService.remove(id)
+  async remove (@Param('id') id: string, @Body() deletePublicationDto: DeletePublicationDto, @Res() res) {
+    const isDeleted = await this.publicationsService.remove(id, deletePublicationDto.pseudo, deletePublicationDto.token);
+
+    if(!isDeleted) {
+      res.sendStatus(404);
+      return;
+    }
+
+    res.sendStatus(201);
+  }
+
+  @Delete('user/:pseudo')
+  @ApiResponse({
+    status: 201,
+    description: 'The publications have been successfully remove.'
+  })
+  @ApiResponse({ status: 404, description: 'Not found.' })
+  @ApiOperation({
+    summary: 'Remove all publications of a user by them pseudo'
+  })
+  async removeAllFromUser (@Param('pseudo') pseudo: string, @Body() deletePublicationDto: DeletePublicationDto, @Res() res) {
+    const isDeleted = await this.publicationsService.removeAllFromUser(pseudo, deletePublicationDto.pseudo, deletePublicationDto.token);
+
+    if(!isDeleted) {
+      res.sendStatus(404);
+      return;
+    }
+
+    res.sendStatus(201);
   }
 }

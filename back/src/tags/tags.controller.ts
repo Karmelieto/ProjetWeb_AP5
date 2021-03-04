@@ -41,6 +41,14 @@ export class TagsController {
     return this.tagsService.findAll('');
   }
 
+  @Get('/ids/:ids')
+  @ApiOperation({
+    summary: 'Retrieve all tags by matching ids'
+  })
+  async getAllTagsByIds (@Param('ids') ids: string): Promise<Tag[]> {
+    return await this.tagsService.getAllTagsByIds(ids.split(','));
+  }
+
   @Get('filter/:name/:pseudo')
   @ApiOperation({
     summary: 'Retrieve tags filter by a name, and check is private'
@@ -67,7 +75,7 @@ export class TagsController {
     summary: 'Create a tag'
   })
   async create (@Body() createTagDto: CreateTagDto) {
-    await this.tagsService.create(createTagDto)
+    return await this.tagsService.create(createTagDto)
   }
 
   @UsePipes(new ValidationPipe({ transform: true }))
@@ -76,18 +84,11 @@ export class TagsController {
     summary: 'Update imageLink of a tag'
   })
   async update (@Body() updateImageTagDto: UpdateImageTagDto) {
+    console.log(updateImageTagDto);
     await this.tagsService.updateImageTag(updateImageTagDto)
   }
 
-  /*  @Put()
-  @ApiOperation({
-    summary: 'Update a tag'
-  })
-  async update (@Body() updateTagDto: UpdateTagDto) {
-    await this.tagsService.update(updateTagDto)
-  } */
-
-  @Delete(':name')
+  @Delete(':id')
   @ApiResponse({
     status: 201,
     description: 'The tag has been successfully deleted.'
@@ -96,7 +97,7 @@ export class TagsController {
   @ApiOperation({
     summary: 'Remove a tag by his name'
   })
-  async remove (@Param('name') name: string) {
-    await this.tagsService.remove(name.toLowerCase())
+  async remove (@Param('id') id: string) {
+    await this.tagsService.remove(id.toLowerCase())
   }
 }

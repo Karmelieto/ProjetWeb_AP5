@@ -84,8 +84,7 @@ body, html {
 input {
     height: 34px;
     font-size: 18px;
-    max-width: 45%;
-    min-width: 35%;
+    max-width: 80%;
     width: auto;
     border : 2px solid var(--color-grey);
     padding-left: 5px;
@@ -113,19 +112,21 @@ input {
     display: inline-block;
 }
 
-.dropdown-content a {
+.dropdown-content > a {
     cursor: pointer;
     color: black;
-    padding: 12px 16px;
+    padding: 10px 10px;
     text-decoration: none;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-around;
 }
 
 .dropdown-content > a > img {
-    width: 25px !important;
-}  
+    max-width: 50px !important;
+    max-height: 30px !important;
+    padding-left: 5px;
+}
 
 .dropdown-content a:hover {
     background-color: var(--color-grey);
@@ -136,8 +137,8 @@ input {
     display: block;
 }
 
-@media only screen and (min-width: 768px) {
-    input {
-        max-width: 65%;
-    }
+
+@keyframes fadeIn {
+    from{opacity: 0.3;}
+    to {opacity: 1;}
 }

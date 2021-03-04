@@ -1,9 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger'
 
-export class UpdateImageTagDto {
-  @ApiProperty()
-  id: string;
+export class DeletePublicationDto {
 
   @ApiProperty()
-  newImageLink: string;
+  pseudo: string;
+
+  @ApiProperty()
+  token: string;
 }

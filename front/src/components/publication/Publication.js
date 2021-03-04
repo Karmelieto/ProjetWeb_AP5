@@ -6,26 +6,37 @@ import back from '../../images/back.svg';
 import options from '../../images/options.svg';
 
 import Banner from '../banner/Banner';
-import Loading from '../loading/Loading';
+import LoadingPage from '../loading/LoadingPage';
 import Container from '../container/Container';
 import PropTypes from 'prop-types';
-import reward from "../../images/reward.svg";
-import heartEmpty from "../../images/heart_empty.svg";
-import heartFill from "../../images/heart_fill.svg";
+import reward from '../../images/reward.svg';
+import heartEmpty from '../../images/heart_empty.svg';
+import heartFill from '../../images/heart_fill.svg';
 
 class Publication extends React.Component {
 
     state = {
         publication: null,
         isFavorite: false,
+        favorites: [],
         isLoading: true
     } ;
 
     componentDidMount () {
         const id = this.props.history.location.pathname.split('/')[2];
         APICallManager.getPublication(id, (response) => {
-            this.setState({ publication: response.data, isLoading: false });
+            const publication = response.data;
+            APICallManager.getAllTagsByIds(publication.tags, (response) => {
+                publication.tags = response.data.map(tag => tag.name);
+                this.setState({ publication: publication, isLoading: false });
+            });
+            if (this.props.user) {
+                APICallManager.getFavoritesOfUser(this.props.user.pseudo, (response) => {
+                    this.setState({ favorites: response.data, isFavorite: response.data.includes(publication._id) });
+                })
+            }
         });
+        
     }
 
     onBackClicked (event) {
@@ -33,10 +44,21 @@ class Publication extends React.Component {
     }
 
     onFavoriteClicked (event) {
-        console.log("Clicked on favorite");
-        this.setState({
-            isFavorite: !this.state.isFavorite
-        })
+        if (!this.props.user) return;
+
+        if (this.state.isFavorite) { 
+            APICallManager.removePublicationFromFavorites(this.props.user.pseudo, this.state.publication._id, (response) => {
+                this.setState({
+                    isFavorite: !this.state.isFavorite
+                })
+            });
+        } else {
+            APICallManager.addPublicationToFavorites(this.props.user.pseudo, this.state.publication._id, (response) => {
+                this.setState({
+                    isFavorite: !this.state.isFavorite
+                })
+            });
+        }
     }
 
     render () {
@@ -78,7 +100,7 @@ class Publication extends React.Component {
                 />
                 <Container>
                         {isLoading
-                            ? <Loading/>
+                            ? <LoadingPage/>
                             : <div className="publication-page">
                                 <img className="publication-img" src={publication.imageLink}/>
                                 <p className="publication-date"> {publication.date}</p>
@@ -92,11 +114,14 @@ class Publication extends React.Component {
                                              <img className="vote-img" src={reward} />
                                         <p>{publication.rank}</p>
                                     </div>
-                                    <div onClick={ (event) => this.onFavoriteClicked(event)}>
-                                        {isFavorite
-                                        ? <img className="favorite-img" src={heartFill}/>
-                                        : <img className="favorite-img" src={heartEmpty}/>}
-                                    </div>
+                                    {
+                                        userConnected &&
+                                        <div onClick={ (event) => this.onFavoriteClicked(event)}>
+                                            {isFavorite
+                                            ? <img className="favorite-img" src={heartFill}/>
+                                            : <img className="favorite-img" src={heartEmpty}/>}
+                                        </div>
+                                    }
                                 </div>
                                 <div className="publication-description">
                                     <p >{publication.description}</p>

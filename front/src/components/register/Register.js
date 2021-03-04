@@ -6,7 +6,7 @@ import back from '../../images/back.svg';
 import logo from '../../images/logo.svg';
 import Banner from '../banner/Banner';
 import Container from '../container/Container';
-import Loading from '../loading/Loading';
+import LoadingPage from '../loading/LoadingPage';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -141,7 +141,7 @@ class Register extends React.Component {
                     <Container>
                         <div className="full-page">
                             {isLoading
-                                ? <Loading/>
+                                ? <LoadingPage/>
                                 : <div className="login-content full-page">
                                     <p className="register-title margin-bottom">Join us !</p>
                                     <span className="error">{pseudoError}</span>

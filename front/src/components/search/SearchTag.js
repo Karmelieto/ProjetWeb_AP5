@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import APICallManager from '../../app/APICallManager';
 import logo from '../../images/logo.svg'
 import Banner from '../banner/Banner';
-import Loading from '../loading/Loading';
+import LoadingPage from '../loading/LoadingPage';
 import Container from '../container/Container';
 import Gallery from '../gallery/Gallery'
 import PropTypes from 'prop-types';
@@ -27,8 +27,12 @@ class SearchTag extends React.Component {
 
     componentDidMount () {
         if (this.props.tag) {
-            this.setState({ inputSearch: this.props.tag });
+            APICallManager.getAllTagsByIds([this.props.tag], (response) => {
+                this.setState({ inputSearch: response.data[0].name });
+            });
             this.getPublications(this.props.tag);
+        } else {
+            this.setState({ isLoading: false });
         }
     }
 
@@ -50,10 +54,10 @@ class SearchTag extends React.Component {
         }
     }
 
-    getPublications (tagName) {
-        if (tagName) {
+    getPublications (tagId) {
+        if (tagId) {
             this.setState({ isLoading: true });
-            APICallManager.getPublicationsByTag(tagName, (response) => {
+            APICallManager.getPublicationsByTag(tagId, (response) => {
                 this.setState({
                     publications: response.data,
                     isLoading: false
@@ -63,8 +67,8 @@ class SearchTag extends React.Component {
     }
 
     onTagSelected (clickedOn) {
-        this.setState({ inputSearch: clickedOn });
-        this.getPublications(clickedOn);
+        this.setState({ inputSearch: clickedOn.name });
+        this.getPublications(clickedOn._id);
     }
 
     handleInputChange (event) {
@@ -86,14 +90,9 @@ class SearchTag extends React.Component {
                             <img src={logo}/>
                         }
                         center={
-                            <div className="input-button dropdown">
-                                <input value={inputSearch} onChange={ event => this.handleInputChange(event) }/>
+                            <div className="dropdown">
+                                <input placeholder='Tag name' value={inputSearch} onChange={ event => this.handleInputChange(event) }/>
                                 <SearchList elements={tags} actionOnClick={ this.onTagSelected } type="&#x3A6;"/>
-                                <Link to="/search/users">
-                                    <button className="button-marble">
-                                        &#x3A6;
-                                    </button>
-                                </Link>
                             </div>
                         }
                         right = {
@@ -116,8 +115,10 @@ class SearchTag extends React.Component {
                     <Container>
                         <div className='search'>
                             {isLoading
-                                ? <Loading/>
-                                : <Gallery publications={publications} />
+                                ? <LoadingPage/>
+                                : (publications.length === 0)
+                                    ? <div className="not-found">No publications found !</div>
+                                    : <Gallery publications={publications} />
                             }  
                           </div>
                     </Container>

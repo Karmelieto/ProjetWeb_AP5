@@ -9,9 +9,6 @@ export class CreatePublicationDto {
   pseudo: string;
 
   @ApiProperty()
-  metaData: MetaData;
-
-  @ApiProperty()
   description: string;
 
   @ApiProperty({
@@ -19,16 +16,4 @@ export class CreatePublicationDto {
   })
   @ApiProperty()
   tags: string[];
-
-  @ApiProperty()
-  nbVotes: number;
-
-  @ApiProperty()
-  points: number;
-
-  @ApiProperty()
-  rank: number;
-
-  @ApiProperty()
-  date: string;
 }

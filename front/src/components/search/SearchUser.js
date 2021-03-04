@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import APICallManager from '../../app/APICallManager';
 import logo from '../../images/logo.svg'
 import Banner from '../banner/Banner';
-import Loading from '../loading/Loading';
+import LoadingPage from '../loading/LoadingPage';
 import Container from '../container/Container';
 import UserListItem from '../userListItem/UserListItem';
 import PropTypes from 'prop-types';
@@ -61,14 +61,7 @@ class SearchUser extends React.Component {
                             <img src={logo}/>
                         }
                         center={
-                            <div className="input-button">
-                                <input value={inputSearch} onChange={ event => this.handleInputChange(event)}/>
-                                <Link to="/search/tags">
-                                    <button className="button-marble">
-                                        User
-                                    </button>
-                                </Link>
-                            </div>
+                            <input placeholder='User name' value={inputSearch} onChange={ event => this.handleInputChange(event)}/>
                         }
                         right = {
                             <div>
@@ -90,9 +83,9 @@ class SearchUser extends React.Component {
                     <Container>
                         <div className='search'>
                             {isLoading
-                                ? <Loading/>
-                                : users.map(user => (
-                                    <Link style={{ textDecoration: 'none', color: '#0d0d0d', maxWidth: '200px' }} to={'/profile/' + user.pseudo} key={user.key}>
+                                ? <LoadingPage/>
+                                : users.map((user, index) => (
+                                    <Link style={{ textDecoration: 'none', color: '#0d0d0d', maxWidth: '200px' }} to={'/profile/' + user.pseudo} key={index}>
                                         <UserListItem user={user}/>
                                     </Link>
                                 ))

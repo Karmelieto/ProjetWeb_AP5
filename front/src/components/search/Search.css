@@ -9,12 +9,11 @@
     flex-grow: 1;
 }
 
-.input-button > input {
-    border-radius: 5px 0px 0px 5px;
-}
-
-.input-button button {
-    border-radius: 0px 5px 5px 0px;
+.not-found {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .limit-size {
