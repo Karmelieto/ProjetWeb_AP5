@@ -14,7 +14,6 @@ export class UsersService {
   constructor (@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   private readonly logger = new Logger(UsersService.name);
-  SERVER_URL: string = 'http://localhost:4242/';
 
   async findAll (): Promise<User[]> {
     return this.userModel
@@ -131,8 +130,7 @@ export class UsersService {
       }
 
       if (!createdUser.profileImageLink) {
-        createdUser.profileImageLink =
-          'http://89.158.244.191:17001/images/default.svg'
+        createdUser.profileImageLink = process.env.CLOUD_URL + '/default.svg'
       }
 
       await createdUser.save()
@@ -241,7 +239,7 @@ export class UsersService {
       }
     }
 
-    await axios.delete(this.SERVER_URL + 'publications/user/' + deleteUserDto.pseudo, { data: { pseudo: deleteUserDto.pseudoUserConnected, token: 'eKoYea331nJhfnqIzeLap8jSd4SddpalqQ93Nn2' } })
+    await axios.delete(process.env.SERVER_URL + 'publications/user/' + deleteUserDto.pseudo, { data: { pseudo: deleteUserDto.pseudoUserConnected, token: 'eKoYea331nJhfnqIzeLap8jSd4SddpalqQ93Nn2' } })
     .catch((err) => console.error
     (err.response.statusText));
     const res = await this.userModel.deleteOne({ pseudo: deleteUserDto.pseudo })

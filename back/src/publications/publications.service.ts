@@ -14,9 +14,6 @@ export class PublicationsService {
     private publicationModel: Model<PublicationDocument>
   ) {}
 
-  CLOUD_URL: string = 'http://89.158.244.191:17001/images';
-  SERVER_URL: string = 'http://localhost:4242/';
-
   async findAll (): Promise<Publication[]> {
     return this.publicationModel.find().exec()
   }
@@ -85,7 +82,7 @@ export class PublicationsService {
   }
 
   async renameImageLink (actualName: string, newName: string): Promise<string> {
-    return axios.put(this.CLOUD_URL, { actualName: actualName, newName: newName})
+    return axios.put(process.env.CLOUD_URL, { actualName: actualName, newName: newName})
     .then((response) => {
       return response.data;
     }).catch((error) => {
@@ -105,7 +102,7 @@ export class PublicationsService {
       return false;
     }
 
-    axios.delete(this.CLOUD_URL, { data : { url: publication.imageLink, token: token } });
+    axios.delete(process.env.CLOUD_URL, { data : { url: publication.imageLink, token: token } });
 
     const res = await this.publicationModel.deleteOne({ _id: id })
 
@@ -135,7 +132,7 @@ export class PublicationsService {
       return false;
     }
 
-    const user = await axios.get(this.SERVER_URL + 'users/' + pseudoUserConnected).then((response) => response.data);
+    const user = await axios.get(process.env.SERVER_URL + 'users/' + pseudoUserConnected).then((response) => response.data);
     if (!user.isAdmin && pseudo !== pseudoUserConnected) {
       return false;
     }
