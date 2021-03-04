@@ -35,16 +35,12 @@ class GameStart extends React.Component {
         if (this.props.user) {
             pseudo = this.props.user.pseudo;
         }
-        if (this.props.tag) {
-            this.setState({ inputSearch: this.props.tag });
-        }
         APICallManager.getTags(pseudo, (response) => {
             this.setState({
                 tags: response.data,
                 isLoading: false
             });
         });
-        this.setState.tag = this.props.tag;
     }
 
     onTagSelected (clickedOn) {
@@ -63,7 +59,6 @@ class GameStart extends React.Component {
         const tags = this.state.tags;
         // const randomTag = this.randomTag;
         const user = this.props.user;
-        const tag = this.props.tag;
         return (
             <div>
                 <Banner
@@ -98,11 +93,10 @@ class GameStart extends React.Component {
                 />
                 <Container>
                     <div className='gameZone'>
-                        <h1>Test {tag.name}</h1>
                         {isLoading
                             ? <Loading />
                             : tags.slice(0, 3).map((tag, index) => (
-                                <Link to={`/play/${tag.name}`} className="clear-link-decoration" key={index} onClick={ () => this.props.setTag(tag.name) }>
+                                <Link to={`/play/${tag.name}`} className="clear-link-decoration" key={index}>
                                     <Tag tag={tag}/>
                                 </Link>
                             ))
@@ -113,9 +107,8 @@ class GameStart extends React.Component {
         );
     }
 }
-GameStart.PropTypes = {
-    hystory: PropTypes.object,
-    user: PropTypes.object,
-    setTag: PropTypes.func.isRequired
+GameStart.propTypes = {
+    history: PropTypes.object,
+    user: PropTypes.object
 }
 export default withRouter(GameStart);

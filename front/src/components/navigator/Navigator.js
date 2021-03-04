@@ -94,13 +94,13 @@ class Navigator extends React.Component {
                         }
                     </Route>
                     <Route path='/publication'>
-                        <Publication user={user} setTag={this.setTag} />
+                        <Publication user={user}/>
                     </Route>
                     <Route exact path='/play'>
-                        <Gameinit user={user} setTag={this.setTag} />
+                        <Gameinit user={user}/>
                     </Route>
                     <Route name="gamestart" path='/play/'>
-                        <Gamestart user={user} setTag={this.setTag} />
+                        <Gamestart user={user}/>
                     </Route>
                 </Switch>
             </div>

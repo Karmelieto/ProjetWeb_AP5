@@ -29,10 +29,6 @@ class Gameinit extends React.Component {
         if (this.props.user) {
             pseudo = this.props.user.pseudo;
         }
-        if (this.props.tag) {
-            this.setState({ inputSearch: this.props.tag });
-            this.getPublications(this.props.tag);
-        }
         APICallManager.getTags(pseudo, (response) => {
             this.setState({
                 tags: response.data,
@@ -111,7 +107,7 @@ class Gameinit extends React.Component {
                         {isLoading
                             ? <LoadingPage />
                             : tags.slice(0, 3).map((tag, index) => (
-                                <Link to={`/play/${tag.name}`} className="clear-link-decoration" key={index} onClick={ () => this.props.setTag(tag.name) }>
+                                <Link to={`/play/${tag.name}`} className="clear-link-decoration" key={index}>
                                     <Tag tag={tag}/>
                                 </Link>
                             ))
@@ -122,7 +118,7 @@ class Gameinit extends React.Component {
                         {isLoading
                             ? <LoadingPage />
                             : tags.slice(0, 1).map((tag, index) => (
-                                <Link to={`/play/${tag.name}`} className="clear-link-decoration" key={index} onClick={ () => this.props.setTag(tag.name) }>
+                                <Link to={`/play/${tag.name}`} className="clear-link-decoration" key={index}>
                                     <Tag tag={tag}/>
                                 </Link>
                             ))
@@ -133,9 +129,8 @@ class Gameinit extends React.Component {
         );
     }
 }
-Gameinit.PropTypes = {
+Gameinit.propTypes = {
     hystory: PropTypes.object,
-    user: PropTypes.object,
-    setTag: PropTypes.func.isRequired
+    user: PropTypes.object
 }
 export default withRouter(Gameinit);
