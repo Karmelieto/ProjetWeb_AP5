@@ -61,14 +61,7 @@ class SearchUser extends React.Component {
                             <img src={logo}/>
                         }
                         center={
-                            <div className="input-button">
-                                <input value={inputSearch} onChange={ event => this.handleInputChange(event)}/>
-                                <Link to="/search/tags">
-                                    <button className="button-marble">
-                                        User
-                                    </button>
-                                </Link>
-                            </div>
+                            <input placeholder='User name' value={inputSearch} onChange={ event => this.handleInputChange(event)}/>
                         }
                         right = {
                             <div>

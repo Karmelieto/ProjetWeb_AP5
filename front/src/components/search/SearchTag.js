@@ -31,6 +31,8 @@ class SearchTag extends React.Component {
                 this.setState({ inputSearch: response.data[0].name });
             });
             this.getPublications(this.props.tag);
+        } else {
+            this.setState({ isLoading: false });
         }
     }
 
@@ -88,14 +90,9 @@ class SearchTag extends React.Component {
                             <img src={logo}/>
                         }
                         center={
-                            <div className="input-button dropdown">
-                                <input value={inputSearch} onChange={ event => this.handleInputChange(event) }/>
+                            <div className="dropdown">
+                                <input placeholder='Tag name' value={inputSearch} onChange={ event => this.handleInputChange(event) }/>
                                 <SearchList elements={tags} actionOnClick={ this.onTagSelected } type="&#x3A6;"/>
-                                <Link to="/search/users">
-                                    <button className="button-marble">
-                                        &#x3A6;
-                                    </button>
-                                </Link>
                             </div>
                         }
                         right = {
@@ -119,7 +116,9 @@ class SearchTag extends React.Component {
                         <div className='search'>
                             {isLoading
                                 ? <LoadingPage/>
-                                : <Gallery publications={publications} />
+                                : (publications.length === 0)
+                                    ? <div className="not-found">No publications found !</div>
+                                    : <Gallery publications={publications} />
                             }  
                           </div>
                     </Container>
