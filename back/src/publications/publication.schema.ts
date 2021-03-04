@@ -22,7 +22,7 @@ export class Publication {
 
   @ApiProperty()
   @Prop()
-  metaDatas: MetaData;
+  metaDatas: unknown;
 
   @ApiProperty()
   @Prop()

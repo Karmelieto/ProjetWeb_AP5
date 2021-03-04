@@ -39,7 +39,7 @@ export class PublicationsController {
   async findAllByTag (@Param('tag') tag: string): Promise<Publication[]> {
     return this.publicationsService.findAllByTag(tag)
   }
-  
+
   @Get('user/:pseudo')
   @ApiOperation({
     summary: 'Find all publications post by a user'

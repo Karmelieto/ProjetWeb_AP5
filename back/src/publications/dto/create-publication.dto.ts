@@ -16,4 +16,19 @@ export class CreatePublicationDto {
   })
   @ApiProperty()
   tags: string[];
+
+  @ApiProperty()
+  nbVotes: number;
+
+  @ApiProperty()
+  metaDatas: unknown
+
+  @ApiProperty()
+  points: number;
+
+  @ApiProperty()
+  rank: number;
+
+  @ApiProperty()
+  date: string;
 }

@@ -104,15 +104,27 @@ class Publication extends React.Component {
                             : <div className="publication-page">
                                 <img className="publication-img" src={publication.imageLink}/>
                                 <p className="publication-date"> {publication.date}</p>
-                                <div className="publication-informations">
-                                    <div className="publication-tags">
-                                        {publication.tags.map((tag, index) => (
-                                            <p key={index}> &#x3A6; {tag.capitalize()}</p>
-                                        ))}
+                                <div>
+                                    <div className="publication-informations">
+                                        <div className="publication-tags">
+                                            {publication.tags.map((tag, index) => (
+                                              <p key={index}> &#x3A6; {tag.capitalize()}</p>
+                                            ))}
+                                        </div>
+                                        <div className="publication-votes">
+                                            <img className="vote-img" src={reward} />
+                                            <p>{publication.rank}</p>
+                                        </div>
+                                        <div onClick={ (event) => this.onFavoriteClicked(event)}>
+                                            {isFavorite
+                                              ? <img className="favorite-img" src={heartFill}/>
+                                              : <img className="favorite-img" src={heartEmpty}/>}
+                                        </div>
                                     </div>
-                                    <div className="publication-votes">
-                                             <img className="vote-img" src={reward} />
-                                        <p>{publication.rank}</p>
+                                    <div className="publication-exifs">
+                                        <p> Modèle de caméra : </p>
+                                        <p> Distance focale : </p>
+                                        <p> Ouverture : </p>
                                     </div>
                                     {
                                         userConnected &&
@@ -126,7 +138,6 @@ class Publication extends React.Component {
                                 <div className="publication-description">
                                     <p >{publication.description}</p>
                                 </div>
-
                             </div>
                         }
                 </Container>

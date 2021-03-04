@@ -3,6 +3,8 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Publication, PublicationDocument } from './publication.schema'
 import { CreatePublicationDto } from './dto/create-publication.dto'
+import { ExifImage } from "exif";
+import { defaults } from "request"
 import axios from 'axios'
 import * as util from 'util'
 import { json } from 'express'
@@ -15,6 +17,7 @@ export class PublicationsService {
   ) {}
 
   async findAll (): Promise<Publication[]> {
+    this.getExif('https://github.com/ianare/exif-samples/blob/master/jpg/tests/22-canon_tags.jpg?raw=true')
     return this.publicationModel.find().exec()
   }
 
@@ -64,6 +67,14 @@ export class PublicationsService {
         HttpStatus.FORBIDDEN
       )
     }
+    console.log(this.getExif(createdPost.imageLink))
+    const exif = this.getExif(createdPost.imageLink)
+    if (exif !== undefined) {
+      createdPost.metaDatas = exif
+    } else {
+      createdPost.metaDatas = {}
+      console.log("No exif for this image")
+    }
 
     const date = new Date();
     const dateString = date.toDateString() + " " + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
@@ -112,6 +123,35 @@ export class PublicationsService {
     return true
   }
 
+  async getExif (urlImage) {
+    let exif = undefined
+    const request = defaults({ encoding: null });
+    request.get(urlImage, function (error, response, body) {
+      if (!error && response.statusCode === 200) {
+        try {
+          // eslint-disable-next-line no-new
+          new ExifImage({ image: body }, function (error, exifData) {
+            if (!error) {
+              console.log(typeof exifData)
+              console.log(exifData); // Do something with your data!
+              exif = exifData
+            } else {
+              console.log('Error: ' + error.message);
+            }
+          });
+        } catch (error) {
+          console.log('Error: ' + error.message);
+        }
+      }
+    });
+    return exif
+  }
+
+  /*    getNextSequenceValue () {
+    const sequenceDocument = this.userModel.estimatedDocumentCount();
+    console.log("NB DOCUMENT" + sequenceDocument.getQuery()._id);
+    return sequenceDocument.getQuery();
+  } */
   async removeAllFromUser(pseudo: string, pseudoUserConnected: string, token: string) : Promise<boolean> {
     const isVerified = await this.verifyUserAndToken(pseudo, pseudoUserConnected, token);
     if(!isVerified) {
