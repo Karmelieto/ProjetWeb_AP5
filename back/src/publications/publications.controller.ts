@@ -39,12 +39,14 @@ export class PublicationsController {
   async findAllByTag (@Param('tag') tag: string): Promise<Publication[]> {
     return this.publicationsService.findAllByTag(tag)
   }
-  
+
   @Get('user/:pseudo')
   @ApiOperation({
     summary: 'Find all publications post by a user'
   })
-  async findAllByPseudo (@Param('pseudo') pseudo: string): Promise<Publication[]> {
+  async findAllByPseudo (
+    @Param('pseudo') pseudo: string
+  ): Promise<Publication[]> {
     return this.publicationsService.findAllByPseudo(pseudo)
   }
 
@@ -97,15 +99,23 @@ export class PublicationsController {
   @ApiOperation({
     summary: 'Remove a publication by his id'
   })
-  async remove (@Param('id') id: string, @Body() deletePublicationDto: DeletePublicationDto, @Res() res) {
-    const isDeleted = await this.publicationsService.remove(id, deletePublicationDto.pseudo, deletePublicationDto.token);
+  async remove (
+    @Param('id') id: string,
+    @Body() deletePublicationDto: DeletePublicationDto,
+    @Res() res
+  ) {
+    const isDeleted = await this.publicationsService.remove(
+      id,
+      deletePublicationDto.pseudo,
+      deletePublicationDto.token
+    )
 
-    if(!isDeleted) {
-      res.sendStatus(404);
-      return;
+    if (!isDeleted) {
+      res.sendStatus(404)
+      return
     }
 
-    res.sendStatus(201);
+    res.sendStatus(201)
   }
 
   @Delete('user/:pseudo')
@@ -117,14 +127,22 @@ export class PublicationsController {
   @ApiOperation({
     summary: 'Remove all publications of a user by them pseudo'
   })
-  async removeAllFromUser (@Param('pseudo') pseudo: string, @Body() deletePublicationDto: DeletePublicationDto, @Res() res) {
-    const isDeleted = await this.publicationsService.removeAllFromUser(pseudo, deletePublicationDto.pseudo, deletePublicationDto.token);
+  async removeAllFromUser (
+    @Param('pseudo') pseudo: string,
+    @Body() deletePublicationDto: DeletePublicationDto,
+    @Res() res
+  ) {
+    const isDeleted = await this.publicationsService.removeAllFromUser(
+      pseudo,
+      deletePublicationDto.pseudo,
+      deletePublicationDto.token
+    )
 
-    if(!isDeleted) {
-      res.sendStatus(404);
-      return;
+    if (!isDeleted) {
+      res.sendStatus(404)
+      return
     }
 
-    res.sendStatus(201);
+    res.sendStatus(201)
   }
 }

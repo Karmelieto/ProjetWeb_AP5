@@ -26,7 +26,7 @@ import {
 } from '@nestjs/swagger'
 import * as util from 'util'
 import { UpdateUserDto } from './dto/update-user.dto'
-import {LoginUserDto} from "./dto/login-user.dto";
+import { LoginUserDto } from './dto/login-user.dto'
 
 @Controller('users')
 @ApiTags('users')
@@ -46,14 +46,14 @@ export class UsersController {
     summary: 'Retrieve a user by his pseudo'
   })
   async findOne (@Param('pseudo') pseudo: string) {
-    const user = await this.usersService.findOne(pseudo.toLowerCase());
-    if(!user) {
+    const user = await this.usersService.findOne(pseudo.toLowerCase())
+    if (!user) {
       throw new HttpException(
         util.format('The user does not exist'),
         HttpStatus.NOT_FOUND
       )
     }
-    return user; 
+    return user
   }
 
   @Get('filter/:pseudo')
@@ -85,10 +85,7 @@ export class UsersController {
   @ApiOperation({
     summary: 'Login a user'
   })
-  async login (
-      @Body() loginUserDto: LoginUserDto,
-      @Res() res
-  ): Promise<User> {
+  async login (@Body() loginUserDto: LoginUserDto, @Res() res): Promise<User> {
     return res.json(await this.usersService.login(loginUserDto))
   }
 
@@ -105,15 +102,19 @@ export class UsersController {
   @ApiOperation({
     summary: 'Find all favorites of one user'
   })
-  async getAllFavoritesOfUser (@Param('pseudo') pseudo: string): Promise<string[]> {
-    const favorites = await this.usersService.getFavoritesOfUser(pseudo.toLowerCase())
-    if(!favorites) {
+  async getAllFavoritesOfUser (
+    @Param('pseudo') pseudo: string
+  ): Promise<string[]> {
+    const favorites = await this.usersService.getFavoritesOfUser(
+      pseudo.toLowerCase()
+    )
+    if (!favorites) {
       throw new HttpException(
         util.format('The user %s does not exist', pseudo),
         HttpStatus.NOT_FOUND
       )
     }
-    return favorites;
+    return favorites
   }
 
   @UsePipes(new ValidationPipe({ transform: true }))
@@ -121,23 +122,32 @@ export class UsersController {
   @ApiOperation({
     summary: 'Add favorite to user'
   })
-  async addFavoriteToUser (@Body() changeFavoriteOfUserDto: ChangeFavoriteOfUserDto) {
-    if(!changeFavoriteOfUserDto.idPost){
+  async addFavoriteToUser (
+    @Body() changeFavoriteOfUserDto: ChangeFavoriteOfUserDto
+  ) {
+    if (!changeFavoriteOfUserDto.idPost) {
       throw new HttpException(
         util.format('Post is is required'),
         HttpStatus.FORBIDDEN
       )
     }
-    if(!changeFavoriteOfUserDto.pseudo){
+    if (!changeFavoriteOfUserDto.pseudo) {
       throw new HttpException(
         util.format('Pseudo is required'),
         HttpStatus.FORBIDDEN
       )
     }
-    const res = await this.usersService.addFavoriteToUser(changeFavoriteOfUserDto.pseudo, changeFavoriteOfUserDto.idPost)
-    if(!res) {
+    const res = await this.usersService.addFavoriteToUser(
+      changeFavoriteOfUserDto.pseudo,
+      changeFavoriteOfUserDto.idPost
+    )
+    if (!res) {
       throw new HttpException(
-        util.format('The user %s does not exist or the post id %s is already in favorites', changeFavoriteOfUserDto.pseudo, changeFavoriteOfUserDto.idPost),
+        util.format(
+          'The user %s does not exist or the post id %s is already in favorites',
+          changeFavoriteOfUserDto.pseudo,
+          changeFavoriteOfUserDto.idPost
+        ),
         HttpStatus.NOT_FOUND
       )
     }
@@ -147,23 +157,31 @@ export class UsersController {
   @ApiOperation({
     summary: 'Remove favorite from user'
   })
-  async removeFavoriteToUser (@Body() changeFavoriteOfUserDto: ChangeFavoriteOfUserDto) {
-    if(!changeFavoriteOfUserDto.idPost){
+  async removeFavoriteToUser (
+    @Body() changeFavoriteOfUserDto: ChangeFavoriteOfUserDto
+  ) {
+    if (!changeFavoriteOfUserDto.idPost) {
       throw new HttpException(
         util.format('Post is required'),
         HttpStatus.FORBIDDEN
       )
     }
-    if(!changeFavoriteOfUserDto.pseudo){
+    if (!changeFavoriteOfUserDto.pseudo) {
       throw new HttpException(
         util.format('Pseudo is required'),
         HttpStatus.FORBIDDEN
       )
     }
-    const res = await this.usersService.removeFavoriteToUser(changeFavoriteOfUserDto.pseudo, changeFavoriteOfUserDto.idPost)
-    if(!res) {
+    const res = await this.usersService.removeFavoriteToUser(
+      changeFavoriteOfUserDto.pseudo,
+      changeFavoriteOfUserDto.idPost
+    )
+    if (!res) {
       throw new HttpException(
-        util.format('The user %s does not exist', changeFavoriteOfUserDto.pseudo),
+        util.format(
+          'The user %s does not exist',
+          changeFavoriteOfUserDto.pseudo
+        ),
         HttpStatus.NOT_FOUND
       )
     }

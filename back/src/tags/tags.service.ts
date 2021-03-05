@@ -13,21 +13,20 @@ export class TagsService {
   private readonly logger = new Logger(TagsService.name);
 
   async findAll (pseudo: string): Promise<Tag[]> {
-    return this.tagModel.find(
-      { 
-        $or: [
-          { isPrivate: false },
-          { $and: [
-            { isPrivate: true },
-            { usersAllow: pseudo }
-          ]}
-        ]
-      },
-      {
-        name: 1,
-        imageLink: 1
-      }
-    ).exec()
+    return this.tagModel
+      .find(
+        {
+          $or: [
+            { isPrivate: false },
+            { $and: [{ isPrivate: true }, { usersAllow: pseudo }] }
+          ]
+        },
+        {
+          name: 1,
+          imageLink: 1
+        }
+      )
+      .exec()
   }
 
   async findOne (id: string): Promise<Tag> {
@@ -40,29 +39,27 @@ export class TagsService {
   }
 
   async getAllTagsByIds (ids: string[]): Promise<Tag[]> {
-    return await this.tagModel.find(
-      {
-        _id:
-          {
-            $in: ids
-          }
-      }
-    ).exec()
+    return await this.tagModel
+      .find({
+        _id: {
+          $in: ids
+        }
+      })
+      .exec()
   }
 
   async searchTagsByName (name: string, pseudo: string): Promise<Tag[]> {
     return this.tagModel
       .find(
-        { 
+        {
           $and: [
             { name: new RegExp(name) },
-            { $or: [
-              { isPrivate: false },
-              { $and: [
-                { isPrivate: true },
-                { usersAllow: pseudo }
-              ]}
-            ]}         
+            {
+              $or: [
+                { isPrivate: false },
+                { $and: [{ isPrivate: true }, { usersAllow: pseudo }] }
+              ]
+            }
           ]
         },
         {
@@ -75,7 +72,7 @@ export class TagsService {
 
   async create (createTagDto: CreateTagDto): Promise<Tag> {
     const createdTag = new this.tagModel(createTagDto)
-    if (!createdTag.isPrivate && await this.isTagExist(createdTag.name)) {
+    if (!createdTag.isPrivate && (await this.isTagExist(createdTag.name))) {
       throw new HttpException(
         util.format('The tag %s already exist', createdTag.name),
         HttpStatus.FORBIDDEN
