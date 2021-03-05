@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { Document } from 'mongoose'
-import { MetaData2 } from '../models/MetaData2'
+import { MetaData } from '../models/MetaData'
 import { ApiProperty } from '@nestjs/swagger'
 
 export type PublicationDocument = Publication & Document;
@@ -23,7 +23,7 @@ export class Publication {
     default: null
   })
   @Prop()
-  metaDatas: MetaData2;
+  metaDatas: MetaData;
 
   @ApiProperty()
   @Prop()

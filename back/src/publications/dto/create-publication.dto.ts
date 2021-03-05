@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { MetaData2 } from '../../models/MetaData2'
+import { MetaData } from '../../models/MetaData'
 import { Prop } from '@nestjs/mongoose'
 import { Transform } from 'class-transformer'
 
@@ -27,7 +27,7 @@ export class CreatePublicationDto {
     default: null
   })
   @Prop()
-  metaDatas: MetaData2;
+  metaDatas: MetaData;
 
   @ApiProperty()
   points: number;
