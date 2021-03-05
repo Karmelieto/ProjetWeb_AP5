@@ -5,6 +5,7 @@ import APICallManager from '../../app/APICallManager';
 import back from '../../images/back.svg';
 import cross from '../../images/cross.svg';
 import post from '../../images/post.svg';
+import cantValidate from '../../images/cant_validate.svg';
 import Banner from '../banner/Banner';
 import LoadingElement from '../loading/LoadingElement';
 import Container from '../container/Container';
@@ -262,8 +263,9 @@ class PostPublication extends React.Component {
                         right = {
                             <div>
                             {
-                                publication.tags.length > 0 && ((isTagAddedIsPrivate && usersAllow.length > 0) || !isTagAddedIsPrivate) && !isImageLoading &&
-                                <Validate onClick={this.onValidate}/>
+                                (publication.tags.length > 0 && ((isTagAddedIsPrivate && usersAllow.length > 0) || !isTagAddedIsPrivate) && !isImageLoading)
+                                ? <Validate onClick={this.onValidate}/>
+                                : <img src={cantValidate}/>
                             }
                             </div>
                         }
@@ -285,8 +287,9 @@ class PostPublication extends React.Component {
                                 </label>
                             </div>
                             <div className='post-publication-tags'>
-                                {
-                                    publication.tags.map((tag, index) => (
+                                { (publication.tags.length === 0)
+                                    ? <div className='post-publication-tags-empty'>No tag added yet</div>
+                                    : publication.tags.map((tag, index) => (
                                         <div className='post-publication-tag' style={{ borderColor: (tag.isPrivate) ? 'var(--color-primary-dark)' : 'var(--color-black)' }} key={index} onClick={() => this.onTagDeleted(tag)}>
                                             <label>&#x3A6; {tag.name}</label>
                                             <img className='delete-tag' src={cross}/>

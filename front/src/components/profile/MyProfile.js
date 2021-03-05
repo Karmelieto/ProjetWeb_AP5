@@ -145,11 +145,11 @@ class MyProfile extends React.Component {
                                         isPopupDisplay &&
                                         <Popup title="Do you really want do delete this account ?" actionOnCancel={this.removePopup} actionOnValidate={this.deleteAccount}/>
                                     }
-                                    <div className="flex-nowrap select-post">
-                                        <div onClick={ (event) => this.onPublicationsClicked(event)} className={!isFavoriteDisplay ? 'selected' : ''}>
+                                    <div className="flex-nowrap select-post ">
+                                        <div onClick={ (event) => this.onPublicationsClicked(event)} className={!isFavoriteDisplay ? 'selected transform-scale' : 'transform-scale'}>
                                             <img src={publicationsIcon}/>
                                         </div>
-                                        <div onClick={ (event) => this.onFavoriteClicked(event)} className={isFavoriteDisplay ? 'selected' : ''}>
+                                        <div onClick={ (event) => this.onFavoriteClicked(event)} className={isFavoriteDisplay ? 'selected transform-scale' : 'transform-scale'}>
                                             <img src={favoritesIcon}/>
                                         </div>
                                     </div>

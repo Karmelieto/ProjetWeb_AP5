@@ -131,7 +131,7 @@ class Publication extends React.Component {
                                     </div>
                                     {
                                         userConnected &&
-                                        <div onClick={ (event) => this.onFavoriteClicked(event)}>
+                                        <div className="transform-scale" onClick={ (event) => this.onFavoriteClicked(event)}>
                                             {isFavorite
                                             ? <img className="favorite-img" src={heartFill}/>
                                             : <img className="favorite-img" src={heartEmpty}/>}

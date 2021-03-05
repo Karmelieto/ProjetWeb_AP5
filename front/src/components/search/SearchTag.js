@@ -117,7 +117,7 @@ class SearchTag extends React.Component {
                             {isLoading
                                 ? <LoadingPage/>
                                 : (publications.length === 0)
-                                    ? <div className="not-found">No publications found !</div>
+                                    ? <div className="not-found">No publication found !</div>
                                     : <Gallery publications={publications} />
                             }  
                           </div>

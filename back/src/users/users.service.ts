@@ -141,17 +141,21 @@ export class UsersService {
   }
 
   async update (updateUserDto: UpdateUserDto): Promise<User> {
-    this.logger.debug(updateUserDto)
+    if(!(await this.checkUserConnectedIsAdminOrAuthorized(updateUserDto.lastPseudo, updateUserDto.pseudoUserConnected))) {
+      throw new HttpException(
+        util.format('The user %s is not authorized !', updateUserDto.pseudoUserConnected),
+        HttpStatus.UNAUTHORIZED
+      )
+    }
     const myUser: User = await this.userModel.findOne({
       pseudo: updateUserDto.lastPseudo
     })
-    if (myUser && !(await this.isUserExist(updateUserDto.newPseudo))) {
+    if (myUser && (updateUserDto.lastPseudo === updateUserDto.newPseudo || !(await this.isUserExist(updateUserDto.newPseudo)))) {
       try {
         await this.userModel.updateOne(
           { pseudo: updateUserDto.lastPseudo },
           {
             pseudo: updateUserDto.newPseudo,
-            password: updateUserDto.password,
             description: updateUserDto.description,
             profileImageLink: updateUserDto.profileImageLink
           }
@@ -228,15 +232,20 @@ export class UsersService {
     return !!(await this.findOneByMail(mail))
   }
 
+  async checkUserConnectedIsAdminOrAuthorized(pseudo: string, pseudoUserConnected: string): Promise<boolean> {
+    if(pseudoUserConnected !== pseudo) {
+      const userConnected = await this.userModel.findOne({ pseudo: pseudoUserConnected }, { isAdmin: 1});
+      return userConnected.isAdmin;
+    }
+    return true;
+  }
+
   async remove (deleteUserDto: DeleteUserDto) {
-    if(deleteUserDto.pseudoUserConnected !== deleteUserDto.pseudo) {
-      const userConnected = await this.userModel.findOne({ pseudo: deleteUserDto.pseudoUserConnected }, { isAdmin: 1});
-      if(!userConnected.isAdmin) {
-        throw new HttpException(
-          util.format('The user connected %s might be an admin !', deleteUserDto.pseudoUserConnected),
-          HttpStatus.FORBIDDEN
-        )
-      }
+    if(!(await this.checkUserConnectedIsAdminOrAuthorized(deleteUserDto.pseudo, deleteUserDto.pseudoUserConnected))) {
+      throw new HttpException(
+        util.format('The user %s is not authorized !', deleteUserDto.pseudoUserConnected),
+        HttpStatus.UNAUTHORIZED
+      )
     }
 
     await axios.delete(process.env.SERVER_URL + 'publications/user/' + deleteUserDto.pseudo, { data: { pseudo: deleteUserDto.pseudoUserConnected, token: 'eKoYea331nJhfnqIzeLap8jSd4SddpalqQ93Nn2' } })

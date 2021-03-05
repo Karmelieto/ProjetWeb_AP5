@@ -53,14 +53,19 @@ body, html {
     text-decoration: none !important;
 }
 
-.back-img {
+.transform-scale img {
     cursor: pointer;
-    height: 35px;
-    transition: height 0.2s;
+    transform: scale(1);
+    transition: transform 0.2s ease-in-out;
 }
 
-.back-img:hover {
-    height: 40px;
+.transform-scale:hover img {
+    transform: scale(1.2);
+    transition: transform 0.2s ease-in-out;
+}
+
+.back-img {
+    height: 35px;
 }
 
 .button-marble {
