@@ -82,6 +82,13 @@ input[type="file"] {
     transition: border 0.2s ease-in-out;
 }
 
+.post-publication-tags-empty {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 10px;
+}
+
 .delete-tag {
     padding-left: 5px;
     width: 10px;

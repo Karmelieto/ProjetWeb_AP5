@@ -11,8 +11,9 @@ export class UpdateUserDto {
   @ApiProperty()
   newPseudo: string;
 
+  @Transform((pseudoUserConnected) => pseudoUserConnected.value.toLowerCase())
   @ApiProperty()
-  password: string;
+  pseudoUserConnected: string;
 
   @ApiProperty()
   profileImageLink: string;

@@ -89,7 +89,7 @@ class MyProfile extends React.Component {
 
     onFavoriteClicked (event) {
         this.setState({ isFavoriteDisplay: true });
-        if (this.state.favorites.length === 0) {
+        if (this.state.favorites.length === 0 && this.state.user.favorites.length !== 0) {
             APICallManager.getPublicationsByArrayOfId(this.state.user.favorites, (response) => {
                 if (response.data) {
                     this.setState({ favorites: response.data });
@@ -145,11 +145,11 @@ class MyProfile extends React.Component {
                                         isPopupDisplay &&
                                         <Popup title="Do you really want do delete this account ?" actionOnCancel={this.removePopup} actionOnValidate={this.deleteAccount}/>
                                     }
-                                    <div className="flex-nowrap select-post">
-                                        <div onClick={ (event) => this.onPublicationsClicked(event)} className={!isFavoriteDisplay ? 'selected' : ''}>
+                                    <div className="flex-nowrap select-post ">
+                                        <div onClick={ (event) => this.onPublicationsClicked(event)} className={!isFavoriteDisplay ? 'selected transform-scale' : 'transform-scale'}>
                                             <img src={publicationsIcon}/>
                                         </div>
-                                        <div onClick={ (event) => this.onFavoriteClicked(event)} className={isFavoriteDisplay ? 'selected' : ''}>
+                                        <div onClick={ (event) => this.onFavoriteClicked(event)} className={isFavoriteDisplay ? 'selected transform-scale' : 'transform-scale'}>
                                             <img src={favoritesIcon}/>
                                         </div>
                                     </div>

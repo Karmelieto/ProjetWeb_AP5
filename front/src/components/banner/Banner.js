@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 const Banner = (props) => {
     return (
         <div className="banner">
-            <div className="banner-left">
+            <div className="banner-left transform-scale">
                 {props.left}
             </div>
-            <div className="banner-center">
+            <div className="banner-center transform-scale">
                 {props.center}
             </div>
-            <div className="banner-right">
+            <div className="banner-right transform-scale">
                 {props.right}
             </div>
       </div>
