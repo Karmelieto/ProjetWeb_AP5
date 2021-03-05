@@ -1,11 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { MetaData } from '../../models/MetaData'
+import { MetaData2 } from '../../models/MetaData2'
+import { Prop } from '@nestjs/mongoose'
+import { Transform } from 'class-transformer'
 
 export class CreatePublicationDto {
   @ApiProperty()
   imageLink: string;
 
   @ApiProperty()
+  @Transform((pseudo) => pseudo.value.toLowerCase())
   pseudo: string;
 
   @ApiProperty()
@@ -20,8 +23,11 @@ export class CreatePublicationDto {
   @ApiProperty()
   nbVotes: number;
 
-  @ApiProperty()
-  metaDatas: unknown
+  @ApiProperty({
+    default: null
+  })
+  @Prop()
+  metaDatas: MetaData2;
 
   @ApiProperty()
   points: number;

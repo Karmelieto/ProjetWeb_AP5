@@ -1,13 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { Document } from 'mongoose'
-import { MetaData } from '../models/MetaData'
+import { MetaData2 } from '../models/MetaData2'
 import { ApiProperty } from '@nestjs/swagger'
 
 export type PublicationDocument = Publication & Document;
 
 @Schema()
 export class Publication {
-
   @ApiProperty()
   @Prop()
   imageLink: string;
@@ -20,9 +19,11 @@ export class Publication {
   @Prop()
   tags: string[];
 
-  @ApiProperty()
+  @ApiProperty({
+    default: null
+  })
   @Prop()
-  metaDatas: unknown;
+  metaDatas: MetaData2;
 
   @ApiProperty()
   @Prop()

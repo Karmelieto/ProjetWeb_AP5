@@ -13,6 +13,9 @@ import PropTypes from 'prop-types';
 import reward from '../../images/reward.svg';
 import heartEmpty from '../../images/heart_empty.svg';
 import heartFill from '../../images/heart_fill.svg';
+import camera from '../../images/camera_alt-24px.svg'
+import time from '../../images/schedule-24px.svg'
+import list from '../../images/toc-24px.svg'
 
 class Publication extends React.Component {
 
@@ -30,6 +33,7 @@ class Publication extends React.Component {
             APICallManager.getAllTagsByIds(publication.tags, (response) => {
                 publication.tags = response.data.map(tag => tag.name);
                 this.setState({ publication: publication, isLoading: false });
+                console.log(this.state.publication)
             });
             if (this.props.user) {
                 APICallManager.getFavoritesOfUser(this.props.user.pseudo, (response) => {
@@ -37,7 +41,6 @@ class Publication extends React.Component {
                 })
             }
         });
-        
     }
 
     onBackClicked (event) {
@@ -59,7 +62,7 @@ class Publication extends React.Component {
     onFavoriteClicked (event) {
         if (!this.props.user) return;
 
-        if (this.state.isFavorite) { 
+        if (this.state.isFavorite) {
             APICallManager.removePublicationFromFavorites(this.props.user.pseudo, this.state.publication._id, (response) => {
                 this.setState({
                     isFavorite: !this.state.isFavorite
@@ -136,19 +139,22 @@ class Publication extends React.Component {
                                               : <img className="favorite-img" src={heartEmpty}/>}
                                         </div>
                                     </div>
-                                    <div className="publication-exifs">
-                                        <p> Modèle de caméra : </p>
-                                        <p> Distance focale : </p>
-                                        <p> Ouverture : </p>
-                                    </div>
-                                    {
-                                        userConnected &&
-                                        <div className="transform-scale" onClick={ (event) => this.onFavoriteClicked(event)}>
-                                            {isFavorite
-                                            ? <img className="favorite-img" src={heartFill}/>
-                                            : <img className="favorite-img" src={heartEmpty}/>}
+                                    { (publication.metaDatas != null)
+                                      ? <div className="publication-exifs">
+                                          <div className="exif-container">
+                                              <img className="exif-image" src={camera}/>
+                                              <p> {publication.metaDatas.cameraModel} </p>
+                                          </div>
+                                          <div className="exif-container">
+                                              <img className="exif-image" src={time}/>
+                                              <p>{publication.metaDatas.dateAndTimeOfCreation} </p>
+                                          </div>
+                                          <div className="exif-container">
+                                              <img className="exif-image" src={list}/>
+                                              <p> {publication.metaDatas.expositionTime}s {publication.metaDatas.focalLength}mm F/{publication.metaDatas.focal} </p>
+                                          </div>
                                         </div>
-                                    }
+                                      : <div/> }
                                 </div>
                                 <div className="publication-description">
                                     <p >{publication.description}</p>
