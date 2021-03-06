@@ -17,7 +17,7 @@ class Gameinit extends React.Component {
         this.state = {
             publications: [],
             tags: [],
-            randomTag: '',
+            randomTag: [],
             isLoading: true,
             inputSearch: ''
         };
@@ -33,6 +33,11 @@ class Gameinit extends React.Component {
             this.setState({
                 tags: response.data,
                 isLoading: false
+            });
+        });
+        APICallManager.getRandomTags(1, (response) => {
+            this.setState({
+                randomTag: response.data
             });
         });
     }
@@ -70,7 +75,7 @@ class Gameinit extends React.Component {
         const isLoading = this.state.isLoading;
         const inputSearch = this.state.inputSearch;
         const tags = this.state.tags;
-        // const randomTag = this.randomTag;
+        const randomTag = this.state.randomTag;
         const user = this.props.user;
         return (
             <div>
@@ -117,7 +122,7 @@ class Gameinit extends React.Component {
                         <h1>Random tag</h1>
                         {isLoading
                             ? <LoadingPage />
-                            : tags.slice(0, 1).map((tag, index) => (
+                            : randomTag.slice(0, 1).map((tag, index) => (
                                 <Link to={`/play/${tag.name}`} className="clear-link-decoration" key={index}>
                                     <Tag tag={tag}/>
                                 </Link>

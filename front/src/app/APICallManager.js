@@ -32,6 +32,10 @@ export default class APICallManager {
         axios.get(APICallManager.backUrl + '/tags/ids/' + ids.join()).then(callback).catch(errorCallback);
     }
 
+    static getRandomTags (nb, callback, errorCallback) {
+        axios.get(APICallManager.backUrl + '/tags/random/' + nb).then(callback).catch(errorCallback);
+    }
+
     static getPublications (callback, errorCallback) {
         axios.get(APICallManager.backUrl + '/publications').then(callback).catch(errorCallback);
     }
