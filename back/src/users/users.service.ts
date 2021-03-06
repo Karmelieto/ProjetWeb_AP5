@@ -151,6 +151,18 @@ export class UsersService {
       pseudo: updateUserDto.lastPseudo
     })
     if (myUser && (updateUserDto.lastPseudo === updateUserDto.newPseudo || !(await this.isUserExist(updateUserDto.newPseudo)))) {
+      if(myUser.profileImageLink !== updateUserDto.profileImageLink) {
+        const date = new Date();
+        const dateString = date.toDateString() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+        const newImageLink = updateUserDto.newPseudo + '_' + dateString.replace(/[ :]/g, '_');
+
+        updateUserDto.profileImageLink = await this.renameImageLink(
+          updateUserDto.profileImageLink,
+          newImageLink
+        )
+
+        this.removeProfileImage(myUser.profileImageLink);
+      }
       try {
         await this.userModel.updateOne(
           { pseudo: updateUserDto.lastPseudo },
@@ -160,21 +172,8 @@ export class UsersService {
             profileImageLink: updateUserDto.profileImageLink
           }
         )
-        this.logger.debug(
-          'UPDATE FINISHED ' +
-            (await this.userModel.findOne(
-              { pseudo: updateUserDto.newPseudo },
-              {
-                password: 0
-              }
-            ))
-        )
-        return this.userModel.findOne(
-          { pseudo: updateUserDto.newPseudo },
-          {
-            password: 0
-          }
-        )
+
+        return await this.findOneConnected(updateUserDto.newPseudo);
       } catch (e) {
         throw new HttpException(
           util.format(
@@ -193,6 +192,24 @@ export class UsersService {
         HttpStatus.NOT_FOUND
       )
     }
+  }
+
+  async renameImageLink (actualName: string, newName: string): Promise<string> {
+    return axios
+      .put(process.env.CLOUD_URL, { actualName: actualName, newName: newName })
+      .then((response) => {
+        return response.data
+      })
+      .catch((error) => {
+        console.log(error)
+        return ''
+      })
+  }
+
+  async removeProfileImage(profileImageLink: string) {
+    axios.delete(process.env.CLOUD_URL, {
+      data: { url: profileImageLink, token: 'eKoYea331nJhfnqIzeLap8jSd4SddpalqQ93Nn2' }
+    })
   }
 
   async getFavoritesOfUser (pseudo: string): Promise<string[]> {
@@ -264,6 +281,9 @@ export class UsersService {
         }
       )
       .catch((err) => console.error(err.response.statusText))
+
+    const user = await this.findOne(deleteUserDto.pseudo);
+    this.removeProfileImage(user.profileImageLink);
     const res = await this.userModel.deleteOne({
       pseudo: deleteUserDto.pseudo
     })

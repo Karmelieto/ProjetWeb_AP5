@@ -20,6 +20,10 @@ export default class APICallManager {
         axios.delete(APICallManager.backUrl + '/users', { data: { pseudo, pseudoUserConnected } });
     }
 
+    static updateUser (lastPseudo, userUpdate, pseudoUserConnected, callback, errorCallback) {
+        axios.put(APICallManager.backUrl + '/users', { lastPseudo: lastPseudo, newPseudo: userUpdate.pseudo, pseudoUserConnected: pseudoUserConnected, profileImageLink: userUpdate.profileImageLink, description: userUpdate.description }).then(callback).catch(errorCallback);
+    }
+
     static getTags (pseudo, callback, errorCallback) {
         axios.get(APICallManager.backUrl + '/tags/' + pseudo).then(callback).catch(errorCallback);
     }

@@ -4,14 +4,13 @@ import { withRouter } from 'react-router-dom';
 import APICallManager from '../../app/APICallManager';
 import back from '../../images/back.svg';
 import cross from '../../images/cross.svg';
-import post from '../../images/post.svg';
-import cantValidate from '../../images/cant_validate.svg';
 import Banner from '../banner/Banner';
 import LoadingElement from '../loading/LoadingElement';
 import Container from '../container/Container';
 import SearchList from '../search/SearchList';
 import Validate from '../validate/Validate';
 import PropTypes from 'prop-types';
+import InputImage from '../input/InputImage';
 
 class PostPublication extends React.Component {
 
@@ -262,11 +261,7 @@ class PostPublication extends React.Component {
                         }
                         right = {
                             <div>
-                            {
-                                (publication.tags.length > 0 && ((isTagAddedIsPrivate && usersAllow.length > 0) || !isTagAddedIsPrivate) && !isImageLoading)
-                                ? <Validate onClick={this.onValidate}/>
-                                : <img src={cantValidate}/>
-                            }
+                                <Validate canBeValidate={(publication.tags.length > 0 && ((isTagAddedIsPrivate && usersAllow.length > 0) || !isTagAddedIsPrivate) && !isImageLoading)} onClick={this.onValidate}/>
                             </div>
                         }
                     />
@@ -280,11 +275,7 @@ class PostPublication extends React.Component {
                                         : <img className='post-publication-select-img' src={publication.imageLink}/>
                                     }
                                 </div>
-                                
-                                <label className="custom-file-input">
-                                    <input type="file" onChange={this.onFileUpdated} />
-                                    <img src={post}/> Add image
-                                </label>
+                                <InputImage onFileUpdated={this.onFileUpdated}/>
                             </div>
                             <div className='post-publication-tags'>
                                 { (publication.tags.length === 0)

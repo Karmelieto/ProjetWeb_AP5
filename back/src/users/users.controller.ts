@@ -94,8 +94,8 @@ export class UsersController {
   @ApiOperation({
     summary: 'Update a user'
   })
-  async update (@Body() updateUserDto: UpdateUserDto) {
-    await this.usersService.update(updateUserDto)
+  async update (@Body() updateUserDto: UpdateUserDto): Promise<User> {
+    return await this.usersService.update(updateUserDto)
   }
 
   @Get('/favorites/:pseudo')

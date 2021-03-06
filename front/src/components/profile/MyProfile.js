@@ -21,10 +21,7 @@ class MyProfile extends React.Component {
 
     constructor (props) {
         super(props);
-
-        this.removePopup = this.removePopup.bind(this);
-        this.deleteAccount = this.deleteAccount.bind(this);
-
+        
         this.state = {
             user: null,
             publications: [],
@@ -60,22 +57,10 @@ class MyProfile extends React.Component {
         this.props.history.push('/');
     }
 
-    onEdit (event) {
-       this.setState({ isPopupDisplay: true });
+    onEdit () {
+       this.props.history.push('/editProfile/' + this.state.user.pseudo);
     }
-
-    removePopup () {
-        this.setState({ isPopupDisplay: false });
-    }
-
-    deleteAccount () {
-        if (!this.state.user || !this.props.user) return;
-        APICallManager.deleteUser(this.state.user.pseudo, this.props.user.pseudo);
-        this.setState({ isPopupDisplay: true });
-        if (this.state.user.pseudo === this.props.user.pseudo) this.onDisconnect();
-        else this.props.history.push('/');
-    }
-
+    
     onPublicationsClicked (pseudo) {
         this.setState({ isFavoriteDisplay: false });
         if (this.state.publications.length === 0) {
