@@ -39,6 +39,17 @@ export class TagsService {
     }
   }
 
+  async getRandomTag () : Promise<Tag[]> {
+    const randomTags: Tag[] = await this.tagModel.aggregate([
+        { $sample: { size: 1 } }
+    ])
+    if (randomTags) {
+      return randomTags
+    } else {
+      return null
+    }
+  }
+
   async getAllTagsByIds (ids: string[]): Promise<Tag[]> {
     return await this.tagModel.find(
       {

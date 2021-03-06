@@ -41,6 +41,14 @@ export class TagsController {
     return this.tagsService.findAll('');
   }
 
+  @Get('/random')
+  @ApiOperation({
+    summary: 'Retrieve a given number of random tags'
+  })
+  async getRandomTag () : Promise<Tag[]> {
+    return this.tagsService.getRandomTag()
+  }
+
   @Get('/ids/:ids')
   @ApiOperation({
     summary: 'Retrieve all tags by matching ids'
