@@ -19,6 +19,7 @@ class Gameinit extends React.Component {
             tags: [],
             randomTag: [],
             isLoading: true,
+            isLoadingRandom: true,
             inputSearch: ''
         };
         this.onTagSelected = this.onTagSelected.bind(this);
@@ -37,7 +38,8 @@ class Gameinit extends React.Component {
         });
         APICallManager.getRandomTags(1, (response) => {
             this.setState({
-                randomTag: response.data
+                randomTag: response.data,
+                isLoadingRandom: false
             });
         });
     }
@@ -73,6 +75,7 @@ class Gameinit extends React.Component {
 
     render () {
         const isLoading = this.state.isLoading;
+        const isLoadingRandom = this.state.isLoadingRandom;
         const inputSearch = this.state.inputSearch;
         const tags = this.state.tags;
         const randomTag = this.state.randomTag;
@@ -107,8 +110,8 @@ class Gameinit extends React.Component {
                     }
                 />
                 <Container>
-                    <div className='favoritesTags'>
-                        <h1>Favorites Tags</h1>
+                    <div className='trendingTags'>
+                        <h1>Trending Tags</h1>
                         {isLoading
                             ? <LoadingPage />
                             : tags.slice(0, 3).map((tag, index) => (
@@ -120,7 +123,7 @@ class Gameinit extends React.Component {
                     </div>
                     <div className="randomTag">
                         <h1>Random tag</h1>
-                        {isLoading
+                        {isLoadingRandom
                             ? <LoadingPage />
                             : randomTag.slice(0, 1).map((tag, index) => (
                                 <Link to={`/play/${tag.name}`} className="clear-link-decoration" key={index}>
