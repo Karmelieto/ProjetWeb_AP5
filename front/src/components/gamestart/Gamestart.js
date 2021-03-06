@@ -1,4 +1,5 @@
 import '../search/Search.css';
+import './Gamestart.css'
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import APICallManager from '../../app/APICallManager';
@@ -109,8 +110,13 @@ class GameStart extends React.Component {
                         {isImageLoading
                         ? <Loading />
                         : isThereTwoPublications
-                        ? <div><img src={this.state.publications[0].imageLink}/>
-                        <img src={this.state.publications[1].imageLink}/></div>
+                        ? <div>
+                            <h1>Which one is best ?</h1> 
+                        <div className="row">
+                            <div className="column"><img src={this.state.publications[0].imageLink}/></div>
+                            <div className="column"><img src={this.state.publications[1].imageLink}/></div>
+                        </div>
+                        </div>
                         : <p>Unfortunately, there are not enough publications for this tag yet. Publish yours !</p>
                     }
                     </div>
