@@ -7,8 +7,6 @@ import Banner from '../banner/Banner';
 import Loading from '../loading/LoadingPage';
 import Container from '../container/Container';
 import PropTypes from 'prop-types';
-import SearchList from '../search/SearchList';
-// import Tag from '../tag/Tag';
 
 class GameStart extends React.Component {
 
@@ -23,6 +21,7 @@ class GameStart extends React.Component {
             isLoading: true,
             isTagLoading: true,
             isImageLoading: true,
+            isThereTwoPublications: false,
             inputSearch: ''
         };
         this.onTagSelected = this.onTagSelected.bind(this);
@@ -54,6 +53,11 @@ class GameStart extends React.Component {
                 publications: response.data,
                 isImageLoading: false
             })
+            if (this.state.publications[1] != null) {
+                this.setState({
+                    isThereTwoPublications: true
+                })
+            }
         })
     }
 
@@ -70,8 +74,7 @@ class GameStart extends React.Component {
     render () {
         const isTagLoading = this.state.isTagLoading;
         const isImageLoading = this.state.isImageLoading;
-        const inputSearch = this.state.inputSearch;
-        const tags = this.state.tags;
+        const isThereTwoPublications = this.state.isThereTwoPublications;
         const user = this.props.user;
         return (
             <div>
@@ -80,13 +83,9 @@ class GameStart extends React.Component {
                         <Link to="/"><img src={logo} /></Link>
                     }
                     center={
-                        <div className="input-button dropdown">
-                            <input value={inputSearch} onChange={event => this.handleInputChange(event)} />
-                            <SearchList elements={tags} actionOnClick={this.onTagSelected} type="&#x3A6;" />
-                            <button className="button-marble">
-                                &#x3A6;
-                            </button>
-                        </div>
+                        isTagLoading 
+                        ? <h1>Tag</h1>
+                        : <h1>{this.state.tag.name.capitalize()}</h1>
                     }
                     right={
                         <div>
@@ -107,14 +106,12 @@ class GameStart extends React.Component {
                 />
                 <Container>
                     <div className='gameZone'>
-                        {isTagLoading
-                            ? <Loading />
-                            : <h1>{this.state.tag.name.capitalize()}</h1>
-                        }
                         {isImageLoading
                         ? <Loading />
-                        : <div><img src={this.state.publications[0].imageLink}/>
+                        : isThereTwoPublications
+                        ? <div><img src={this.state.publications[0].imageLink}/>
                         <img src={this.state.publications[1].imageLink}/></div>
+                        : <p>Unfortunately, there are not enough publications for this tag yet. Publish yours !</p>
                     }
                     </div>
                 </Container>
