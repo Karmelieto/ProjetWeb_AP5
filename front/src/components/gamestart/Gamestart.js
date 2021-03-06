@@ -8,7 +8,7 @@ import Loading from '../loading/LoadingPage';
 import Container from '../container/Container';
 import PropTypes from 'prop-types';
 import SearchList from '../search/SearchList';
-import Tag from '../tag/Tag';
+// import Tag from '../tag/Tag';
 
 class GameStart extends React.Component {
 
@@ -19,8 +19,10 @@ class GameStart extends React.Component {
             publications: [],
             tags: [],
             tag: '',
-            randomTag: '',
+            currentTagName: '',
             isLoading: true,
+            isTagLoading: true,
+            isImageLoading: true,
             inputSearch: ''
         };
         this.onTagSelected = this.onTagSelected.bind(this);
@@ -41,6 +43,18 @@ class GameStart extends React.Component {
                 isLoading: false
             });
         });
+        APICallManager.getAllTagsByIds([this.props.history.location.pathname.split('/')[2]], (response) => {
+            this.setState({
+                tag: response.data[0],
+                isTagLoading: false
+            })
+        })
+        APICallManager.getTwoRandomPublications(this.props.history.location.pathname.split('/')[2], (response) => {
+            this.setState({
+                publications: response.data,
+                isImageLoading: false
+            })
+        })
     }
 
     onTagSelected (clickedOn) {
@@ -54,10 +68,10 @@ class GameStart extends React.Component {
     }
 
     render () {
-        const isLoading = this.state.isLoading;
+        const isTagLoading = this.state.isTagLoading;
+        const isImageLoading = this.state.isImageLoading;
         const inputSearch = this.state.inputSearch;
         const tags = this.state.tags;
-        // const randomTag = this.randomTag;
         const user = this.props.user;
         return (
             <div>
@@ -93,14 +107,15 @@ class GameStart extends React.Component {
                 />
                 <Container>
                     <div className='gameZone'>
-                        {isLoading
+                        {isTagLoading
                             ? <Loading />
-                            : tags.slice(0, 3).map((tag, index) => (
-                                <Link to={`/play/${tag.name}`} className="clear-link-decoration" key={index}>
-                                    <Tag tag={tag}/>
-                                </Link>
-                            ))
+                            : <h1>{this.state.tag.name.capitalize()}</h1>
                         }
+                        {isImageLoading
+                        ? <Loading />
+                        : <div><img src={this.state.publications[0].imageLink}/>
+                        <img src={this.state.publications[1].imageLink}/></div>
+                    }
                     </div>
                 </Container>
             </div>
@@ -109,6 +124,7 @@ class GameStart extends React.Component {
 }
 GameStart.propTypes = {
     history: PropTypes.object,
-    user: PropTypes.object
+    user: PropTypes.object,
+    currentTagName: PropTypes.object
 }
 export default withRouter(GameStart);

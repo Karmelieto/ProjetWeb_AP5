@@ -64,6 +64,14 @@ export class PublicationsController {
     return this.publicationsService.findOne(id)
   }
 
+  @Get('tworandom/:tag')
+  @ApiOperation({
+    summary: 'Retrieve two publications which have the same tag'
+  })
+  async getTwoRandom (@Param('tag') tag: string) {
+    return this.publicationsService.getTwoRandom(tag)
+  }
+
   @Post()
   @ApiCreatedResponse({
     description: 'The publication has been successfully created.',

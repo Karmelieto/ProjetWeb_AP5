@@ -115,7 +115,7 @@ class Gameinit extends React.Component {
                         {isLoading
                             ? <LoadingPage />
                             : tags.slice(0, 3).map((tag, index) => (
-                                <Link to={`/play/${tag.name}`} className="clear-link-decoration" key={index}>
+                                <Link to={`/play/${tag._id}`} className="clear-link-decoration" key={index}>
                                     <Tag tag={tag}/>
                                 </Link>
                             ))
@@ -126,7 +126,7 @@ class Gameinit extends React.Component {
                         {isLoadingRandom
                             ? <LoadingPage />
                             : randomTag.slice(0, 1).map((tag, index) => (
-                                <Link to={`/play/${tag.name}`} className="clear-link-decoration" key={index}>
+                                <Link to={`/play/${tag._id}`} className="clear-link-decoration" key={index}>
                                     <Tag tag={tag}/>
                                 </Link>
                             ))
