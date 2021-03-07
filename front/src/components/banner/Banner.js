@@ -8,10 +8,10 @@ const Banner = (props) => {
             <div className="banner-left transform-scale">
                 {props.left}
             </div>
-            <div className="banner-center transform-scale">
+            <div className="banner-center">
                 {props.center}
             </div>
-            <div className="banner-right transform-scale">
+            <div className="banner-right">
                 {props.right}
             </div>
       </div>

@@ -97,7 +97,7 @@ export class UsersService {
       )
     }
   }
-  
+
   async create (createUserDto: CreateUserDto): Promise<any> {
     const createdUser = new this.userModel(createUserDto)
 
@@ -134,9 +134,9 @@ export class UsersService {
       }
 
       await createdUser.save()
-      const user: any = await this.findOneConnected(createdUser.pseudo);
-      user.token = 'eKoYea331nJhfnqIzeLap8jSd4SddpalqQ93Nn2';
-      return user;
+      const user: any = await this.findOneConnected(createdUser.pseudo)
+      user.token = 'eKoYea331nJhfnqIzeLap8jSd4SddpalqQ93Nn2'
+      return user
     }
   }
 
@@ -151,6 +151,18 @@ export class UsersService {
       pseudo: updateUserDto.lastPseudo
     })
     if (myUser && (updateUserDto.lastPseudo === updateUserDto.newPseudo || !(await this.isUserExist(updateUserDto.newPseudo)))) {
+      if(myUser.profileImageLink !== updateUserDto.profileImageLink) {
+        const date = new Date();
+        const dateString = date.toDateString() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+        const newImageLink = updateUserDto.newPseudo + '_' + dateString.replace(/[ :]/g, '_');
+
+        updateUserDto.profileImageLink = await this.renameImageLink(
+          updateUserDto.profileImageLink,
+          newImageLink
+        )
+
+        this.removeProfileImage(myUser.profileImageLink);
+      }
       try {
         await this.userModel.updateOne(
           { pseudo: updateUserDto.lastPseudo },
@@ -160,21 +172,8 @@ export class UsersService {
             profileImageLink: updateUserDto.profileImageLink
           }
         )
-        this.logger.debug(
-          'UPDATE FINISHED ' +
-            (await this.userModel.findOne(
-              { pseudo: updateUserDto.newPseudo },
-              {
-                password: 0
-              }
-            ))
-        )
-        return this.userModel.findOne(
-          { pseudo: updateUserDto.newPseudo },
-          {
-            password: 0
-          }
-        )
+
+        return await this.findOneConnected(updateUserDto.newPseudo);
       } catch (e) {
         throw new HttpException(
           util.format(
@@ -195,33 +194,56 @@ export class UsersService {
     }
   }
 
+  async renameImageLink (actualName: string, newName: string): Promise<string> {
+    return axios
+      .put(process.env.CLOUD_URL, { actualName: actualName, newName: newName })
+      .then((response) => {
+        return response.data
+      })
+      .catch((error) => {
+        console.log(error)
+        return ''
+      })
+  }
+
+  async removeProfileImage(profileImageLink: string) {
+    axios.delete(process.env.CLOUD_URL, {
+      data: { url: profileImageLink, token: 'eKoYea331nJhfnqIzeLap8jSd4SddpalqQ93Nn2' }
+    })
+  }
+
   async getFavoritesOfUser (pseudo: string): Promise<string[]> {
     const res = await this.userModel.findOne(
       { pseudo: pseudo },
       { favorites: 1 }
-    );
+    )
 
-    if(!res) return null;
-    return res.favorites;
+    if (!res) return null
+    return res.favorites
   }
 
   async addFavoriteToUser (pseudo: string, postId: string): Promise<boolean> {
-    const user = await this.findOne(pseudo);
-    if (!user) return false;
+    const user = await this.findOne(pseudo)
+    if (!user) return false
 
-    if (user.favorites.includes(postId))
-      return false;
-    
-    await this.userModel.updateOne({ pseudo: user.pseudo }, { $push: { favorites : postId } });
-    return true;
+    if (user.favorites.includes(postId)) return false
+
+    await this.userModel.updateOne(
+      { pseudo: user.pseudo },
+      { $push: { favorites: postId } }
+    )
+    return true
   }
-  
-  async removeFavoriteToUser (pseudo: string, postId: string): Promise<boolean> {
-    const user = await this.findOne(pseudo);
-    if (!user) return false;
 
-    await this.userModel.updateOne({ pseudo: user.pseudo }, { $pull: { favorites : postId } });
-    return true;
+  async removeFavoriteToUser (pseudo: string, postId: string): Promise<boolean> {
+    const user = await this.findOne(pseudo)
+    if (!user) return false
+
+    await this.userModel.updateOne(
+      { pseudo: user.pseudo },
+      { $pull: { favorites: postId } }
+    )
+    return true
   }
 
   async isUserExist (pseudo: string): Promise<boolean> {
@@ -248,13 +270,29 @@ export class UsersService {
       )
     }
 
-    await axios.delete(process.env.SERVER_URL + 'publications/user/' + deleteUserDto.pseudo, { data: { pseudo: deleteUserDto.pseudoUserConnected, token: 'eKoYea331nJhfnqIzeLap8jSd4SddpalqQ93Nn2' } })
-    .catch((err) => console.error
-    (err.response.statusText));
-    const res = await this.userModel.deleteOne({ pseudo: deleteUserDto.pseudo })
+    await axios
+      .delete(
+        process.env.SERVER_URL + 'publications/user/' + deleteUserDto.pseudo,
+        {
+          data: {
+            pseudo: deleteUserDto.pseudoUserConnected,
+            token: 'eKoYea331nJhfnqIzeLap8jSd4SddpalqQ93Nn2'
+          }
+        }
+      )
+      .catch((err) => console.error(err.response.statusText))
+
+    const user = await this.findOne(deleteUserDto.pseudo);
+    this.removeProfileImage(user.profileImageLink);
+    const res = await this.userModel.deleteOne({
+      pseudo: deleteUserDto.pseudo
+    })
     if (res.deletedCount === 0) {
       throw new HttpException(
-        util.format('The user %s might be already remove', deleteUserDto.pseudo),
+        util.format(
+          'The user %s might be already remove',
+          deleteUserDto.pseudo
+        ),
         HttpStatus.NOT_FOUND
       )
     }

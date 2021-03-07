@@ -30,7 +30,7 @@ export class TagsController {
     summary: 'Retrieve all tags with a pseudo'
   })
   async findAllByPseudo (@Param('pseudo') pseudo: string): Promise<Tag[]> {
-    return this.tagsService.findAll(pseudo.toLowerCase());
+    return this.tagsService.findAll(pseudo.toLowerCase())
   }
 
   @Get()
@@ -38,7 +38,7 @@ export class TagsController {
     summary: 'Retrieve all tags'
   })
   async findAll (): Promise<Tag[]> {
-    return this.tagsService.findAll('');
+    return this.tagsService.findAll('')
   }
 
   @Get('/random/:nb')
@@ -54,15 +54,21 @@ export class TagsController {
     summary: 'Retrieve all tags by matching ids'
   })
   async getAllTagsByIds (@Param('ids') ids: string): Promise<Tag[]> {
-    return await this.tagsService.getAllTagsByIds(ids.split(','));
+    return await this.tagsService.getAllTagsByIds(ids.split(','))
   }
 
   @Get('filter/:name/:pseudo')
   @ApiOperation({
     summary: 'Retrieve tags filter by a name, and check is private'
   })
-  async searchTagsByNameWithPseudo (@Param('name') name: string, @Param('pseudo') pseudo: string) {
-    return this.tagsService.searchTagsByName(name.toLowerCase(), pseudo.toLowerCase());
+  async searchTagsByNameWithPseudo (
+    @Param('name') name: string,
+    @Param('pseudo') pseudo: string
+  ) {
+    return this.tagsService.searchTagsByName(
+      name.toLowerCase(),
+      pseudo.toLowerCase()
+    )
   }
 
   @Get('filter/:name')
@@ -70,7 +76,7 @@ export class TagsController {
     summary: 'Retrieve tags filter by a name, and check is private'
   })
   async searchTagsByName (@Param('name') name: string) {
-    return this.tagsService.searchTagsByName(name.toLowerCase(), '');
+    return this.tagsService.searchTagsByName(name.toLowerCase(), '')
   }
 
   @UsePipes(new ValidationPipe({ transform: true }))
@@ -92,7 +98,7 @@ export class TagsController {
     summary: 'Update imageLink of a tag'
   })
   async update (@Body() updateImageTagDto: UpdateImageTagDto) {
-    console.log(updateImageTagDto);
+    console.log(updateImageTagDto)
     await this.tagsService.updateImageTag(updateImageTagDto)
   }
 

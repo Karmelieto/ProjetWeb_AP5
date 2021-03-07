@@ -68,6 +68,10 @@ body, html {
     height: 35px;
 }
 
+.input-error {
+    border: 2px solid var(--color-error);
+}   
+
 .button-marble {
     background: url(../images/button.png);
     background-size: cover;

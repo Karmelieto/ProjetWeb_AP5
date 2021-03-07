@@ -8,6 +8,7 @@ import Login from '../login/Login';
 import Register from '../register/Register';
 import Profile from '../profile/Profile';
 import MyProfile from '../profile/MyProfile';
+import EditProfile from '../profile/EditProfile';
 import Gamestart from '../gamestart/Gamestart';
 import Gameinit from '../gameinit/Gameinit';
 import Publication from '../publication/Publication';
@@ -92,6 +93,9 @@ class Navigator extends React.Component {
                             ? <MyProfile user={user} clearUser={this.clearUser} />
                             : <Profile user={user} />
                         }
+                    </Route>
+                    <Route path='/editProfile'>
+                        <EditProfile user={user} clearUser={this.clearUser} updateUser={this.updateUser} />
                     </Route>
                     <Route path='/publication'>
                         <Publication user={user}/>

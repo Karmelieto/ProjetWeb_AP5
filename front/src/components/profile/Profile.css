@@ -18,12 +18,11 @@
 
 .user-datas > * {
     flex-grow: 1;
-    width: 50%;
 }
 
 .user-datas img {
     max-height: 175px;
-    max-width: 100%;
+    max-width: 90%;
     height: auto;
     border-radius: 10px;
     border: 2px solid;
@@ -46,6 +45,16 @@
     height: 70px;
 }
 
+.edit-user-description {
+    width: 100%;
+    resize: none;
+    font-size: 14px;
+    height: 120px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid var(--color-grey);
+}
+
 .select-post {
     border-bottom: 2px solid var(--color-black);
     border-right: 2px solid var(--color-black);
@@ -62,6 +71,30 @@
 .select-post > div {
     cursor: pointer;
     width: 50%;
+}
+
+.button-delete-account {
+    margin-top: 10px;
+    border: 1px solid var(--color-black);
+    transition: border 0.2s ease-in-out;
+    box-shadow: 0px 4px 10px 2px var(--color-grey);
+    display: inline-block;
+    cursor: pointer;
+    padding: 15px 25px 15px 25px;
+    font-size: 20px;
+    background-color: var(--color-white);
+    border-radius: 5px;
+}
+
+.button-delete-account:hover {
+    border: 1px solid var(--color-error);
+    transition: border 0.2s ease-in-out;
+}
+
+.button-delete-account > img {
+    padding-left: 5px;
+    width: 20px;
+    vertical-align: top;
 }
 
 @media only screen and (min-width: 768px) {

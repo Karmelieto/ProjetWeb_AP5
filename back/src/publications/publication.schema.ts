@@ -7,7 +7,6 @@ export type PublicationDocument = Publication & Document;
 
 @Schema()
 export class Publication {
-
   @ApiProperty()
   @Prop()
   imageLink: string;
@@ -20,7 +19,9 @@ export class Publication {
   @Prop()
   tags: string[];
 
-  @ApiProperty()
+  @ApiProperty({
+    default: null
+  })
   @Prop()
   metaDatas: MetaData;
 

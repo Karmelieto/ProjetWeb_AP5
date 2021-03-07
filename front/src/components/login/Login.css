@@ -20,10 +20,6 @@
     margin-bottom: 20px;
 }
 
-.input-error {
-    border: 2px solid var(--color-error);
-}
-
 .error {
     color: var(--color-error);
     font-size: 13px;
