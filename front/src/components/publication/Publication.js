@@ -7,6 +7,7 @@ import options from '../../images/options.svg';
 import deleteIcon from '../../images/delete.svg';
 
 import Banner from '../banner/Banner';
+import Popup from '../popup/Popup';
 import LoadingPage from '../loading/LoadingPage';
 import Container from '../container/Container';
 import PropTypes from 'prop-types';
@@ -19,12 +20,20 @@ import list from '../../images/toc-24px.svg'
 
 class Publication extends React.Component {
 
-    state = {
-        publication: null,
-        isFavorite: false,
-        favorites: [],
-        isLoading: true
-    } ;
+    constructor (props) {
+        super(props);
+
+        this.state = {
+            publication: null,
+            isFavorite: false,
+            favorites: [],
+            isLoading: true,
+            isPopupDisplay: false
+        };
+
+        this.removePopup = this.removePopup.bind(this);
+        this.deletePublication = this.deletePublication.bind(this);
+    }
 
     componentDidMount () {
         const id = this.props.history.location.pathname.split('/')[2];
@@ -46,8 +55,16 @@ class Publication extends React.Component {
     onBackClicked (event) {
         this.props.history.goBack();
     }
+
+    onDeleteClicked () {
+        this.setState({ isPopupDisplay: true });
+    }
+
+    removePopup () {
+        this.setState({ isPopupDisplay: false });
+    }
     
-    onDelete (event) {
+    deletePublication (event) {
         const userConnected = this.props.user;
         const publication = this.state.publication;
         if (userConnected.pseudo !== publication.pseudo && !userConnected.isAdmin) return;
@@ -82,6 +99,7 @@ class Publication extends React.Component {
         const isFavorite = this.state.isFavorite;
         const userConnected = this.props.user;
         const publication = this.state.publication;
+        const isPopupDisplay = this.state.isPopupDisplay;
         return (
             <div>
                 <Banner
@@ -101,7 +119,7 @@ class Publication extends React.Component {
                                 <img src={options} className="back-img"/>
                                 <div id="options" className="dropdown-content transform-for-profile">
                                     { (userConnected && (userConnected.pseudo === publication.pseudo || userConnected.isAdmin)) &&
-                                        <a onClick={ (event) => this.onDelete(event) } >Delete <img src={deleteIcon}/></a>
+                                        <a onClick={ (event) => this.onDeleteClicked(event) } >Delete <img src={deleteIcon}/></a>
                                     }
                                 </div>
                             </div>
@@ -147,24 +165,44 @@ class Publication extends React.Component {
                                     </div>
                                     { (publication.metaDatas != null)
                                       ? <div className="publication-exifs">
-                                          <div className="exif-container">
+                                          {
+                                            (publication.metaDatas.cameraModel != null) &&
+                                            <div className="exif-container">
                                               <img className="exif-image" src={camera}/>
                                               <p> {publication.metaDatas.cameraModel} </p>
-                                          </div>
-                                          <div className="exif-container">
+                                            </div>
+                                          }
+                                          {
+                                            (publication.metaDatas.dateAndTimeOfCreation != null) &&
+                                            <div className="exif-container">
                                               <img className="exif-image" src={time}/>
                                               <p>{publication.metaDatas.dateAndTimeOfCreation} </p>
-                                          </div>
-                                          <div className="exif-container">
-                                              <img className="exif-image" src={list}/>
-                                              <p> {publication.metaDatas.expositionTime}s {publication.metaDatas.focalLength}mm F/{publication.metaDatas.focal} </p>
-                                          </div>
+                                            </div>
+                                          }
+                                          {
+                                            (publication.metaDatas.expositionTime != null) &&
+                                            <div className="exif-container">
+                                                <img className="exif-image" src={list}/>
+                                                <p> {publication.metaDatas.expositionTime}s {publication.metaDatas.focalLength}mm F/{publication.metaDatas.focal} </p>
+                                            </div>
+                                          }
+                                          
                                         </div>
                                       : <div/> }
                                 </div>
                                 <div className="publication-description">
                                     <p >{publication.description}</p>
                                 </div>
+                                {
+                                        isPopupDisplay &&
+                                        <Popup title="Do you really want to delete this publication ?" actionOnCancel={this.removePopup} actionOnValidate={this.deletePublication}
+                                            center={ 
+                                                <div>
+                                                    <img src={publication.imageLink}/>
+                                                </div> 
+                                            }
+                                        />
+                                    }
                             </div>
                         }
                 </Container>

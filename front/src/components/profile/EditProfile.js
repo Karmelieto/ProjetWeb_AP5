@@ -177,7 +177,7 @@ class EditProfile extends React.Component {
                                     </button>
                                     {
                                         isPopupDisplay &&
-                                        <Popup title="Do you really want do delete this account ?" actionOnCancel={this.removePopup} actionOnValidate={this.deleteAccount}
+                                        <Popup title="Do you really want to delete this account ?" actionOnCancel={this.removePopup} actionOnValidate={this.deleteAccount}
                                             center={ 
                                                 <div>
                                                     <img src={user.profileImageLink}/>
