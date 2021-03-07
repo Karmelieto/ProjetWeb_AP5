@@ -17,8 +17,9 @@ class Gameinit extends React.Component {
         this.state = {
             publications: [],
             tags: [],
-            randomTag: '',
+            randomTag: [],
             isLoading: true,
+            isLoadingRandom: true,
             inputSearch: ''
         };
         this.onTagSelected = this.onTagSelected.bind(this);
@@ -33,6 +34,12 @@ class Gameinit extends React.Component {
             this.setState({
                 tags: response.data,
                 isLoading: false
+            });
+        });
+        APICallManager.getRandomTags(1, (response) => {
+            this.setState({
+                randomTag: response.data,
+                isLoadingRandom: false
             });
         });
     }
@@ -68,9 +75,10 @@ class Gameinit extends React.Component {
 
     render () {
         const isLoading = this.state.isLoading;
+        const isLoadingRandom = this.state.isLoadingRandom;
         const inputSearch = this.state.inputSearch;
         const tags = this.state.tags;
-        // const randomTag = this.randomTag;
+        const randomTag = this.state.randomTag;
         const user = this.props.user;
         return (
             <div>
@@ -102,12 +110,12 @@ class Gameinit extends React.Component {
                     }
                 />
                 <Container>
-                    <div className='favoritesTags'>
-                        <h1>Favorites Tags</h1>
+                    <div className='trendingTags'>
+                        <h1>Trending Tags</h1>
                         {isLoading
                             ? <LoadingPage />
                             : tags.slice(0, 3).map((tag, index) => (
-                                <Link to={`/play/${tag.name}`} className="clear-link-decoration" key={index}>
+                                <Link to={`/play/${tag._id}`} className="clear-link-decoration" key={index}>
                                     <Tag tag={tag}/>
                                 </Link>
                             ))
@@ -115,10 +123,10 @@ class Gameinit extends React.Component {
                     </div>
                     <div className="randomTag">
                         <h1>Random tag</h1>
-                        {isLoading
+                        {isLoadingRandom
                             ? <LoadingPage />
-                            : tags.slice(0, 1).map((tag, index) => (
-                                <Link to={`/play/${tag.name}`} className="clear-link-decoration" key={index}>
+                            : randomTag.slice(0, 1).map((tag, index) => (
+                                <Link to={`/play/${tag._id}`} className="clear-link-decoration" key={index}>
                                     <Tag tag={tag}/>
                                 </Link>
                             ))

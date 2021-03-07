@@ -36,6 +36,10 @@ export default class APICallManager {
         axios.get(APICallManager.backUrl + '/tags/ids/' + ids.join()).then(callback).catch(errorCallback);
     }
 
+    static getRandomTags (nb, callback, errorCallback) {
+        axios.get(APICallManager.backUrl + '/tags/random/' + nb).then(callback).catch(errorCallback);
+    }
+
     static getPublications (callback, errorCallback) {
         axios.get(APICallManager.backUrl + '/publications').then(callback).catch(errorCallback);
     }
@@ -54,6 +58,14 @@ export default class APICallManager {
 
     static getPublication (id, callback, errorCallback) {
         axios.get(APICallManager.backUrl + '/publications/' + id).then(callback).catch(errorCallback);
+    }
+
+    static getTwoRandomPublications (tag, callback, errorCallback) {
+        axios.get(APICallManager.backUrl + '/publications/tworandom/' + tag).then(callback).catch(errorCallback);
+    }
+
+    static voteForPublication (id, point, callback, errorCallback) {
+        axios.put(APICallManager.backUrl + '/publications/vote/' + id + '/' + point).then(callback).catch(errorCallback);
     }
 
     static getFavoritesOfUser (pseudo, callback, errorCallback) {

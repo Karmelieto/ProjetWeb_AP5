@@ -19,6 +19,23 @@ export class PublicationsService {
     return this.publicationModel.find().exec()
   }
 
+  async getTwoRandom (tag: string): Promise<Publication[]> {
+    return this.publicationModel.aggregate([
+      { $match: { tags: tag } },
+      { $sample: { size: 2 } },
+      { $project: { imageLink: 1 } }
+    ])
+  } 
+
+  async vote (id: string, point: number): Promise<Publication> {
+    return this.publicationModel.update(
+      { _id: id },
+      { $inc: { nbVotes: 1, points : point }}
+    )
+  }
+
+
+
   async findAllByTag (tag: string): Promise<Publication[]> {
     const totalCount = await this.publicationModel.find().countDocuments()
     return this.publicationModel.aggregate([

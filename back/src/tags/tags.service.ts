@@ -38,6 +38,15 @@ export class TagsService {
     }
   }
 
+  async getRandomTag (nb: string) : Promise<Tag[]> {
+    const nbOfRandom = parseInt(nb)
+    return await this.tagModel.aggregate([
+        { $match: { isPrivate: false } },
+        { $sample: { size: (nbOfRandom) } },
+        { $project: { imageLink: 1, name: 1} }
+    ])
+  }
+
   async getAllTagsByIds (ids: string[]): Promise<Tag[]> {
     return await this.tagModel
       .find({

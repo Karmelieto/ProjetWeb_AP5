@@ -66,6 +66,14 @@ export class PublicationsController {
     return this.publicationsService.findOne(id)
   }
 
+  @Get('tworandom/:tag')
+  @ApiOperation({
+    summary: 'Retrieve two publications which have the same tag'
+  })
+  async getTwoRandom (@Param('tag') tag: string) {
+    return this.publicationsService.getTwoRandom(tag)
+  }
+
   @Post()
   @ApiCreatedResponse({
     description: 'The publication has been successfully created.',
@@ -88,6 +96,14 @@ export class PublicationsController {
   ) {
     // await this.usersService.update(updateUserDto)
     console.log('Has to update the publication with the id %s', id)
+  }
+
+  @Put('vote/:id/:point')
+  @ApiOperation({
+    summary: 'Add nbVotes for a given publication'
+  })
+  async addPoint(@Param('id') id: string, @Param('point') point: number) {
+    return await this.publicationsService.vote(id, point)
   }
 
   @Delete(':id')
