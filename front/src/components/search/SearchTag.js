@@ -85,9 +85,9 @@ class SearchTag extends React.Component {
         const publications = this.state.publications
         return (
                 <div>
-                    <Banner 
+                    <Banner
                         left={
-                            <img src={logo}/>
+                            <Link to="/"><img src={logo} /></Link>
                         }
                         center={
                             <div className="dropdown">
@@ -108,7 +108,7 @@ class SearchTag extends React.Component {
                                         <img className="user-pic" src={user.profileImageLink}/>
                                     </Link>
                                 }
-                                
+
                             </div>
                         }
                     />
@@ -119,7 +119,7 @@ class SearchTag extends React.Component {
                                 : (publications.length === 0)
                                     ? <div className="not-found">No publication found !</div>
                                     : <Gallery publications={publications} />
-                            }  
+                            }
                           </div>
                     </Container>
                 </div>

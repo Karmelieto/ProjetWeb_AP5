@@ -56,9 +56,9 @@ class SearchUser extends React.Component {
         const user = this.props.user;
         return (
                 <div>
-                    <Banner 
+                    <Banner
                         left={
-                            <img src={logo}/>
+                            <Link to="/"><img src={logo} /></Link>
                         }
                         center={
                             <input placeholder='User name' value={inputSearch} onChange={ event => this.handleInputChange(event)}/>
@@ -76,7 +76,7 @@ class SearchUser extends React.Component {
                                         <img className="user-pic" src={user.profileImageLink}/>
                                     </Link>
                                 }
-                                
+
                             </div>
                         }
                     />

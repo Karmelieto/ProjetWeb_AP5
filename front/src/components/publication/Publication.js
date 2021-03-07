@@ -42,7 +42,6 @@ class Publication extends React.Component {
             APICallManager.getAllTagsByIds(publication.tags, (response) => {
                 publication.tags = response.data.map(tag => tag.name);
                 this.setState({ publication: publication, isLoading: false });
-                console.log(this.state.publication)
             });
             if (this.props.user) {
                 APICallManager.getFavoritesOfUser(this.props.user.pseudo, (response) => {
@@ -154,7 +153,7 @@ class Publication extends React.Component {
                                             <img className="vote-img" src={reward} />
                                             <p>{publication.rank}</p>
                                         </div>
-                                        {   
+                                        {
                                             userConnected &&
                                             <div className='transform-scale' onClick={ (event) => this.onFavoriteClicked(event)}>
                                                 {isFavorite
