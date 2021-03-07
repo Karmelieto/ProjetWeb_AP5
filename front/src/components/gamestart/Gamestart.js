@@ -68,12 +68,13 @@ class GameStart extends React.Component {
 
     onPictureSelected (clickedOn) {
         const clickedPic = this.state.publications[clickedOn]
-        // Commented block = if we want to increase points for voted pic and decrease for the other pic
-        // let otherPic = 0;
-        // clickedOn === 1 ? otherPic = 0 : otherPic = 1
-        // APICallManager.voteForPublication(clickedPic._id, 1)
-        // APICallManager.voteForPublication(otherPic._id, -1)
-        APICallManager.voteForPublication(clickedPic._id, 0);
+        // BEGIN of block = if we want to increase points for voted pic and decrease for the other pic
+        let otherPic = 0;
+        clickedOn === 1 ? otherPic = 0 : otherPic = 1
+        APICallManager.voteForPublication(clickedPic._id, 1)
+        APICallManager.voteForPublication(this.state.publications[otherPic]._id, -1)
+        // END of block
+        // APICallManager.voteForPublication(clickedPic._id, 0);
         this.getTwoRandomPublications();
     }
 
