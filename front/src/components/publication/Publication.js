@@ -129,15 +129,21 @@ class Publication extends React.Component {
                                               <p key={index}> &#x3A6; {tag.capitalize()}</p>
                                             ))}
                                         </div>
+                                        <div className="publication-points">
+                                            <p>Score : {publication.points}</p>
+                                        </div>
                                         <div className="publication-votes">
                                             <img className="vote-img" src={reward} />
                                             <p>{publication.rank}</p>
                                         </div>
-                                        <div onClick={ (event) => this.onFavoriteClicked(event)}>
-                                            {isFavorite
-                                              ? <img className="favorite-img" src={heartFill}/>
-                                              : <img className="favorite-img" src={heartEmpty}/>}
-                                        </div>
+                                        {   
+                                            userConnected &&
+                                            <div className='transform-scale' onClick={ (event) => this.onFavoriteClicked(event)}>
+                                                {isFavorite
+                                                ? <img className="favorite-img" src={heartFill}/>
+                                                : <img className="favorite-img" src={heartEmpty}/>}
+                                            </div>
+                                        }
                                     </div>
                                     { (publication.metaDatas != null)
                                       ? <div className="publication-exifs">
