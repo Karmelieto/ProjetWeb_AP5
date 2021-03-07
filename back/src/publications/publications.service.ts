@@ -26,6 +26,15 @@ export class PublicationsService {
     ])
   } 
 
+  async vote (id: string, point: number): Promise<Publication> {
+    return this.publicationModel.update(
+      { _id: id },
+      { $inc: { nbVotes: 1, points : point }}
+    )
+  }
+
+
+
   async findAllByTag (tag: string): Promise<Publication[]> {
     const totalCount = await this.publicationModel.find().countDocuments()
     return this.publicationModel.aggregate([

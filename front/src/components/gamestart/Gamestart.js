@@ -25,7 +25,7 @@ class GameStart extends React.Component {
             isThereTwoPublications: false,
             inputSearch: ''
         };
-        this.onTagSelected = this.onTagSelected.bind(this);
+        this.onPictureSelected = this.onPictureSelected.bind(this);
     }
 
     componentDidMount () {
@@ -49,6 +49,10 @@ class GameStart extends React.Component {
                 isTagLoading: false
             })
         })
+        this.getTwoRandomPublications()
+    }
+
+    getTwoRandomPublications () {
         APICallManager.getTwoRandomPublications(this.props.history.location.pathname.split('/')[2], (response) => {
             this.setState({
                 publications: response.data,
@@ -62,8 +66,15 @@ class GameStart extends React.Component {
         })
     }
 
-    onTagSelected (clickedOn) {
-        this.setState({ inputSearch: clickedOn });
+    onPictureSelected (clickedOn) {
+        const clickedPic = this.state.publications[clickedOn]
+        // Commented block = if we want to increase points for voted pic and decrease for the other pic
+        // let otherPic = 0;
+        // clickedOn === 1 ? otherPic = 0 : otherPic = 1
+        // APICallManager.voteForPublication(clickedPic._id, 1)
+        // APICallManager.voteForPublication(otherPic._id, -1)
+        APICallManager.voteForPublication(clickedPic._id, 0);
+        this.getTwoRandomPublications();
     }
 
     handleInputChange (event) {
@@ -113,8 +124,8 @@ class GameStart extends React.Component {
                         ? <div>
                             <h1>Which one is best ?</h1> 
                         <div className="row">
-                            <div className="column"><img src={this.state.publications[0].imageLink}/></div>
-                            <div className="column"><img src={this.state.publications[1].imageLink}/></div>
+                            <div className="column"><img src={this.state.publications[0].imageLink} onClick={ () => this.onPictureSelected(0) }/></div>
+                            <div className="column"><img src={this.state.publications[1].imageLink} onClick={ () => this.onPictureSelected(1) }/></div>
                         </div>
                         </div>
                         : <p>Unfortunately, there are not enough publications for this tag yet. Publish yours !</p>

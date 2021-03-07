@@ -96,6 +96,14 @@ export class PublicationsController {
     console.log('Has to update the publication with the id %s', id)
   }
 
+  @Put('vote/:id/:point')
+  @ApiOperation({
+    summary: 'Add nbVotes for a given publication'
+  })
+  async addPoint(@Param('id') id: string, @Param('point') point: number) {
+    return await this.publicationsService.vote(id, point)
+  }
+
   @Delete(':id')
   @ApiResponse({
     status: 201,

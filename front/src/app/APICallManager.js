@@ -60,6 +60,10 @@ export default class APICallManager {
         axios.get(APICallManager.backUrl + '/publications/tworandom/' + tag).then(callback).catch(errorCallback);
     }
 
+    static voteForPublication (id, point, callback, errorCallback) {
+        axios.put(APICallManager.backUrl + '/publications/vote/' + id + '/' + point).then(callback).catch(errorCallback);
+    }
+
     static getFavoritesOfUser (pseudo, callback, errorCallback) {
         axios.get(APICallManager.backUrl + '/users/favorites/' + pseudo).then(callback).catch(errorCallback);
     }
