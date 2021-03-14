@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const SearchList = ({ elements, actionOnClick, type }) => {
-    // console.log(elements);
     function onItemSelected (value) {
         const el = document.getElementById('options');
         el.style.display = 'none';

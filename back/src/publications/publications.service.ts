@@ -76,7 +76,6 @@ export class PublicationsService {
 
   async create (createPostDto: CreatePublicationDto): Promise<Publication> {
     const createdPost = new this.publicationModel(createPostDto)
-    console.log(createdPost)
     if (!createdPost.tags || createdPost.tags.length === 0) {
       throw new HttpException(
         util.format('The publication %s doesn\'t have any tags', createdPost.id),
@@ -99,7 +98,6 @@ export class PublicationsService {
     createdPost.rank = 0
     createdPost.points = 0
 
-    console.log('1', createdPost)
     if (createdPost.imageLink.indexOf('default') === -1) {
       const newImageLink =
         createPostDto.pseudo + '_' + dateString.replace(/[ :]/g, '_')
@@ -166,7 +164,6 @@ export class PublicationsService {
           // eslint-disable-next-line no-new
           new ExifImage({ image: body }, async function (error, imageInfo) {
             if (!error) {
-              console.log(imageInfo)
               createdPost.metaDatas = {
                 cameraModel: imageInfo.image.Model,
                 focal: imageInfo.exif.FNumber,

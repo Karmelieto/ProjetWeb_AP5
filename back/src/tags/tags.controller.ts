@@ -98,7 +98,6 @@ export class TagsController {
     summary: 'Update imageLink of a tag'
   })
   async update (@Body() updateImageTagDto: UpdateImageTagDto) {
-    console.log(updateImageTagDto)
     await this.tagsService.updateImageTag(updateImageTagDto)
   }
 

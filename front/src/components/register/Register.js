@@ -37,7 +37,6 @@ class Register extends React.Component {
                 this.props.history.push('/');
             }, (error) => {
                 this.setState({ isLoading: false })
-                // console.log(error.response.data.message);
                 if (!error.response) {
                     return;
                 }
@@ -48,7 +47,7 @@ class Register extends React.Component {
                 } else if (error.response.data.message.indexOf('mail') > 0) {
                     this.setState({ emailError: 'Email alreay taken.' });
                     this.setErrorOnInput('emailInput');
-                }   
+                }
             });
         }
     }
@@ -128,7 +127,7 @@ class Register extends React.Component {
         const passwordError = this.state.passwordError;
         return (
                 <div className="full-page flex">
-                    <Banner 
+                    <Banner
                         left={
                             <img src={back} className="back-img" onClick={ (event) => this.onBackClicked(event) }/>
                         }
