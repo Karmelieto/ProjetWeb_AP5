@@ -23,33 +23,46 @@ class SearchTag extends React.Component {
         };
 
         this.onTagSelected = this.onTagSelected.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     componentDidMount () {
+        let pseudo = '';
+        if (this.props.user) {
+            pseudo = this.props.user.pseudo;
+        }
         if (this.props.tag) {
             APICallManager.getAllTagsByIds([this.props.tag], (response) => {
                 this.setState({ inputSearch: response.data[0].name });
             });
             this.getPublications(this.props.tag);
         } else {
-            this.setState({ isLoading: false });
+            APICallManager.getTags(pseudo, (response) => {
+                this.setState({
+                    tags: response.data,
+                    isLoading: false
+                });
+                document.getElementById('inputTags').focus();
+            });
         }
     }
 
     getTags (tagName) {
+        let pseudo = '';
+        if (this.props.user) {
+            pseudo = this.props.user.pseudo;
+        }
         if (tagName) {
-            let pseudo = '';
-            if (this.props.user) {
-                pseudo = this.props.user.pseudo;
-            }
             APICallManager.getTagsByName(tagName, pseudo, (response) => {
                 this.setState({
                     tags: response.data
                 });
             });
         } else {
-            this.setState({
-                tags: []
+            APICallManager.getTags(pseudo, (response) => {
+                this.setState({
+                    tags: response.data
+                });
             });
         }
     }
@@ -90,10 +103,7 @@ class SearchTag extends React.Component {
                             <Link to="/"><img src={logo} /></Link>
                         }
                         center={
-                            <div className="dropdown">
-                                <input placeholder='Tag name' value={inputSearch} onChange={ event => this.handleInputChange(event) }/>
-                                <SearchList elements={tags} actionOnClick={ this.onTagSelected } type="&#x3A6;"/>
-                            </div>
+                            <SearchList elements={tags} inputSearch={inputSearch} placeholder='Tag name' actionOnClick={ this.onTagSelected } actionOnInputChange={ this.handleInputChange } type="&#x3A6;"/>
                         }
                         right = {
                             <div>

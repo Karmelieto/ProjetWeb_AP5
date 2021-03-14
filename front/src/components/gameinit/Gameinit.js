@@ -7,7 +7,6 @@ import Banner from '../banner/Banner';
 import LoadingPage from '../loading/LoadingPage';
 import Container from '../container/Container';
 import PropTypes from 'prop-types';
-// import SearchList from '../search/SearchList';
 import Tag from '../tag/Tag';
 
 class Gameinit extends React.Component {
@@ -89,10 +88,7 @@ class Gameinit extends React.Component {
                         <Link to="/"><img src={logo} /></Link>
                     }
                     center={
-                        <div className="dropdown">
-                            <input value={inputSearch} onChange={event => this.handleInputChange(event)} />
-                            {/* <SearchList elements={tags} actionOnClick={this.onTagSelected} type="&#x3A6;" /> */}
-                        </div>
+                        <input value={inputSearch} className='input-large' onChange={event => this.handleInputChange(event)} />
                     }
                     right={
                         <div>

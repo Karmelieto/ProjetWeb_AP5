@@ -39,6 +39,8 @@ class PostPublication extends React.Component {
         this.onUserSelected = this.onUserSelected.bind(this);
         this.onValidate = this.onValidate.bind(this);
         this.onFileUpdated = this.onFileUpdated.bind(this);
+        this.handleTagInputChange = this.handleTagInputChange.bind(this);
+        this.handleUserInputChange = this.handleUserInputChange.bind(this);
     }
 
     componentDidMount () {
@@ -254,10 +256,7 @@ class PostPublication extends React.Component {
                             <img src={back} className="back-img" onClick={ (event) => this.onBackClicked(event) }/>
                         }
                         center={
-                            <div className="dropdown">
-                                <input placeholder="Tags related" className="input-large" value={tagSearch} onChange={ event => this.handleTagInputChange(event)}/>
-                                <SearchList elements={tagsSearch} actionOnClick={ this.onTagSelected } type="&#x3A6;"/>
-                            </div>
+                            <SearchList elements={tagsSearch} inputSearch={tagSearch} placeholder='Tag related' actionOnInputChange={ this.handleTagInputChange } actionOnClick={ this.onTagSelected } type="&#x3A6;"/>
                         }
                         right = {
                             <div>
@@ -294,10 +293,7 @@ class PostPublication extends React.Component {
                             {
                                 isTagAddedIsPrivate &&
                                 <div className='post-publication-is-private'>
-                                    <div className="dropdown">
-                                        <input placeholder="Users allowed" className="input-large" value={userSearch} onChange={ event => this.handleUserInputChange(event)}/>
-                                        <SearchList elements={usersSearch} actionOnClick={ this.onUserSelected } type=""/>
-                                    </div>
+                                    <SearchList elements={usersSearch} inputSearch={userSearch} placeholder='User allowed' actionOnInputChange={ this.handleUserInputChange } actionOnClick={ this.onUserSelected }/>
                                     <div className='post-publication-tags'>
                                         {
                                             usersAllow.map((user, index) => (
