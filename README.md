@@ -25,7 +25,8 @@ Rendez-vous dans le dossier front et lancez les commandes suivantes :
 Le front se lancera à l'adresse suivante :  <br/>
 * ` localhost:5000`
 
-Pour vous connecter à un compte administrateur veuillez utiliser les identifiants reçus par mail.
+Pour vous connecter à un compte administrateur veuillez utiliser les identifiants présents dans le mail reçu le 14/03 avec comme objet : <br/>
+"Rendu PROJET WEB Equipe TOPPICS - CANTA - DEHONDT - REYES"
 
 ### BACK
 Rendez-vous dans le dossier back et lancez les commandes suivantes : 
@@ -45,11 +46,8 @@ Lancement du projet en mode développeur -> `npm run start:dev`
 ### BDD
 
 Notre base de données est une base de données NoSQL hébergée sur MongoDB Atlas. <br/>
-Voici le lien de connexion pour se connecter via MongoDB Compass :
-
-(Merci de ne pas faire n'importe quoi avec cet accès.)
-
-Pour vous connecter à la BDD, veillez vous référer au mail reçu.
+Si vous souhaitez vous connecter à notre base vous retrouverez les informations dans le mail reçu le 14/03 avec comme objet : <br/>
+"Rendu PROJET WEB Equipe TOPPICS - CANTA - DEHONDT - REYES"
 
 ### Librairies utilisées :
 
@@ -62,3 +60,5 @@ Voici les différentes librairies que nous avons décidé de rajouter pour nous 
 
 Nous avons décidé d'utiliser Trello pour créer un Kanban partagé. <br/>
 Voici le lien -> https://trello.com/b/HsFH5YQC/toppics
+
+Vous trouverez les différents rendues contenant les informations sur notre application dans le dossier docs.
