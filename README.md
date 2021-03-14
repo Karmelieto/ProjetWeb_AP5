@@ -1,7 +1,12 @@
+<p align="center">
+  <img src="/docs/logo.png">
+</p>
+
 # ProjetWeb_AP5 (TOPPICS)
 Projet WEB réalisé pour la dernière période de l'ISEN en AP5.  <br/>
 Réalisé par l'équipe suivante : <br/>
 CANTA Carmelo - DEHONDT Léo - REYES Adam
+
 ## Description du projet
 Notre projet démarre d’une constatation simple : de nos jours, il est difficile de se faire sa place sur les réseaux sociaux lorsque l’on souhaite partager du contenu qualitatif. La concurrence étant rude, notre travail n’apparaît malheureusement pas au grand public sauf si nous arrivons à nous faire tirer vers le haut par les plus connus.
 
