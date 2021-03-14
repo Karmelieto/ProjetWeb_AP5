@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { Transform } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger'
+import { Transform } from 'class-transformer'
 
 export class CreateTagDto {
   @Transform((name) => name.value.toLowerCase())
@@ -10,13 +10,13 @@ export class CreateTagDto {
   imageLink: string;
 
   @ApiProperty({
-    default: false,
+    default: false
   })
   @ApiProperty()
   isPrivate: boolean;
 
   @ApiProperty({
-    default: [],
+    default: []
   })
   @ApiProperty()
   usersAllow: string[];
