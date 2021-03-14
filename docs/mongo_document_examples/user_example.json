@@ -1,25 +1,17 @@
 {
-  "_id": 1,
-  "pseudo" : "Toto",
-  "mail" : "toto@gmail.com",
-  "profileImageLink" : "https://fr.web.img6.acsta.net/newsv7/20/06/11/14/46/1077703.png",
-  "description": "Salut je suis Toto :)",
-  "isAdmin" : true,
-  "favorisPosts": [1,5],
-  "rewards" : [
-    {
-      "rank" : 1,
-      "postId": 1,
-      "date" : "29/01/2021",
-      "tag" : "Chat",
-      "points" : 1000
-    },
-    {
-      "rank" : 3,
-      "postId": 1,
-      "date" : "29/01/2021",
-      "tag" : "Mignon",
-      "points" : 1000
-    }
-  ]
+  "_id": {
+    "$oid": "604e45f54cd86742747f74a0"
+  },
+  "rewards": [],
+  "favorites": [
+    "604e480321a7c334604739c1",
+    "604e47c521a7c334604739bf"
+  ],
+  "mail": "admin@gmail.com",
+  "pseudo": "admin",
+  "password": "41e5653fc7aeb894026d6bb7b2db7f65902b454945fa8fd65a6327047b5277fb",
+  "isAdmin": true,
+  "description": "Le plus puissant de tous ! ",
+  "profileImageLink": "https://png.pngtree.com/png-vector/20190301/ourlarge/pngtree-vector-administration-icon-png-image_747092.jpg",
+  "__v": 0
 }

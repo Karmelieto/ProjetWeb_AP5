@@ -1,15 +1,10 @@
 {
-  "_id": 1,
-  "imageLink" : "https://i.pinimg.com/originals/86/42/71/864271ce2a1d06f04f20fc7c68208dd5.jpg",
-  "pseudo" : "Toto",
-  "metaDatas" : {
-    "X" : "",
-    "Y" : ""
+  "_id": {
+    "$oid": "601af320a8fe0820b48d0b59"
   },
-  "description": "My cat :)",
-  "tags": ["Chat","Mignon"],
-  "nbVotes" : 42,
-  "points" : 1000, 
-  "rank" : 99,
-  "date" : "29/01/2021"
+  "usersAllow": [],
+  "name": "chat",
+  "imageLink": "https://cdn.futura-sciences.com/buildsv6/images/wide1920/a/0/f/a0fc73919d_50166390_chaton.jpg",
+  "isPrivate": false,
+  "__v": 0
 }
