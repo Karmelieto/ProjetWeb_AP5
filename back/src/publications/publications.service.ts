@@ -157,7 +157,6 @@ export class PublicationsService {
   }
 
   setExif (createdPost) {
-    console.log(createdPost)
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this
     const request = defaults({ encoding: null })
