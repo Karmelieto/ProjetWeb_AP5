@@ -15,14 +15,13 @@ class GameStart extends React.Component {
 
         this.state = {
             publications: [],
-            tags: [],
             tag: '',
             currentTagName: '',
             isLoading: true,
             isTagLoading: true,
             isImageLoading: true,
             isThereTwoPublications: false,
-            inputSearch: ''
+            isAnimationRunning: false
         };
         this.onPictureSelected = this.onPictureSelected.bind(this);
     }
@@ -32,16 +31,6 @@ class GameStart extends React.Component {
             this.props.history.push('/login?comingFrom=play');
             return;
         }
-        let pseudo = '';
-        if (this.props.user) {
-            pseudo = this.props.user.pseudo;
-        }
-        APICallManager.getTags(pseudo, (response) => {
-            this.setState({
-                tags: response.data,
-                isLoading: false
-            });
-        });
         APICallManager.getAllTagsByIds([this.props.history.location.pathname.split('/')[2]], (response) => {
             this.setState({
                 tag: response.data[0],
@@ -66,7 +55,9 @@ class GameStart extends React.Component {
     }
 
     onPictureSelected (clickedOn) {
-        const clickedPic = this.state.publications[clickedOn]
+        if (this.state.isAnimationRunning) return;
+        this.setState({ isAnimationRunning: true });
+        const clickedPic = this.state.publications[clickedOn];
         // BEGIN of block = if we want to increase points for voted pic and decrease for the other pic
         let otherPic = 0;
         clickedOn === 1 ? otherPic = 0 : otherPic = 1
@@ -74,13 +65,41 @@ class GameStart extends React.Component {
         APICallManager.voteForPublication(this.state.publications[otherPic]._id, -1)
         // END of block
         // APICallManager.voteForPublication(clickedPic._id, 0);
-        this.getTwoRandomPublications();
-    }
 
-    handleInputChange (event) {
-        event.preventDefault();
-        this.setState({ inputSearch: event.target.value });
-        this.getTags(event.target.value.trim());
+        const displayPoint = (clickedOn === 0) ? 'left-add' : 'left-remove';
+        const displayOtherPoint = (clickedOn === 1) ? 'right-add' : 'right-remove';
+        
+        const elementPoint = document.getElementById(displayPoint);
+        const elementOtherPoint = document.getElementById(displayOtherPoint);
+
+        const anim = elementPoint.animate([
+            // keyframes
+            { opacity: 0.5, transform: 'scale(0.0)', zIndex: 1 },
+            { opacity: 1, transform: 'scale(1)', zIndex: 1 }
+        ], {
+            // timing options
+            duration: 700,
+            iterations: 2,
+            direction: 'alternate',
+            easing: 'ease-in-out'
+        });
+
+        anim.onfinish = () => {
+            this.getTwoRandomPublications();
+            this.setState({ isAnimationRunning: false });
+        }
+
+        elementOtherPoint.animate([
+            // keyframes
+            { opacity: 0.5, transform: 'scale(0.0)', zIndex: 1 },
+            { opacity: 1, transform: 'scale(1)', zIndex: 1 }
+        ], {
+            // timing options
+            duration: 700,
+            iterations: 2,
+            direction: 'alternate',
+            easing: 'ease-in-out'
+        });
     }
 
     render () {
@@ -124,8 +143,24 @@ class GameStart extends React.Component {
                         ? <div>
                             <h1>Which one is best ?</h1> 
                         <div className="row">
-                            <div className="column"><img src={this.state.publications[0].imageLink} onClick={ () => this.onPictureSelected(0) }/></div>
-                            <div className="column"><img src={this.state.publications[1].imageLink} onClick={ () => this.onPictureSelected(1) }/></div>
+                            <div className="column">
+                                <img src={this.state.publications[0].imageLink} onClick={ () => this.onPictureSelected(0) }/>
+                                <div id="left-remove" className="remove-point point">
+                                    -1
+                                </div>
+                                <div id="left-add" className="add-point point">
+                                    +1
+                                </div>
+                            </div>
+                            <div className="column">
+                                <img src={this.state.publications[1].imageLink} onClick={ () => this.onPictureSelected(1) }/>
+                                <div id="right-remove" className="remove-point point">
+                                    -1
+                                </div>
+                                <div id="right-add" className="add-point point">
+                                    +1
+                                </div>
+                            </div>
                         </div>
                         </div>
                         : <p>Unfortunately, there are not enough publications to play for this tag yet. Publish yours !</p>
