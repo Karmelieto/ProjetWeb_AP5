@@ -25,9 +25,7 @@ Rendez-vous dans le dossier front et lancez les commandes suivantes :
 Le front se lancera à l'adresse suivante :  <br/>
 * ` localhost:5000`
 
-Pour vous connecter à un compte administrateur veuillez utiliser les identifiants suivants : <br/>
-* `admin@gmail.com`
-* `admin12345`
+Pour vous connecter à un compte administrateur veuillez utiliser les identifiants reçus par mail.
 
 ### BACK
 Rendez-vous dans le dossier back et lancez les commandes suivantes : 
@@ -51,7 +49,7 @@ Voici le lien de connexion pour se connecter via MongoDB Compass :
 
 (Merci de ne pas faire n'importe quoi avec cet accès.)
 
-`mongodb+srv://dbAdminUser:MPvsNZdTNNtd8u0K@cluster0.sbi0m.mongodb.net/test?authSource=admin&replicaSet=atlas-s35bp8-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true`
+Pour vous connecter à la BDD, veillez vous référer au mail reçu.
 
 ### Librairies utilisées :
 
