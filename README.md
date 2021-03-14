@@ -47,6 +47,13 @@ Voici le lien de connexion pour se connecter via MongoDB Compass :
 
 `mongodb+srv://dbAdminUser:MPvsNZdTNNtd8u0K@cluster0.sbi0m.mongodb.net/test?authSource=admin&replicaSet=atlas-s35bp8-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true`
 
+### Librairies utilisées :
+
+Voici les différentes librairies que nous avons décidé de rajouter pour nous simplifier la vie :
+* Librairie exif nous permettant de récupérer les exifs d'une image. -> https://www.npmjs.com/package/exif
+* Eslint nous permettant d'avoir un code de meilleur qualité -> https://eslint.org/
+* Axios nous permettant de faire des requêtes HTTP -> https://www.npmjs.com/package/axios
+
 ## Partie organisation
 
 Nous avons décidé d'utiliser Trello pour créer un Kanban partagé. <br/>
