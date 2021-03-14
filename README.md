@@ -1,5 +1,5 @@
 # ProjetWeb_AP5 (TOPPICS)
-Projet WEB réalisé pour la dernière période de l'ISEN en AP5.
+Projet WEB réalisé pour la dernière période de l'ISEN en AP5.  <br/>
 Réalisé par l'équipe suivante : <br/>
 CANTA Carmelo - DEHONDT Léo - REYES Adam
 ## Description du projet
@@ -30,7 +30,7 @@ Le serveur se lancera à l'adresse suivante :  <br/>
 Un swagger est également disponible à l'adresse suivante :  <br/>
 ` localhost:4242/swagger`
  
-####Lancement en mode DEV :
+#### Lancement en mode DEV :
 Lancement du projet en mode développeur -> `npm run start:dev`
 
 ### BDD
