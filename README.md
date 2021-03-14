@@ -46,3 +46,8 @@ Voici le lien de connexion pour se connecter via MongoDB Compass :
 (Merci de ne pas faire n'importe quoi avec cet accès.)
 
 `mongodb+srv://dbAdminUser:MPvsNZdTNNtd8u0K@cluster0.sbi0m.mongodb.net/test?authSource=admin&replicaSet=atlas-s35bp8-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true`
+
+## Partie organisation
+
+Nous avons décidé d'utiliser Trello pour créer un Kanban partagé.
+Voici le lien -> https://trello.com/b/HsFH5YQC/toppics
