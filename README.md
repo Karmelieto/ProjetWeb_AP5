@@ -1,7 +1,12 @@
+<p align="center">
+  <img src="/docs/logo.png">
+</p>
+
 # ProjetWeb_AP5 (TOPPICS)
 Projet WEB réalisé pour la dernière période de l'ISEN en AP5.  <br/>
 Réalisé par l'équipe suivante : <br/>
 CANTA Carmelo - DEHONDT Léo - REYES Adam
+
 ## Description du projet
 Notre projet démarre d’une constatation simple : de nos jours, il est difficile de se faire sa place sur les réseaux sociaux lorsque l’on souhaite partager du contenu qualitatif. La concurrence étant rude, notre travail n’apparaît malheureusement pas au grand public sauf si nous arrivons à nous faire tirer vers le haut par les plus connus.
 
@@ -18,7 +23,7 @@ Rendez-vous dans le dossier front et lancez les commandes suivantes :
 * Lancement du projet -> `npm install -g serve ; serve -s build`
 
 Le front se lancera à l'adresse suivante :  <br/>
-` localhost:5000`
+* ` localhost:5000`
 
 Pour vous connecter à un compte administrateur veuillez utiliser les identifiants suivants : <br/>
 * `admin@gmail.com`
@@ -31,9 +36,10 @@ Rendez-vous dans le dossier back et lancez les commandes suivantes :
 * Lancement du projet -> `npm run start`
 
 Le serveur se lancera à l'adresse suivante :  <br/>
-` localhost:4242`  <br/>
+
+* ` localhost:4242`  <br/>
 Un swagger est également disponible à l'adresse suivante :  <br/>
-` localhost:4242/swagger`
+* ` localhost:4242/swagger`
  
 #### Lancement en mode DEV :
 Lancement du projet en mode développeur -> `npm run start:dev`
