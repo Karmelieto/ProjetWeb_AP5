@@ -103,17 +103,17 @@ class PostPublication extends React.Component {
                     tag._id = response.data._id;
                     nbPrivateCreated++;
                     if (nbPrivateCreated === maxPrivate) {
-                        this.createPublication(publication);
+                        this.createPublication(publication, maxPrivate);
                     }
                 });
                 
             } else if (maxPrivate === 0) {
-                this.createPublication(publication);
+                this.createPublication(publication, maxPrivate);
             }
         })
     }
 
-    createPublication (publication) {
+    createPublication (publication, maxPrivate) {
         const tags = publication.tags.map(tag => tag);
         publication.tags = publication.tags.map(tag => tag._id);
 
