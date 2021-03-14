@@ -35,9 +35,9 @@ Lancement du projet en mode développeur -> `npm run start:dev`
 
 ### BDD
 
-Notre base de donnée est une base de donnée MongoDB hebergée sur MongoDB Atlas. <br/>
-Voici le lien de connexion pour se connecter de MongoCompass :
+Notre base de données est une base de données NoSQL hebergée sur MongoDB Atlas. <br/>
+Voici le lien de connexion pour se connecter via MongoDB Compass :
 
-(Merci de ne pas faire n'importe quoi avec cette accès.)
+(Merci de ne pas faire n'importe quoi avec cet accès.)
 
 `mongodb+srv://dbAdminUser:MPvsNZdTNNtd8u0K@cluster0.sbi0m.mongodb.net/test?authSource=admin&replicaSet=atlas-s35bp8-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true`
