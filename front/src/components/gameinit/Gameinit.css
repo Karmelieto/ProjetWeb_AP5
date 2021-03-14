@@ -1,0 +1,5 @@
+.trendings-tags {
+    min-height: 330px;
+    max-height: 330px;
+    overflow-y: scroll;
+}

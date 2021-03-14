@@ -1,4 +1,4 @@
-import '../search/Search.css';
+import './Gameinit.css';
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import APICallManager from '../../app/APICallManager';
@@ -7,7 +7,7 @@ import Banner from '../banner/Banner';
 import LoadingPage from '../loading/LoadingPage';
 import Container from '../container/Container';
 import PropTypes from 'prop-types';
-import SearchList from '../search/SearchList';
+// import SearchList from '../search/SearchList';
 import Tag from '../tag/Tag';
 
 class Gameinit extends React.Component {
@@ -45,11 +45,11 @@ class Gameinit extends React.Component {
     }
 
     getTags (tagName) {
-        if (tagName) {
-            let pseudo = '';
+        let pseudo = '';
             if (this.props.user) {
                 pseudo = this.props.user.pseudo;
             }
+        if (tagName) {
             APICallManager.getTagsByName(tagName, pseudo, (response) => {
                 response.data.map((tag, index) => (tag.key = index));
                 this.setState({
@@ -57,8 +57,10 @@ class Gameinit extends React.Component {
                 });
             });
         } else {
-            this.setState({
-                tags: []
+            APICallManager.getTags(pseudo, (response) => {
+                this.setState({
+                    tags: response.data
+                });
             });
         }
     }
@@ -89,7 +91,7 @@ class Gameinit extends React.Component {
                     center={
                         <div className="dropdown">
                             <input value={inputSearch} onChange={event => this.handleInputChange(event)} />
-                            <SearchList elements={tags} actionOnClick={this.onTagSelected} type="&#x3A6;" />
+                            {/* <SearchList elements={tags} actionOnClick={this.onTagSelected} type="&#x3A6;" /> */}
                         </div>
                     }
                     right={
@@ -114,11 +116,15 @@ class Gameinit extends React.Component {
                         <h1>Trending Tags</h1>
                         {isLoading
                             ? <LoadingPage />
-                            : tags.slice(0, 3).map((tag, index) => (
-                                <Link to={`/play/${tag._id}`} className="clear-link-decoration" key={index}>
-                                    <Tag tag={tag}/>
-                                </Link>
-                            ))
+                            : <div className='trendings-tags'>
+                                {
+                                    tags.map((tag, index) => (
+                                        <Link to={`/play/${tag._id}`} className="clear-link-decoration" key={index}>
+                                            <Tag tag={tag}/>
+                                        </Link>
+                                    ))
+                                }
+                            </div>
                         }
                     </div>
                     <div className="randomTag">

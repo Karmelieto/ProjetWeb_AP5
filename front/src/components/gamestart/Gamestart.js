@@ -1,4 +1,3 @@
-import '../search/Search.css';
 import './Gamestart.css'
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
