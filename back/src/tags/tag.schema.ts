@@ -1,7 +1,5 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import { Document } from 'mongoose'
-
-export type TagDocument = Tag & Document;
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 
 @Schema()
 export class Tag {
@@ -18,4 +16,5 @@ export class Tag {
   usersAllow: string[];
 }
 
-export const TagSchema = SchemaFactory.createForClass(Tag)
+export type TagDocument = Tag & Document;
+export const TagSchema = SchemaFactory.createForClass(Tag);
