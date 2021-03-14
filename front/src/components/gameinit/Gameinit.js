@@ -25,6 +25,10 @@ class Gameinit extends React.Component {
     }
 
     componentDidMount () {
+        if (!this.props.user) {
+            this.props.history.push('/login?comingFrom=play');
+            return;
+        }
         let pseudo = '';
         if (this.props.user) {
             pseudo = this.props.user.pseudo;
@@ -140,7 +144,7 @@ class Gameinit extends React.Component {
     }
 }
 Gameinit.propTypes = {
-    hystory: PropTypes.object,
+    history: PropTypes.object,
     user: PropTypes.object
 }
 export default withRouter(Gameinit);
