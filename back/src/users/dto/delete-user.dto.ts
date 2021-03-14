@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger'
-import { Transform } from 'class-transformer'
+import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 
 export class DeleteUserDto {
   @Transform((pseudo) => pseudo.value.toLowerCase())

@@ -1,9 +1,7 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import { Document } from 'mongoose'
-import { Reward } from '../models/Reward'
-import { IsEmail } from 'class-validator'
-
-export type UserDocument = User & Document;
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
+import { Reward } from '../models/Reward';
+import { IsEmail } from 'class-validator';
 
 @Schema()
 export class User {
@@ -36,4 +34,5 @@ export class User {
   token: string;
 }
 
-export const UserSchema = SchemaFactory.createForClass(User)
+export type UserDocument = User & Document;
+export const UserSchema = SchemaFactory.createForClass(User);

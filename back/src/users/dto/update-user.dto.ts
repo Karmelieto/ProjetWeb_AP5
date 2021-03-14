@@ -1,6 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger'
-import { Transform } from 'class-transformer'
-import { IsEmail } from 'class-validator'
+import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 
 export class UpdateUserDto {
   @Transform((lastPseudo) => lastPseudo.value.toLowerCase())

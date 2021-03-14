@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export default class APICallManager {
+
     static backUrl = 'http://localhost:4242';
     static cloud = 'http://89.158.244.191:17001';
 
@@ -94,7 +95,7 @@ export default class APICallManager {
         .then(callback)
         .catch(errorCallback);
     }
-    
+
     static async createTag (tag, callback, errorCallback) {
         return await axios.post(APICallManager.backUrl + '/tags', tag).then(callback).catch(errorCallback);
     }

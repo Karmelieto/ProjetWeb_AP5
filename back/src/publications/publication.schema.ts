@@ -1,9 +1,7 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import { Document } from 'mongoose'
-import { MetaData } from '../models/MetaData'
-import { ApiProperty } from '@nestjs/swagger'
-
-export type PublicationDocument = Publication & Document;
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
+import { MetaData } from '../models/MetaData';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Schema()
 export class Publication {
@@ -20,7 +18,7 @@ export class Publication {
   tags: string[];
 
   @ApiProperty({
-    default: null
+    default: null,
   })
   @Prop()
   metaDatas: MetaData;
@@ -46,4 +44,5 @@ export class Publication {
   date: string;
 }
 
-export const PublicationSchema = SchemaFactory.createForClass(Publication)
+export type PublicationDocument = Publication & Document;
+export const PublicationSchema = SchemaFactory.createForClass(Publication);
