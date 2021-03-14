@@ -20,6 +20,10 @@ Rendez-vous dans le dossier front et lancez les commandes suivantes :
 Le front se lancera à l'adresse suivante :  <br/>
 ` localhost:5000`
 
+Pour vous connecter à un compte administrateur veuillez utiliser les identifiants suivants : <br/>
+* `admin@gmail.com`
+* `admin12345`
+
 ### BACK
 Rendez-vous dans le dossier back et lancez les commandes suivantes : 
 
