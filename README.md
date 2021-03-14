@@ -23,7 +23,7 @@ Rendez-vous dans le dossier front et lancez les commandes suivantes :
 * Lancement du projet -> `npm install -g serve ; serve -s build`
 
 Le front se lancera à l'adresse suivante :  <br/>
-` localhost:5000`
+* ` localhost:5000`
 
 Pour vous connecter à un compte administrateur veuillez utiliser les identifiants suivants : <br/>
 * `admin@gmail.com`
@@ -36,9 +36,10 @@ Rendez-vous dans le dossier back et lancez les commandes suivantes :
 * Lancement du projet -> `npm run start`
 
 Le serveur se lancera à l'adresse suivante :  <br/>
-` localhost:4242`  <br/>
+
+* ` localhost:4242`  <br/>
 Un swagger est également disponible à l'adresse suivante :  <br/>
-` localhost:4242/swagger`
+* ` localhost:4242/swagger`
  
 #### Lancement en mode DEV :
 Lancement du projet en mode développeur -> `npm run start:dev`
