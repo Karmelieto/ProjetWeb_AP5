@@ -1,7 +1,7 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { MetaData } from '../../models/MetaData';
-import { Prop } from '@nestjs/mongoose';
-import { Transform } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger'
+import { MetaData } from '../../models/MetaData'
+import { Prop } from '@nestjs/mongoose'
+import { Transform } from 'class-transformer'
 
 export class CreatePublicationDto {
   @ApiProperty()
@@ -15,7 +15,7 @@ export class CreatePublicationDto {
   description: string;
 
   @ApiProperty({
-    default: [],
+    default: []
   })
   @ApiProperty()
   tags: string[];
@@ -24,7 +24,7 @@ export class CreatePublicationDto {
   nbVotes: number;
 
   @ApiProperty({
-    default: null,
+    default: null
   })
   @Prop()
   metaDatas: MetaData;

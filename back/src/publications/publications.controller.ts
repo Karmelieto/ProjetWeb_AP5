@@ -6,147 +6,147 @@ import {
   Param,
   Post,
   Put,
-  Res,
-} from '@nestjs/common';
+  Res
+} from '@nestjs/common'
 import {
   ApiCreatedResponse,
   ApiOperation,
   ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
-import { PublicationsService } from './publications.service';
-import { Publication } from './publication.schema';
-import { CreatePublicationDto } from './dto/create-publication.dto';
-import { DeletePublicationDto } from './dto/delete-publication.dto';
+  ApiTags
+} from '@nestjs/swagger'
+import { PublicationsService } from './publications.service'
+import { Publication } from './publication.schema'
+import { CreatePublicationDto } from './dto/create-publication.dto'
+import { DeletePublicationDto } from './dto/delete-publication.dto'
 
 @Controller('publications')
 @ApiTags('publications')
 export class PublicationsController {
-  constructor(private readonly publicationsService: PublicationsService) {}
+  constructor (private readonly publicationsService: PublicationsService) {}
 
   @Get()
   @ApiOperation({
-    summary: 'Find all publications',
+    summary: 'Find all publications'
   })
-  async findAll(): Promise<Publication[]> {
-    return this.publicationsService.findAll();
+  async findAll (): Promise<Publication[]> {
+    return this.publicationsService.findAll()
   }
 
   @Get('tag/:tag')
   @ApiOperation({
-    summary: 'Find all publications by tag',
+    summary: 'Find all publications by tag'
   })
-  async findAllByTag(@Param('tag') tag: string): Promise<Publication[]> {
-    return this.publicationsService.findAllByTag(tag);
+  async findAllByTag (@Param('tag') tag: string): Promise<Publication[]> {
+    return this.publicationsService.findAllByTag(tag)
   }
 
   @Get('user/:pseudo')
   @ApiOperation({
-    summary: 'Find all publications post by a user',
+    summary: 'Find all publications post by a user'
   })
-  async findAllByPseudo(
-    @Param('pseudo') pseudo: string,
+  async findAllByPseudo (
+    @Param('pseudo') pseudo: string
   ): Promise<Publication[]> {
-    return this.publicationsService.findAllByPseudo(pseudo);
+    return this.publicationsService.findAllByPseudo(pseudo)
   }
 
   @Get('favorites/:ids')
   @ApiOperation({
-    summary: 'Find all publications in the array of ids given',
+    summary: 'Find all publications in the array of ids given'
   })
-  async findAllByArrayOfId(@Param('ids') ids: string): Promise<Publication[]> {
-    return this.publicationsService.findAllByArrayOfId(ids.split(','));
+  async findAllByArrayOfId (@Param('ids') ids: string): Promise<Publication[]> {
+    return this.publicationsService.findAllByArrayOfId(ids.split(','))
   }
 
   @Get(':id')
   @ApiOperation({
-    summary: 'Retrieve a publication by its id',
+    summary: 'Retrieve a publication by its id'
   })
-  async findOne(@Param('id') id: string) {
-    return this.publicationsService.findOne(id);
+  async findOne (@Param('id') id: string) {
+    return this.publicationsService.findOne(id)
   }
 
   @Get('tworandom/:tag')
   @ApiOperation({
-    summary: 'Retrieve two publications which have the same tag',
+    summary: 'Retrieve two publications which have the same tag'
   })
-  async getTwoRandom(@Param('tag') tag: string) {
-    return this.publicationsService.getTwoRandom(tag);
+  async getTwoRandom (@Param('tag') tag: string) {
+    return this.publicationsService.getTwoRandom(tag)
   }
 
   @Post()
   @ApiCreatedResponse({
     description: 'The publication has been successfully created.',
-    type: Post,
+    type: Post
   })
   @ApiOperation({
-    summary: 'Create a publication',
+    summary: 'Create a publication'
   })
-  async create(@Body() createPublicationDto: CreatePublicationDto) {
-    return await this.publicationsService.create(createPublicationDto);
+  async create (@Body() createPublicationDto: CreatePublicationDto) {
+    return await this.publicationsService.create(createPublicationDto)
   }
 
   @Put('vote/:id/:point')
   @ApiOperation({
-    summary: 'Add nbVotes for a given publication',
+    summary: 'Add nbVotes for a given publication'
   })
-  async addPoint(@Param('id') id: string, @Param('point') point: number) {
-    return await this.publicationsService.vote(id, point);
+  async addPoint (@Param('id') id: string, @Param('point') point: number) {
+    return await this.publicationsService.vote(id, point)
   }
 
   @Delete(':id')
   @ApiResponse({
     status: 201,
-    description: 'The publication has been successfully remove.',
+    description: 'The publication has been successfully remove.'
   })
   @ApiResponse({ status: 404, description: 'Not found.' })
   @ApiOperation({
-    summary: 'Remove a publication by his id',
+    summary: 'Remove a publication by his id'
   })
-  async remove(
+  async remove (
     @Param('id') id: string,
     @Body() deletePublicationDto: DeletePublicationDto,
-    @Res() res,
+    @Res() res
   ) {
     const isDeleted = await this.publicationsService.remove(
       id,
       deletePublicationDto.pseudo,
-      deletePublicationDto.token,
-    );
+      deletePublicationDto.token
+    )
 
     if (!isDeleted) {
-      res.sendStatus(404);
-      return;
+      res.sendStatus(404)
+      return
     }
 
-    res.sendStatus(201);
+    res.sendStatus(201)
   }
 
   @Delete('user/:pseudo')
   @ApiResponse({
     status: 201,
-    description: 'The publications have been successfully remove.',
+    description: 'The publications have been successfully remove.'
   })
   @ApiResponse({ status: 404, description: 'Not found.' })
   @ApiOperation({
-    summary: 'Remove all publications of a user by them pseudo',
+    summary: 'Remove all publications of a user by them pseudo'
   })
-  async removeAllFromUser(
+  async removeAllFromUser (
     @Param('pseudo') pseudo: string,
     @Body() deletePublicationDto: DeletePublicationDto,
-    @Res() res,
+    @Res() res
   ) {
     const isDeleted = await this.publicationsService.removeAllFromUser(
       pseudo,
       deletePublicationDto.pseudo,
-      deletePublicationDto.token,
-    );
+      deletePublicationDto.token
+    )
 
     if (!isDeleted) {
-      res.sendStatus(404);
-      return;
+      res.sendStatus(404)
+      return
     }
 
-    res.sendStatus(201);
+    res.sendStatus(201)
   }
 }
