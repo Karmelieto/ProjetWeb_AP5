@@ -40,7 +40,6 @@ class Navigator extends React.Component {
     }
 
     updateUser () {
-        console.log('Update');
         const loggedInUser = localStorage.getItem('user');
         if (loggedInUser) {
             const foundUser = JSON.parse(loggedInUser);
@@ -51,7 +50,6 @@ class Navigator extends React.Component {
     }
 
     clearUser () {
-        console.log('Clear');
         localStorage.clear();
         this.setUser(undefined);
     }

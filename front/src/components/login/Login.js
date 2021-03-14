@@ -21,13 +21,12 @@ class Login extends React.Component {
 
     onBackClicked (event) {
         const comingFrom = this.props.history.location.search.split('=')[1];
-        console.log(comingFrom);
         if (comingFrom === 'postpublication' || comingFrom === 'play') {
             this.props.history.goBack();
             this.props.history.goBack();
         } else {
             this.props.history.goBack();
-        } 
+        }
     }
 
     onLoginClicked (event) {
@@ -73,7 +72,6 @@ class Login extends React.Component {
 
         if (email === '') {
             this.setState({ emailError: 'Email is empty.' });
-            console.log(this.state.emailError);
             this.setErrorOnInput('emailInput');
             isValid = false;
         }
@@ -109,7 +107,7 @@ class Login extends React.Component {
         const passwordError = this.state.passwordError;
         return (
                 <div className="full-page">
-                    <Banner 
+                    <Banner
                         left={
                             <img src={back} className="back-img" onClick={ (event) => this.onBackClicked(event) }/>
                         }
