@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/docs/logo.png">
+  <img src="/docs/rendu/logo.png">
 </p>
 
 # ProjetWeb_AP5 (TOPPICS)
