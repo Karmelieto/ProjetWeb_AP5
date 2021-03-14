@@ -49,5 +49,5 @@ Voici le lien de connexion pour se connecter via MongoDB Compass :
 
 ## Partie organisation
 
-Nous avons décidé d'utiliser Trello pour créer un Kanban partagé.
+Nous avons décidé d'utiliser Trello pour créer un Kanban partagé. <br/>
 Voici le lien -> https://trello.com/b/HsFH5YQC/toppics
