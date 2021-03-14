@@ -7,7 +7,7 @@ Notre projet démarre d’une constatation simple : de nos jours, il est diffici
 
 Nous avons donc décidé de casser ce code, en mettant en place un réseau social de partage d’images dont le but principal serait de voter pour les meilleures images de la semaine précédente, réparties par catégorie, à travers un jeu affichant des images aléatoirement tirées. Ainsi si votre travail est de qualité, les utilisateurs voteront pour vous sans même vous connaître !
 
-Le nom “Toppics” est la l’association de “Top” et “Pics”, en soit “meilleures photos”, ce qui reprend les grandes lignes de notre concept.
+Le nom “Toppics” est l’association de “Top” et “Pics”, en soit “meilleures photos”, ce qui reprend les grandes lignes de notre concept.
 
 ## Partie technique
 ### FRONT
