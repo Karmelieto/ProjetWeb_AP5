@@ -128,7 +128,7 @@ class GameStart extends React.Component {
                             <div className="column"><img src={this.state.publications[1].imageLink} onClick={ () => this.onPictureSelected(1) }/></div>
                         </div>
                         </div>
-                        : <p>Unfortunately, there are not enough publications for this tag yet. Publish yours !</p>
+                        : <p>Unfortunately, there are not enough publications to play for this tag yet. Publish yours !</p>
                     }
                     </div>
                 </Container>
