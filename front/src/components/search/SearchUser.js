@@ -87,7 +87,7 @@ class SearchUser extends React.Component {
                                 : (users.length === 0)
                                     ? <div className="not-found">No user found !</div>
                                     : users.map((user, index) => (
-                                        <Link style={{ textDecoration: 'none', color: '#0d0d0d', maxWidth: '200px' }} to={'/profile/' + user.pseudo} key={index}>
+                                        <Link style={{ textDecoration: 'none', color: '#0d0d0d', maxWidth: '250px' }} to={'/profile/' + user.pseudo} key={index}>
                                             <UserListItem user={user}/>
                                         </Link>
                                     ))
