@@ -23,7 +23,8 @@ export class TagsService {
         },
         {
           name: 1,
-          imageLink: 1
+          imageLink: 1,
+          isPrivate: 1
         }
       )
       .exec()
@@ -73,7 +74,8 @@ export class TagsService {
         },
         {
           name: 1,
-          imageLink: 1
+          imageLink: 1,
+          isPrivate: 1
         }
       )
       .exec()

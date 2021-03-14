@@ -98,7 +98,7 @@ class PostPublication extends React.Component {
 
         let nbPrivateCreated = 0;
         publication.tags.forEach((tag) => {
-            if (tag.isPrivate) {
+            if (tag.isNewPrivateTag) {
                 tag.usersAllow = this.state.usersAllow;
                 tag.imageLink = '';
                 APICallManager.createTag(tag, (response) => {
@@ -124,7 +124,7 @@ class PostPublication extends React.Component {
             let nbPrivate = 0;
             if (this.state.isTagAddedIsPrivate) {
                 tags.forEach(tag => {
-                    if (tag.isPrivate) {
+                    if (tag.isNewPrivateTag) {
                         APICallManager.updateTagImage(tag._id, response.data.imageLink, () => {
                             nbPrivate++;
                             if (maxPrivate === nbPrivate) {
@@ -143,14 +143,14 @@ class PostPublication extends React.Component {
         const publication = this.state.publication;
         if (!this.isTagAlreadyAdded(publication.tags, clickedOn)) {
             publication.tags.push(clickedOn);
-            this.setState({ publication: publication, tagsSearch: [], tagSearch: '', isTagAddedIsPrivate: this.isTagsArePrivate(publication.tags) });
+            this.setState({ publication: publication, tagsSearch: [], tagSearch: '', isTagAddedIsPrivate: this.hasNewTagsPrivate(publication.tags) });
         }
     }
 
     getNbPrivateTags (tags) {
         let nb = 0;
         tags.forEach(tag => {
-            if (tag.isPrivate) nb++;
+            if (tag.isNewPrivateTag) nb++;
         });
         return nb;
     }
@@ -168,18 +168,18 @@ class PostPublication extends React.Component {
         const index = publication.tags.indexOf(tag);
         if (index !== -1) {
             publication.tags.splice(index, 1);
-            this.setState({ publication: publication, isTagAddedIsPrivate: this.isTagsArePrivate(publication.tags) });
+            this.setState({ publication: publication, isTagAddedIsPrivate: this.hasNewTagsPrivate(publication.tags) });
         }
     }
 
-    isTagsArePrivate (tags) {
-        let isPrivate = false
+    hasNewTagsPrivate (tags) {
+        let isNewPrivateTag = false
         tags.forEach(tag => {
-            if (tag.isPrivate) {
-                isPrivate = true;
+            if (tag.isNewPrivateTag) {
+                isNewPrivateTag = true;
             }
         });
-        return isPrivate;
+        return isNewPrivateTag;
     }
 
     onFileUpdated (event) {
@@ -245,7 +245,7 @@ class PostPublication extends React.Component {
         const usersSearch = this.state.usersSearch;
         const isTagsSearchUpdated = this.state.isTagsSearchUpdated;
         const isTagAddedIsPrivate = this.state.isTagAddedIsPrivate;
-        if (isTagsSearchUpdated && tagSearch.trim() !== '' && !tagsSearch.find(tag => { return (tag.name === tagSearch) })) tagsSearch.push({ name: tagSearch, isPrivate: true });
+        if (isTagsSearchUpdated && tagSearch.trim() !== '' && !tagsSearch.find(tag => { return (tag.name === tagSearch) })) tagsSearch.push({ name: tagSearch, isPrivate: true, isNewPrivateTag: true });
         const publication = this.state.publication;
         const isImageLoading = this.state.isImageLoading;
         const usersAllow = this.state.usersAllow;
@@ -281,7 +281,7 @@ class PostPublication extends React.Component {
                                     ? <div className='post-publication-tags-empty'>No tag added yet</div>
                                     : publication.tags.map((tag, index) => (
                                         <div className='post-publication-tag' style={{ borderColor: (tag.isPrivate) ? 'var(--color-primary-dark)' : 'var(--color-black)' }} key={index} onClick={() => this.onTagDeleted(tag)}>
-                                            <label>&#x3A6; {tag.name}</label>
+                                            <div>&#x3A6; {tag.name}</div>
                                             <img className='delete-tag' src={cross}/>
                                         </div>
                                     ))
@@ -298,7 +298,7 @@ class PostPublication extends React.Component {
                                         {
                                             usersAllow.map((user, index) => (
                                                 <div className='post-publication-tag' key={index} onClick={() => this.onUserDeleted(user)}>
-                                                    <label>{user}</label>
+                                                    <div>{user}</div>
                                                     <img className='delete-tag' src={cross}/>
                                                 </div>
                                             ))
