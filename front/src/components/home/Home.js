@@ -39,6 +39,9 @@ class Home extends React.Component {
                         left={
                             <img src={logo}/>
                         }
+                        center={
+                            <h1>TΦPPICS</h1>
+                        }
                         right = {
                             <div>
                                 {
@@ -59,6 +62,7 @@ class Home extends React.Component {
                     />
                     <Container>
                         <div>
+                            <h1>Browse tags</h1>
                             {isLoading
                                 ? <LoadingPage/>
                                 : tags.map((tag, index) => (
